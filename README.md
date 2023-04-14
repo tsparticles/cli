@@ -24,6 +24,16 @@ pnpm global add @particlesjs/cli
 
 ## Usage
 
+### Help
+
+```bash
+npx @particlesjs/cli --help
+```
+
+```bash
+tsparticles-cli --help
+```
+
 ### Build
 
 ```bash
