@@ -3,12 +3,13 @@ import fs from "fs-extra";
 import path from "path";
 
 /**
+ * Updates the package.json file
  *
- * @param destPath -
- * @param packageName -
- * @param description -
- * @param fileName -
- * @param repoUrl -
+ * @param destPath - The path where the package.json file is located
+ * @param packageName - The name of the package
+ * @param description - The description of the package
+ * @param fileName - The name of the output file
+ * @param repoUrl - The repository URL
  */
 export async function updatePackageFile(
     destPath: string,
@@ -36,12 +37,13 @@ export async function updatePackageFile(
 }
 
 /**
+ * Updates the package.dist.json file with the new project name and description
  *
- * @param destPath -
- * @param packageName -
- * @param description -
- * @param fileName -
- * @param repoUrl -
+ * @param destPath - The path where the package.dist.json file is located
+ * @param packageName - The name of the package
+ * @param description - The description of the package
+ * @param fileName - The name of the output file
+ * @param repoUrl - The url of the repository
  */
 export async function updatePackageDistFile(
     destPath: string,
@@ -69,11 +71,12 @@ export async function updatePackageDistFile(
 }
 
 /**
+ * Updates the webpack file with the new project name and description
  *
- * @param destPath -
- * @param name -
- * @param description -
- * @param fnName -
+ * @param destPath - The path where the project will be created
+ * @param name - The name of the project
+ * @param description - The description of the project
+ * @param fnName - The name of the function to load the template
  */
 export async function updateWebpackFile(
     destPath: string,
@@ -94,8 +97,9 @@ export async function updateWebpackFile(
 }
 
 /**
+ * Copies the empty template files to the destination path
  *
- * @param destPath -
+ * @param destPath - The path where the project will be created
  */
 export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
     const emptyPath = path.resolve(__dirname, "..", "..", "files", "empty-project");
@@ -107,8 +111,9 @@ export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
 }
 
 /**
+ * Filters the files to copy
  *
- * @param src -
+ * @param src - The source file path
  * @returns true if the file should be copied
  */
 export function copyFilter(src: string): boolean {
@@ -120,8 +125,9 @@ export function copyFilter(src: string): boolean {
 }
 
 /**
+ * Runs npm install in the given path
  *
- * @param destPath -
+ * @param destPath - The path where the project will be created
  */
 export function runInstall(destPath: string): void {
     execSync("npm install", {
@@ -130,8 +136,9 @@ export function runInstall(destPath: string): void {
 }
 
 /**
+ * Runs npm run build in the given path
  *
- * @param destPath -
+ * @param destPath - The path where the project will be build
  */
 export function runBuild(destPath: string): void {
     execSync("npm run build", {

@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
 import { capitalize } from "../../utils/string-utils";

@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { prettifyReadme, prettifySrc } from "./build-prettier";
 import { Command } from "commander";
 import { buildDistFiles } from "./build-distfiles";

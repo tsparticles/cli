@@ -12,9 +12,10 @@ import fs from "fs-extra";
 import path from "path";
 
 /**
+ * Updates the bundle file with the correct function name
  *
- * @param destPath -
- * @param name -
+ * @param destPath - The path where the project is located
+ * @param name - The name of the project
  */
 async function updateBundleFile(destPath: string, name: string): Promise<void> {
     const bundlePath = path.resolve(destPath, "src", "bundle.ts"),
@@ -27,9 +28,10 @@ async function updateBundleFile(destPath: string, name: string): Promise<void> {
 }
 
 /**
+ * Updates the index file with the correct function name
  *
- * @param destPath -
- * @param name -
+ * @param destPath - The path where the project is located
+ * @param name - The name of the project
  */
 async function updateIndexFile(destPath: string, name: string): Promise<void> {
     const indexPath = path.resolve(destPath, "src", "index.ts"),
@@ -45,11 +47,12 @@ async function updateIndexFile(destPath: string, name: string): Promise<void> {
 }
 
 /**
+ * Updates the preset package file
  *
- * @param destPath -
- * @param name -
- * @param description -
- * @param repoUrl -
+ * @param destPath - The path where the project is located
+ * @param name - The name of the project
+ * @param description - The description of the project
+ * @param repoUrl - The repository url
  */
 async function updatePresetPackageFile(
     destPath: string,
@@ -70,11 +73,12 @@ async function updatePresetPackageFile(
 }
 
 /**
+ * Updates the preset package dist file
  *
- * @param destPath -
- * @param name -
- * @param description -
- * @param repoUrl -
+ * @param destPath - The path where the project is located
+ * @param name - The name of the project
+ * @param description - The description of the project
+ * @param repoUrl - The repository url
  */
 async function updatePresetPackageDistFile(
     destPath: string,
@@ -95,11 +99,12 @@ async function updatePresetPackageDistFile(
 }
 
 /**
+ * Updates the preset readme file
  *
- * @param destPath -
- * @param name -
- * @param description -
- * @param repoUrl -
+ * @param destPath - The path where the project is located
+ * @param name - The name of the project
+ * @param description - The description of the project
+ * @param repoUrl - The repository url
  */
 async function updateReadmeFile(destPath: string, name: string, description: string, repoUrl: string): Promise<void> {
     const readmePath = path.resolve(destPath, "README.md"),
@@ -146,10 +151,11 @@ async function updateReadmeFile(destPath: string, name: string, description: str
 }
 
 /**
+ * Updates the preset webpack file
  *
- * @param destPath -
- * @param name -
- * @param description -
+ * @param destPath - The path where the project is located
+ * @param name - The name of the project
+ * @param description - The description of the project
  */
 async function updatePresetWebpackFile(destPath: string, name: string, description: string): Promise<void> {
     await updateWebpackFile(
@@ -161,11 +167,12 @@ async function updatePresetWebpackFile(destPath: string, name: string, descripti
 }
 
 /**
+ * Creates the preset project
  *
- * @param name -
- * @param description -
- * @param repoUrl -
- * @param destPath -
+ * @param name - The name of the project
+ * @param description - The description of the project
+ * @param repoUrl - The repository url
+ * @param destPath - The path where the project is located
  */
 export async function createPresetTemplate(
     name: string,
