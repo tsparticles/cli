@@ -2,14 +2,17 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@tsparticles/eslint-config':
-    specifier: ^1.9.1
-    version: 1.9.1(@tsparticles/prettier-config@1.7.0)(@typescript-eslint/eslint-plugin@5.58.0)(@typescript-eslint/parser@5.58.0)(eslint-config-prettier@8.8.0)(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17)(eslint@8.38.0)(prettier@2.8.7)(typescript@5.0.4)
-  '@tsparticles/prettier-config':
-    specifier: ^1.7.0
-    version: 1.7.0(prettier@2.8.7)
-  '@tsparticles/tsconfig':
     specifier: ^1.10.0
-    version: 1.10.0(typescript@5.0.4)
+    version: 1.10.0(@tsparticles/prettier-config@1.8.0)(@typescript-eslint/eslint-plugin@5.58.0)(@typescript-eslint/parser@5.58.0)(eslint-config-prettier@8.8.0)(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17)(eslint@8.38.0)(prettier@2.8.7)(typescript@5.0.4)
+  '@tsparticles/prettier-config':
+    specifier: ^1.8.0
+    version: 1.8.0(prettier@2.8.7)
+  '@tsparticles/tsconfig':
+    specifier: ^1.11.0
+    version: 1.11.0(typescript@5.0.4)
+  '@tsparticles/webpack-plugin':
+    specifier: ^1.12.0
+    version: 1.12.0(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17)
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.58.0
     version: 5.58.0(@typescript-eslint/parser@5.58.0)(eslint@8.38.0)(typescript@5.0.4)
@@ -40,6 +43,9 @@ dependencies:
   prettier:
     specifier: ^2.8.7
     version: 2.8.7
+  prompts:
+    specifier: ^2.4.2
+    version: 2.4.2
   rimraf:
     specifier: ^5.0.0
     version: 5.0.0
@@ -49,9 +55,6 @@ dependencies:
   webpack:
     specifier: ^5.79.0
     version: 5.79.0(webpack-cli@5.0.1)
-  webpack-tsparticles-plugin:
-    specifier: ^1.11.1
-    version: 1.11.1(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17)
 
 devDependencies:
   '@types/eslint':
@@ -69,6 +72,9 @@ devDependencies:
   '@types/prettier':
     specifier: ^2.7.2
     version: 2.7.2
+  '@types/prompts':
+    specifier: ^2.4.4
+    version: 2.4.4
 
 packages:
 
@@ -1376,12 +1382,12 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: false
 
-  /@tsparticles/eslint-config@1.9.1(@tsparticles/prettier-config@1.7.0)(@typescript-eslint/eslint-plugin@5.58.0)(@typescript-eslint/parser@5.58.0)(eslint-config-prettier@8.8.0)(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17)(eslint@8.38.0)(prettier@2.8.7)(typescript@5.0.4):
-    resolution: {integrity: sha512-sbcuoH2si4GfLH8WRhBAA7fwL6LirFktAv/B2EyqVp3c2E9Cay1+hH0R7/VmeRtqnncaZ4gXzBOYHJUFF6Fh0w==}
+  /@tsparticles/eslint-config@1.10.0(@tsparticles/prettier-config@1.8.0)(@typescript-eslint/eslint-plugin@5.58.0)(@typescript-eslint/parser@5.58.0)(eslint-config-prettier@8.8.0)(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17)(eslint@8.38.0)(prettier@2.8.7)(typescript@5.0.4):
+    resolution: {integrity: sha512-B4A/sAZ0BOH0nWtGo0v3kLNEcKHnh7hZDZygSYZ7Eg3M8xMgIIGDKMghTBrg5EE0qbVaTfV4LHAzqcCCtRb4tA==}
     peerDependencies:
       '@tsparticles/prettier-config': ^1.5.0
-      '@typescript-eslint/eslint-plugin': ^5.57.1
-      '@typescript-eslint/parser': ^5.57.1
+      '@typescript-eslint/eslint-plugin': ^5.58.0
+      '@typescript-eslint/parser': ^5.58.0
       eslint: ^8.38.0
       eslint-config-prettier: ^8.8.0
       eslint-plugin-jsdoc: ^41.1.1
@@ -1389,7 +1395,7 @@ packages:
       prettier: ^2.8.7
       typescript: ^5.0.4
     dependencies:
-      '@tsparticles/prettier-config': 1.7.0(prettier@2.8.7)
+      '@tsparticles/prettier-config': 1.8.0(prettier@2.8.7)
       '@typescript-eslint/eslint-plugin': 5.58.0(@typescript-eslint/parser@5.58.0)(eslint@8.38.0)(typescript@5.0.4)
       '@typescript-eslint/parser': 5.58.0(eslint@8.38.0)(typescript@5.0.4)
       eslint: 8.38.0
@@ -1400,20 +1406,57 @@ packages:
       typescript: 5.0.4
     dev: false
 
-  /@tsparticles/prettier-config@1.7.0(prettier@2.8.7):
-    resolution: {integrity: sha512-96P04sFfJMAzKMR0km1BiYhQJCZBSQuBVHLwtcRtiNJVMBMstjEieWQh5KWkGleYfvJt9KwKonH6TCt67kzp8g==}
+  /@tsparticles/prettier-config@1.8.0(prettier@2.8.7):
+    resolution: {integrity: sha512-vJCr5Iuy4oZs5A1J5hJKAVL6fp8bYZ8EW+IUYCB82x/I0QO9WdEoY9s7W5ZeF2e3e+BowxCPoSfPL1TA3C+0+w==}
     peerDependencies:
-      prettier: ^2.8.3
+      prettier: ^2.8.7
     dependencies:
       prettier: 2.8.7
     dev: false
 
-  /@tsparticles/tsconfig@1.10.0(typescript@5.0.4):
-    resolution: {integrity: sha512-KO0/bDQ0ouX6FhJ/BCl/IxHP2koLhjwObbEVu8b3hHo0+sc8fmmsqjeLndEes9jndfAsyMbnJQFe6LJl/6lTtg==}
+  /@tsparticles/tsconfig@1.11.0(typescript@5.0.4):
+    resolution: {integrity: sha512-cQ8pWRLzhZKaeFcs18KPQ/2Cscbwfg1USbIbNTk+S9mKWxged1g31cXELrfgTVK9crJgOQPudwRR7XNyytwf9Q==}
     peerDependencies:
-      typescript: ^5.0.2
+      typescript: ^5.0.4
     dependencies:
       typescript: 5.0.4
+    dev: false
+
+  /@tsparticles/webpack-plugin@1.12.0(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17):
+    resolution: {integrity: sha512-J2JBOA3/24TKVx1HjZ7jLlCQHdNWxcCacK+TL/e0fnLKzPNf0FeZKJzrAbtZI8VJxMyX2y0GrTgCio+jkaGbLA==}
+    dependencies:
+      '@babel/core': 7.21.4
+      '@babel/preset-env': 7.21.4(@babel/core@7.21.4)
+      '@tsparticles/eslint-config': 1.10.0(@tsparticles/prettier-config@1.8.0)(@typescript-eslint/eslint-plugin@5.58.0)(@typescript-eslint/parser@5.58.0)(eslint-config-prettier@8.8.0)(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17)(eslint@8.38.0)(prettier@2.8.7)(typescript@5.0.4)
+      '@tsparticles/prettier-config': 1.8.0(prettier@2.8.7)
+      '@types/node': 18.15.11
+      '@types/webpack-bundle-analyzer': 4.6.0(webpack-cli@5.0.1)
+      '@types/webpack-env': 1.18.0
+      '@typescript-eslint/eslint-plugin': 5.58.0(@typescript-eslint/parser@5.58.0)(eslint@8.38.0)(typescript@5.0.4)
+      '@typescript-eslint/parser': 5.58.0(eslint@8.38.0)(typescript@5.0.4)
+      babel-loader: 9.1.2(@babel/core@7.21.4)(webpack@5.79.0)
+      browserslist: 4.21.5
+      copyfiles: 2.4.1
+      eslint: 8.38.0
+      eslint-config-prettier: 8.8.0(eslint@8.38.0)
+      prettier: 2.8.7
+      rimraf: 5.0.0
+      terser-webpack-plugin: 5.3.7(webpack@5.79.0)
+      typescript: 5.0.4
+      webpack: 5.79.0(webpack-cli@5.0.1)
+      webpack-bundle-analyzer: 4.8.0
+      webpack-cli: 5.0.1(webpack-bundle-analyzer@4.8.0)(webpack@5.79.0)
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@webpack-cli/generators'
+      - bufferutil
+      - esbuild
+      - eslint-plugin-jsdoc
+      - eslint-plugin-tsdoc
+      - supports-color
+      - uglify-js
+      - utf-8-validate
+      - webpack-dev-server
     dev: false
 
   /@types/eslint-scope@3.7.4:
@@ -1459,6 +1502,13 @@ packages:
 
   /@types/prettier@2.7.2:
     resolution: {integrity: sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==}
+    dev: true
+
+  /@types/prompts@2.4.4:
+    resolution: {integrity: sha512-p5N9uoTH76lLvSAaYSZtBCdEXzpOOufsRjnhjVSrZGXikVGHX9+cc9ERtHRV4hvBKHyZb1bg4K+56Bd2TqUn4A==}
+    dependencies:
+      '@types/node': 18.15.11
+      kleur: 3.0.3
     dev: true
 
   /@types/semver@7.3.13:
@@ -2712,6 +2762,10 @@ packages:
     engines: {node: '>=14.14.0'}
     dev: false
 
+  /kleur@3.0.3:
+    resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
+    engines: {node: '>=6'}
+
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -2987,6 +3041,14 @@ packages:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
     dev: false
 
+  /prompts@2.4.2:
+    resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
+    engines: {node: '>= 6'}
+    dependencies:
+      kleur: 3.0.3
+      sisteransi: 1.0.5
+    dev: false
+
   /punycode@2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
@@ -3211,6 +3273,10 @@ packages:
       '@polka/url': 1.0.0-next.21
       mrmime: 1.0.1
       totalist: 1.1.0
+    dev: false
+
+  /sisteransi@1.0.5:
+    resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: false
 
   /slash@3.0.0:
@@ -3529,43 +3595,6 @@ packages:
   /webpack-sources@3.2.3:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
-    dev: false
-
-  /webpack-tsparticles-plugin@1.11.1(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17):
-    resolution: {integrity: sha512-aqWhKSW39V06rgRaH6GqENM4mIpvWhpUaIerD1yE/IbRlCNS7S8q+3m+AteeS3l/RLqLyJjI0C2E88wVmP8Q4g==}
-    dependencies:
-      '@babel/core': 7.21.4
-      '@babel/preset-env': 7.21.4(@babel/core@7.21.4)
-      '@tsparticles/eslint-config': 1.9.1(@tsparticles/prettier-config@1.7.0)(@typescript-eslint/eslint-plugin@5.58.0)(@typescript-eslint/parser@5.58.0)(eslint-config-prettier@8.8.0)(eslint-plugin-jsdoc@41.1.1)(eslint-plugin-tsdoc@0.2.17)(eslint@8.38.0)(prettier@2.8.7)(typescript@5.0.4)
-      '@tsparticles/prettier-config': 1.7.0(prettier@2.8.7)
-      '@types/node': 18.15.11
-      '@types/webpack-bundle-analyzer': 4.6.0(webpack-cli@5.0.1)
-      '@types/webpack-env': 1.18.0
-      '@typescript-eslint/eslint-plugin': 5.58.0(@typescript-eslint/parser@5.58.0)(eslint@8.38.0)(typescript@5.0.4)
-      '@typescript-eslint/parser': 5.58.0(eslint@8.38.0)(typescript@5.0.4)
-      babel-loader: 9.1.2(@babel/core@7.21.4)(webpack@5.79.0)
-      browserslist: 4.21.5
-      copyfiles: 2.4.1
-      eslint: 8.38.0
-      eslint-config-prettier: 8.8.0(eslint@8.38.0)
-      prettier: 2.8.7
-      rimraf: 5.0.0
-      terser-webpack-plugin: 5.3.7(webpack@5.79.0)
-      typescript: 5.0.4
-      webpack: 5.79.0(webpack-cli@5.0.1)
-      webpack-bundle-analyzer: 4.8.0
-      webpack-cli: 5.0.1(webpack-bundle-analyzer@4.8.0)(webpack@5.79.0)
-    transitivePeerDependencies:
-      - '@swc/core'
-      - '@webpack-cli/generators'
-      - bufferutil
-      - esbuild
-      - eslint-plugin-jsdoc
-      - eslint-plugin-tsdoc
-      - supports-color
-      - uglify-js
-      - utf-8-validate
-      - webpack-dev-server
     dev: false
 
   /webpack@5.79.0(webpack-cli@5.0.1):
