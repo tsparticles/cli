@@ -1,5 +1,7 @@
 #!/usr/bin/env node
+import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
+import { capitalize } from "../../utils/string-utils";
 import { createPresetTemplate } from "./create-preset";
 import { execSync } from "child_process";
 import fs from "fs-extra";
@@ -8,13 +10,11 @@ import path from "path";
 const presetCommand = new Command("preset");
 
 presetCommand.description("Create a new tsParticles preset");
-presetCommand.argument("<name>", "Preset name");
-presetCommand.argument("<description>", "Preset description");
 presetCommand.argument("<destination>", "Destination folder");
-presetCommand.action(async (name: string, description: string, destination: string) => {
+presetCommand.action(async (destination: string) => {
     let repoUrl: string;
 
-    const destPath = path.resolve(".", destination),
+    const destPath = path.resolve(path.join(process.cwd(), destination)),
         destExists = await fs.pathExists(destPath);
 
     if (destExists) {
@@ -34,7 +34,33 @@ presetCommand.action(async (name: string, description: string, destination: stri
         repoUrl = "";
     }
 
-    createPresetTemplate(name, description, repoUrl.trim(), destPath);
+    const initialName = destPath.split(path.sep).pop(),
+        questions: PromptObject[] = [
+            {
+                type: "text",
+                name: "name",
+                message: "What is the name of the preset?",
+                validate: (value: string) => (value ? true : "The name can't be empty"),
+                initial: initialName,
+            },
+            {
+                type: "text",
+                name: "description",
+                message: "What is the description of the preset?",
+                validate: (value: string) => (value ? true : "The description can't be empty"),
+                initial: capitalize(initialName || ""),
+            },
+            {
+                type: "text",
+                name: "repositoryUrl",
+                message: "What is the repository URL? (optional)",
+                initial: repoUrl.trim(),
+            },
+        ];
+
+    const { name, description, repositoryUrl } = await prompts(questions);
+
+    createPresetTemplate(name.trim(), description.trim(), repositoryUrl.trim(), destPath);
 });
 
 export { presetCommand };
