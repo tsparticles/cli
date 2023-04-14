@@ -1,0 +1,57 @@
+{
+    "name": "@tsparticles/cli",
+    "version": "1.0.0",
+    "license": "MIT",
+    "bin": {
+        "tsparticles-cli": "dist/cli.js"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "prettier": "@tsparticles/prettier-config",
+    "scripts": {
+        "prettify:ci:src": "prettier --check ./src/*",
+        "prettify:ci:readme": "prettier --check ./README.md",
+        "prettify:src": "prettier --write ./src/*",
+        "prettify:readme": "prettier --write ./README.md",
+        "lint": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
+        "lint:ci": "eslint src --ext .js,.jsx,.ts,.tsx",
+        "compile": "pnpm run build:ts",
+        "compile:ci": "pnpm run build:ts",
+        "build:ts": "pnpm run build:ts:cjs",
+        "build:ts:cjs": "tsc -p src",
+        "build": "pnpm run clear:dist && pnpm run prettify:src && pnpm run lint && pnpm run compile && pnpm run prettify:readme && chmod +x dist/cli.js && chmod +x dist/build/build.js && chmod +x dist/create/create.js && chmod +x dist/create/preset/preset.js",
+        "build:ci": "pnpm run clear:dist && pnpm run prettify:ci:src && pnpm run lint:ci && pnpm run compile && pnpm run prettify:ci:readme",
+        "clear:dist": "rimraf ./dist",
+        "prepack": "pnpm run build"
+    },
+    "dependencies": {
+        "@tsparticles/eslint-config": "^1.9.1",
+        "@tsparticles/prettier-config": "^1.7.0",
+        "@tsparticles/tsconfig": "^1.10.0",
+        "@typescript-eslint/eslint-plugin": "^5.58.0",
+        "@typescript-eslint/parser": "^5.58.0",
+        "commander": "^10.0.0",
+        "eslint": "^8.38.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-jsdoc": "^41.1.1",
+        "eslint-plugin-tsdoc": "^0.2.17",
+        "fs-extra": "^11.1.1",
+        "klaw": "^4.1.0",
+        "prettier": "^2.8.7",
+        "rimraf": "^5.0.0",
+        "typescript": "^5.0.4",
+        "webpack": "^5.79.0",
+        "webpack-tsparticles-plugin": "^1.11.1"
+    },
+    "devDependencies": {
+        "@types/eslint": "^8.37.0",
+        "@types/fs-extra": "^11.0.1",
+        "@types/klaw": "^3.0.3",
+        "@types/node": "^18.15.11",
+        "@types/prettier": "^2.7.2"
+    },
+    "description": "[![banner](https://particles.js.org/images/banner2.png)](https://particles.js.org)",
+    "main": ".eslintrc.js",
+    "author": ""
+}
