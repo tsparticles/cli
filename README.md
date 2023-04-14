@@ -30,6 +30,8 @@ pnpm global add @particlesjs/cli
 npx @particlesjs/cli --help
 ```
 
+or
+
 ```bash
 tsparticles-cli --help
 ```
@@ -39,6 +41,8 @@ tsparticles-cli --help
 ```bash
 npx @particlesjs/cli build
 ```
+
+or
 
 ```bash
 tsparticles-cli build
@@ -51,6 +55,8 @@ tsparticles-cli build
 ```bash
 npx @particlesjs/cli create preset <folder>
 ```
+
+or
 
 ```bash
 tsparticles-cli create preset <folder>
