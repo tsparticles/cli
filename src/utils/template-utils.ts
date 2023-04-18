@@ -4,7 +4,6 @@ import path from "path";
 
 /**
  * Updates the package.json file
- *
  * @param destPath - The path where the package.json file is located
  * @param packageName - The name of the package
  * @param description - The description of the package
@@ -38,7 +37,6 @@ export async function updatePackageFile(
 
 /**
  * Updates the package.dist.json file with the new project name and description
- *
  * @param destPath - The path where the package.dist.json file is located
  * @param packageName - The name of the package
  * @param description - The description of the package
@@ -72,7 +70,6 @@ export async function updatePackageDistFile(
 
 /**
  * Updates the webpack file with the new project name and description
- *
  * @param destPath - The path where the project will be created
  * @param name - The name of the project
  * @param description - The description of the project
@@ -98,7 +95,6 @@ export async function updateWebpackFile(
 
 /**
  * Copies the empty template files to the destination path
- *
  * @param destPath - The path where the project will be created
  */
 export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
@@ -112,7 +108,6 @@ export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
 
 /**
  * Filters the files to copy
- *
  * @param src - The source file path
  * @returns true if the file should be copied
  */
@@ -126,7 +121,6 @@ export function copyFilter(src: string): boolean {
 
 /**
  * Runs npm install in the given path
- *
  * @param destPath - The path where the project will be created
  */
 export function runInstall(destPath: string): void {
@@ -137,7 +131,6 @@ export function runInstall(destPath: string): void {
 
 /**
  * Runs npm run build in the given path
- *
  * @param destPath - The path where the project will be build
  */
 export function runBuild(destPath: string): void {

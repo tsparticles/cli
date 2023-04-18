@@ -13,7 +13,6 @@ import path from "path";
 
 /**
  * Updates the bundle file with the correct function name
- *
  * @param destPath - The path where the project is located
  * @param name - The name of the project
  */
@@ -29,7 +28,6 @@ async function updateBundleFile(destPath: string, name: string): Promise<void> {
 
 /**
  * Updates the index file with the correct function name
- *
  * @param destPath - The path where the project is located
  * @param name - The name of the project
  */
@@ -48,7 +46,6 @@ async function updateIndexFile(destPath: string, name: string): Promise<void> {
 
 /**
  * Updates the preset package file
- *
  * @param destPath - The path where the project is located
  * @param name - The name of the project
  * @param description - The description of the project
@@ -74,7 +71,6 @@ async function updatePresetPackageFile(
 
 /**
  * Updates the preset package dist file
- *
  * @param destPath - The path where the project is located
  * @param name - The name of the project
  * @param description - The description of the project
@@ -100,7 +96,6 @@ async function updatePresetPackageDistFile(
 
 /**
  * Updates the preset readme file
- *
  * @param destPath - The path where the project is located
  * @param name - The name of the project
  * @param description - The description of the project
@@ -152,7 +147,6 @@ async function updateReadmeFile(destPath: string, name: string, description: str
 
 /**
  * Updates the preset webpack file
- *
  * @param destPath - The path where the project is located
  * @param name - The name of the project
  * @param description - The description of the project
@@ -168,7 +162,6 @@ async function updatePresetWebpackFile(destPath: string, name: string, descripti
 
 /**
  * Creates the preset project
- *
  * @param name - The name of the project
  * @param description - The description of the project
  * @param repoUrl - The repository url

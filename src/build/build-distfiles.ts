@@ -3,7 +3,6 @@ import klaw from "klaw";
 import path from "path";
 
 /**
- *
  * @param basePath -
  */
 export async function buildDistFiles(basePath: string): Promise<boolean> {

@@ -4,7 +4,6 @@ import path from "path";
 import prettier from "prettier";
 
 /**
- *
  * @param basePath -
  * @param srcPath -
  * @param ci -
@@ -52,7 +51,6 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
 }
 
 /**
- *
  * @param basePath -
  * @param ci -
  */
@@ -92,7 +90,6 @@ export async function prettifyReadme(basePath: string, ci: boolean): Promise<boo
 }
 
 /**
- *
  * @param basePath -
  * @param ci -
  */
@@ -147,7 +144,6 @@ async function prettifyTraductions(basePath: string, ci: boolean): Promise<boole
 }
 
 /**
- *
  * @param basePath -
  * @param ci -
  */

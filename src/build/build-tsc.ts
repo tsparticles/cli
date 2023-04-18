@@ -3,7 +3,6 @@ import path from "path";
 import ts from "typescript";
 
 /**
- *
  * @param basePath -
  * @param file -
  */
@@ -20,7 +19,6 @@ async function readConfig(basePath: string, file: string): Promise<string | unde
 }
 
 /**
- *
  * @param basePath -
  * @param type -
  */
@@ -150,7 +148,6 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
 }
 
 /**
- *
  * @param basePath -
  */
 export async function buildTS(basePath: string): Promise<boolean> {

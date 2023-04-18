@@ -2,7 +2,6 @@ import path from "path";
 import { rimraf } from "rimraf";
 
 /**
- *
  * @param basePath -
  */
 export async function clearDist(basePath: string): Promise<boolean> {

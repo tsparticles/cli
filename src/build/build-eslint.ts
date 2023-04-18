@@ -1,7 +1,6 @@
 import { ESLint } from "eslint";
 
 /**
- *
  * @param ci -
  */
 export async function lint(ci: boolean): Promise<boolean> {

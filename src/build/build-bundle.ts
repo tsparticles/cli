@@ -2,7 +2,6 @@ import path from "path";
 import webpack from "webpack";
 
 /**
- *
  * @param basePath -
  */
 export async function bundle(basePath: string): Promise<boolean> {
