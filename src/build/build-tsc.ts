@@ -5,6 +5,7 @@ import ts from "typescript";
 /**
  * @param basePath -
  * @param file -
+ * @returns the file content or undefined if the file doesn't exist
  */
 async function readConfig(basePath: string, file: string): Promise<string | undefined> {
     const tsconfigPath = path.join(basePath, file);
@@ -21,6 +22,7 @@ async function readConfig(basePath: string, file: string): Promise<string | unde
 /**
  * @param basePath -
  * @param type -
+ * @returns the exit code
  */
 async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "types" | "umd"): Promise<number> {
     let options: unknown, data: string | undefined;
@@ -149,6 +151,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
 
 /**
  * @param basePath -
+ * @returns true if the build was successful
  */
 export async function buildTS(basePath: string): Promise<boolean> {
     console.log("Building TS files");

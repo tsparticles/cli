@@ -7,6 +7,7 @@ import prettier from "prettier";
  * @param basePath -
  * @param srcPath -
  * @param ci -
+ * @returns true if the prettify src process was successful
  */
 export async function prettifySrc(basePath: string, srcPath: string, ci: boolean): Promise<boolean> {
     console.log("Prettier - started on src");
@@ -53,6 +54,7 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
 /**
  * @param basePath -
  * @param ci -
+ * @returns true if the prettify readme process was successful
  */
 export async function prettifyReadme(basePath: string, ci: boolean): Promise<boolean> {
     console.log("Prettier - started on README.md");
@@ -92,6 +94,7 @@ export async function prettifyReadme(basePath: string, ci: boolean): Promise<boo
 /**
  * @param basePath -
  * @param ci -
+ * @returns true if the prettify traductions process was successful
  */
 async function prettifyTraductions(basePath: string, ci: boolean): Promise<boolean> {
     console.log("Prettier - started on traductions");
@@ -146,6 +149,7 @@ async function prettifyTraductions(basePath: string, ci: boolean): Promise<boole
 /**
  * @param basePath -
  * @param ci -
+ * @returns true if the prettify markdown typedoc files process was successful
  */
 async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean): Promise<boolean> {
     console.log("Prettier - started on markdown");

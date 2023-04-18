@@ -3,6 +3,7 @@ import { rimraf } from "rimraf";
 
 /**
  * @param basePath -
+ * @returns true if the dist folder was cleared
  */
 export async function clearDist(basePath: string): Promise<boolean> {
     console.log("Clearing dist folder");

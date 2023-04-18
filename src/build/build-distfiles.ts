@@ -4,6 +4,7 @@ import path from "path";
 
 /**
  * @param basePath -
+ * @returns true if the dist files process was successful
  */
 export async function buildDistFiles(basePath: string): Promise<boolean> {
     console.log("Build - started on dist files");

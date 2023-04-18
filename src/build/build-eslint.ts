@@ -2,6 +2,7 @@ import { ESLint } from "eslint";
 
 /**
  * @param ci -
+ * @returns true if the linting was successful
  */
 export async function lint(ci: boolean): Promise<boolean> {
     console.log("ESLint - started on src");

@@ -3,6 +3,7 @@ import webpack from "webpack";
 
 /**
  * @param basePath -
+ * @returns true if the bundle was created
  */
 export async function bundle(basePath: string): Promise<boolean> {
     console.log("Bundling started");
