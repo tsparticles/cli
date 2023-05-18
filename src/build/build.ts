@@ -5,6 +5,7 @@ import { buildTS } from "./build-tsc";
 import { bundle } from "./build-bundle";
 import { clearDist } from "./build-clear";
 import fs from "fs-extra";
+import { getDistStats } from "./build-diststats";
 import { lint } from "./build-eslint";
 import path from "path";
 
@@ -41,6 +42,8 @@ buildCommand.action(async (argPath: string) => {
         tsc = all || !!opts.tsc;
 
     const basePath = process.cwd();
+
+    const oldStats = await getDistStats(path.join(basePath, "dist"));
 
     if (clean) {
         await clearDist(basePath);
@@ -80,6 +83,26 @@ buildCommand.action(async (argPath: string) => {
 
     if (!canContinue) {
         throw new Error("Build failed");
+    }
+
+    const newStats = await getDistStats(path.join(basePath, "dist")),
+        diffSize = newStats.totalSize - oldStats.totalSize,
+        texts = [
+            `Size changed from ${oldStats.totalSize} to ${newStats.totalSize} (${diffSize}B)`,
+            `Files count changed from ${oldStats.totalFiles} to ${newStats.totalFiles} (${
+                newStats.totalFiles - oldStats.totalFiles
+            })`,
+            `Folders count changed from ${oldStats.totalFolders} to ${newStats.totalFolders} (${
+                newStats.totalFolders - oldStats.totalFolders
+            })`,
+        ],
+        sizeIncreased = diffSize > 0,
+        outputFunc = sizeIncreased ? console.warn : console.info;
+
+    console.log("Build finished successfully!");
+
+    for (const text of texts) {
+        outputFunc(text);
     }
 });
 
