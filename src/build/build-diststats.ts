@@ -22,7 +22,7 @@ async function getFolderStats(folderPath: string): Promise<IDistStats> {
 
     for await (const dirent of dir) {
         if (dirent.isDirectory()) {
-            const subDirStats = await getDistStats(path.join(folderPath, dirent.name));
+            const subDirStats = await getFolderStats(path.join(folderPath, dirent.name));
 
             stats.totalFolders += subDirStats.totalFolders + 1;
             stats.totalFiles += subDirStats.totalFiles;
