@@ -43,7 +43,7 @@ buildCommand.action(async (argPath: string) => {
 
     const basePath = process.cwd();
 
-    const oldStats = await getDistStats(path.join(basePath, "dist"));
+    const oldStats = await getDistStats(basePath);
 
     if (clean) {
         await clearDist(basePath);
@@ -85,7 +85,7 @@ buildCommand.action(async (argPath: string) => {
         throw new Error("Build failed");
     }
 
-    const newStats = await getDistStats(path.join(basePath, "dist")),
+    const newStats = await getDistStats(basePath),
         diffSize = newStats.totalSize - oldStats.totalSize,
         texts = [
             `Size changed from ${oldStats.totalSize} to ${newStats.totalSize} (${diffSize}B)`,
