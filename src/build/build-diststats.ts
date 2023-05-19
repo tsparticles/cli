@@ -18,6 +18,10 @@ async function getFolderStats(folderPath: string): Promise<IDistStats> {
         totalSize: 0,
     };
 
+    if (!(await fs.pathExists(folderPath))) {
+        return stats;
+    }
+
     const dir = await fs.promises.opendir(folderPath);
 
     for await (const dirent of dir) {
