@@ -18,7 +18,7 @@ async function getFolderStats(folderPath: string, bundlePath?: string): Promise<
         bundleSize: 0,
         totalFiles: 0,
         totalFolders: 0,
-        totalSize: 0
+        totalSize: 0,
     };
 
     if (!(await fs.pathExists(folderPath))) {
@@ -56,7 +56,9 @@ async function getFolderStats(folderPath: string, bundlePath?: string): Promise<
  */
 export async function getDistStats(basePath: string): Promise<IDistStats> {
     const distFolder = path.join(basePath, "dist"),
-        pkgInfo = (await fs.exists(path.join(distFolder, "package.json"))) ? await import(path.join(distFolder, "package.json")) : {},
+        pkgInfo = (await fs.exists(path.join(distFolder, "package.json")))
+            ? await import(path.join(distFolder, "package.json"))
+            : {},
         bundlePath =
             (await fs.exists(distFolder)) && pkgInfo.jsdelivr
                 ? path.resolve(path.join(distFolder, pkgInfo.jsdelivr))
