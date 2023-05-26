@@ -2,6 +2,7 @@ import fs from "fs-extra";
 import path from "path";
 
 export interface IDistStats {
+    bundleSize: number;
     totalFiles: number;
     totalFolders: number;
     totalSize: number;
@@ -9,10 +10,12 @@ export interface IDistStats {
 
 /**
  * @param folderPath - the path to the folder to get the stats for
+ * @param bundlePath - the bundle path to get the bundle size for
  * @returns the given folder stats;
  */
-async function getFolderStats(folderPath: string): Promise<IDistStats> {
+async function getFolderStats(folderPath: string, bundlePath?: string): Promise<IDistStats> {
     const stats: IDistStats = {
+        bundleSize: 0,
         totalFiles: 0,
         totalFolders: 0,
         totalSize: 0,
@@ -26,7 +29,7 @@ async function getFolderStats(folderPath: string): Promise<IDistStats> {
 
     for await (const dirent of dir) {
         if (dirent.isDirectory()) {
-            const subDirStats = await getFolderStats(path.join(folderPath, dirent.name));
+            const subDirStats = await getFolderStats(path.join(folderPath, dirent.name), bundlePath);
 
             stats.totalFolders += subDirStats.totalFolders + 1;
             stats.totalFiles += subDirStats.totalFiles;
@@ -36,6 +39,10 @@ async function getFolderStats(folderPath: string): Promise<IDistStats> {
 
             stats.totalFiles++;
             stats.totalSize += fileStats.size;
+
+            if (bundlePath && path.join(folderPath, dirent.name) === bundlePath) {
+                stats.bundleSize += fileStats.size;
+            }
         }
     }
 
@@ -48,5 +55,12 @@ async function getFolderStats(folderPath: string): Promise<IDistStats> {
  * @returns the stats for the dist folder
  */
 export async function getDistStats(basePath: string): Promise<IDistStats> {
-    return await getFolderStats(path.join(basePath, "dist"));
+    const distFolder = path.join(basePath, "dist"),
+        pkgInfo = (await fs.exists(distFolder)) ? await import(path.join(distFolder, "package.json")) : {},
+        bundlePath =
+            (await fs.exists(distFolder)) && pkgInfo.jsdelivr
+                ? path.resolve(path.join(distFolder, pkgInfo.jsdelivr))
+                : undefined;
+
+    return await getFolderStats(distFolder, bundlePath);
 }

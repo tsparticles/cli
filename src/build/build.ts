@@ -41,9 +41,8 @@ buildCommand.action(async (argPath: string) => {
         prettier = all || !!opts.prettify,
         tsc = all || !!opts.tsc;
 
-    const basePath = process.cwd();
-
-    const oldStats = await getDistStats(basePath);
+    const basePath = process.cwd(),
+        oldStats = await getDistStats(basePath);
 
     if (clean) {
         await clearDist(basePath);
@@ -87,17 +86,27 @@ buildCommand.action(async (argPath: string) => {
 
     const newStats = await getDistStats(basePath),
         diffSize = newStats.totalSize - oldStats.totalSize,
+        bundleDiffSize = newStats.bundleSize - oldStats.bundleSize,
+        bundleSizeIncreased = bundleDiffSize > 0,
+        outputFunc = bundleSizeIncreased ? console.warn : console.info,
         texts = [
-            `Size changed from ${oldStats.totalSize} to ${newStats.totalSize} (${diffSize}B)`,
+            !bundleDiffSize
+                ? "Bundle size unchanged"
+                : `Bundle size ${bundleSizeIncreased ? "increased" : "decreased"} from ${oldStats.bundleSize} to ${
+                      newStats.bundleSize
+                  } (${Math.abs(bundleDiffSize)}B)`,
+            !diffSize
+                ? "Size unchanged"
+                : `Size ${diffSize > 0 ? "increased" : "decreased"} from ${oldStats.totalSize} to ${
+                      newStats.totalSize
+                  } (${Math.abs(diffSize)}B)`,
             `Files count changed from ${oldStats.totalFiles} to ${newStats.totalFiles} (${
                 newStats.totalFiles - oldStats.totalFiles
             })`,
             `Folders count changed from ${oldStats.totalFolders} to ${newStats.totalFolders} (${
                 newStats.totalFolders - oldStats.totalFolders
             })`,
-        ],
-        sizeIncreased = diffSize > 0,
-        outputFunc = sizeIncreased ? console.warn : console.info;
+        ];
 
     console.log("Build finished successfully!");
 
