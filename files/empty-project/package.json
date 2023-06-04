@@ -83,7 +83,7 @@
   "prettier": "@tsparticles/prettier-config",
   "devDependencies": {
     "@babel/core": "^7.22.1",
-    "@tsparticles/cli": "^1.4.1",
+    "@tsparticles/cli": "1.5.0",
     "@tsparticles/eslint-config": "^1.12.0",
     "@tsparticles/prettier-config": "^1.10.0",
     "@tsparticles/tsconfig": "^1.13.0",
@@ -105,7 +105,6 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "tsparticles-engine": "^2.10.0",
-    "@tsparticles/cli": "1.5.0"
+    "tsparticles-engine": "^2.10.0"
   }
 }
