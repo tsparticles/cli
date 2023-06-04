@@ -105,6 +105,7 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "tsparticles-engine": "^2.10.0"
+    "tsparticles-engine": "^2.10.0",
+    "@tsparticles/cli": "1.4.1"
   }
 }
