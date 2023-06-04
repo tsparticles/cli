@@ -106,6 +106,6 @@
   },
   "dependencies": {
     "tsparticles-engine": "^2.10.0",
-    "@tsparticles/cli": "1.4.1"
+    "@tsparticles/cli": "1.5.0"
   }
 }
