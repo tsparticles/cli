@@ -37,8 +37,8 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
             "README.md",
             {
                 source: "package.dist.json",
-                destination: "package.json"
-            }
+                destination: "package.json",
+            },
         ];
 
         for (const file of rootFilesToCopy) {

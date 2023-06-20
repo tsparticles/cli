@@ -30,7 +30,7 @@
     "@tsparticles/eslint-config": "^1.13.0",
     "@tsparticles/prettier-config": "^1.10.0",
     "@tsparticles/tsconfig": "^1.13.0",
-    "@tsparticles/webpack-plugin": "^1.15.0",
+    "@tsparticles/webpack-plugin": "^1.15.1",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
     "commander": "^11.0.0",
