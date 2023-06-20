@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { presetCommand } from "./preset/preset";
+import { presetCommand } from "./preset/preset.js";
 
 const createCommand = new Command("create");
 

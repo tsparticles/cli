@@ -1,4 +1,4 @@
-import { camelize, capitalize, dash } from "../../utils/string-utils";
+import { camelize, capitalize, dash } from "../../utils/string-utils.js";
 import {
     copyEmptyTemplateFiles,
     copyFilter,
@@ -7,7 +7,7 @@ import {
     updatePackageDistFile,
     updatePackageFile,
     updateWebpackFile,
-} from "../../utils/template-utils";
+} from "../../utils/template-utils.js";
 import fs from "fs-extra";
 import path from "path";
 
@@ -125,7 +125,7 @@ async function updateReadmeFile(destPath: string, name: string, description: str
             `load${capitalizedName}Preset`
         ),
         readmeMiniDescriptionRegex =
-            /\[tsParticles\]\(https:\/\/github.com\/matteobruni\/tsparticles\) preset template\./g,
+            /\[tsParticles]\(https:\/\/github.com\/matteobruni\/tsparticles\) preset template\./g,
         replacedMiniDescriptionText = replacedFunctionNameText.replace(
             readmeMiniDescriptionRegex,
             `[tsParticles](https://github.com/matteobruni/tsparticles) preset ${name}.`
@@ -133,7 +133,7 @@ async function updateReadmeFile(destPath: string, name: string, description: str
         readmeUsageRegex = /preset: "template"/g,
         replacedUsageText = replacedMiniDescriptionText.replace(readmeUsageRegex, `preset: "${camelizedName}`),
         sampleImageRegex =
-            /!\[demo\]\(https:\/\/raw.githubusercontent.com\/tsparticles\/preset-template\/main\/images\/sample.png\)/g,
+            /!\[demo]\(https:\/\/raw.githubusercontent.com\/tsparticles\/preset-template\/main\/images\/sample.png\)/g,
         repoPath = repoUrl.includes("github.com")
             ? repoUrl.substring(repoUrl.indexOf("github.com/") + 11, repoUrl.indexOf(".git"))
             : "tsparticles/preset-template",
