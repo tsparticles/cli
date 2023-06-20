@@ -9,7 +9,7 @@ import path from "path";
 export async function buildDistFiles(basePath: string): Promise<boolean> {
     console.log("Build - started on dist files");
 
-    let res = false;
+    let res: boolean;
 
     try {
         const pkgInfo = await import(path.join(basePath, "package.json")),
@@ -37,8 +37,8 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
             "README.md",
             {
                 source: "package.dist.json",
-                destination: "package.json",
-            },
+                destination: "package.json"
+            }
         ];
 
         for (const file of rootFilesToCopy) {
@@ -70,6 +70,9 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
 
             await fs.writeFile(file.path, contents.replaceAll("__VERSION__", `"${pkgInfo.version}"`), "utf8");
         }
+
+        await fs.writeFile(path.join(distPath, "cjs", "package.json"), `{ "type": "commonjs" }`);
+        await fs.writeFile(path.join(distPath, "esm", "package.json"), `{ "type": "module" }`);
 
         res = true;
     } catch (e) {
