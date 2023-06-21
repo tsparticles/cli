@@ -1,4 +1,4 @@
-import { camelize, capitalize, dash } from "../../utils/string-utils.js";
+import { camelize, capitalize, dash } from "../../utils/string-utils";
 import {
     copyEmptyTemplateFiles,
     copyFilter,
@@ -7,7 +7,7 @@ import {
     updatePackageDistFile,
     updatePackageFile,
     updateWebpackFile,
-} from "../../utils/template-utils.js";
+} from "../../utils/template-utils";
 import fs from "fs-extra";
 import path from "path";
 

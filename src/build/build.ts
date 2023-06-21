@@ -1,12 +1,12 @@
-import { prettifyReadme, prettifySrc } from "./build-prettier.js";
+import { prettifyReadme, prettifySrc } from "./build-prettier";
 import { Command } from "commander";
-import { buildDistFiles } from "./build-distfiles.js";
-import { buildTS } from "./build-tsc.js";
-import { bundle } from "./build-bundle.js";
-import { clearDist } from "./build-clear.js";
+import { buildDistFiles } from "./build-distfiles";
+import { buildTS } from "./build-tsc";
+import { bundle } from "./build-bundle";
+import { clearDist } from "./build-clear";
 import fs from "fs-extra";
-import { getDistStats } from "./build-diststats.js";
-import { lint } from "./build-eslint.js";
+import { getDistStats } from "./build-diststats";
+import { lint } from "./build-eslint";
 import path from "path";
 
 const buildCommand = new Command("build");

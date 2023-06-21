@@ -1,7 +1,7 @@
 import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
-import { capitalize } from "../../utils/string-utils.js";
-import { createPresetTemplate } from "./create-preset.js";
+import { capitalize } from "../../utils/string-utils";
+import { createPresetTemplate } from "./create-preset";
 import { execSync } from "child_process";
 import fs from "fs-extra";
 import path from "path";

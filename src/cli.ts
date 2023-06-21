@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { buildCommand } from "./build/build.js";
-import { createCommand } from "./create/create.js";
+import { buildCommand } from "./build/build";
+import { createCommand } from "./create/create";
 import pkgInfo from "../package.json";
 import { program } from "commander";
 
