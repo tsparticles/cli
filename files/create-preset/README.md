@@ -40,9 +40,11 @@ A bundled script can also be used, this will include every needed plugin needed 
 Once the scripts are loaded you can set up `tsParticles` like this:
 
 ```javascript
-tsParticles.load("tsparticles", {
-  preset: "template",
-});
+(async () => {
+    await tsParticles.load("tsparticles", {
+        preset: "template",
+    });
+})();
 ```
 
 #### Customization
@@ -51,14 +53,16 @@ tsParticles.load("tsparticles", {
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
 ```javascript
-tsParticles.load("tsparticles", {
-  particles: {
-    shape: {
-      type: "square",
-    },
-  },
-  preset: "template",
-});
+(async () => {
+    await tsParticles.load("tsparticles", {
+        particles: {
+            shape: {
+                type: "square"
+            }
+        },
+        preset: "template"
+    });
+})();
 ```
 
 Like in the sample above, the circles will be replaced by squares.
@@ -71,19 +75,19 @@ This sample uses the class component syntax, but you can use hooks as well (if t
 
 ```javascript
 import Particles from "react-particles";
-import { Main } from "tsparticles";
+import { Engine } from "tsparticles-engine";
 import { loadTemplatePreset } from "tsparticles-preset-template";
 
 export class ParticlesContainer extends React.PureComponent<IProps> {
   // this customizes the component tsParticles installation
-  customInit(main: Main) {
+  async customInit(engine: Engine) {
     // this adds the preset to tsParticles, you can safely use the
-    loadTemplatePreset(main);
+    await loadTemplatePreset(engine);
   }
 
   render() {
     const options = {
-      preset: "template", // also "template" is accepted
+      preset: "template",
     };
 
     return <Particles options={options} init={this.customInit} />;
@@ -100,25 +104,25 @@ _The syntax for `Vue.js 2.x` and `3.x` is the same_
 ```
 
 ```js
-function particlesInit(main: Main) {
-  loadTemplatePreset(main);
+async function particlesInit(engine: Engine) {
+    await loadTemplatePreset(main);
 }
 ```
 
 ### Angular
 
 ```html
+
 <ng-particles
-  [id]="id"
-  [options]="particlesOptions"
-  (particlesLoaded)="particlesLoaded($event)"
-  (particlesInit)="particlesInit($event)"
+    [id]="id"
+    [options]="particlesOptions"
+    [particlesInit]="particlesInit"
 ></ng-particles>
 ```
 
 ```ts
-function particlesInit(main: Main): void {
-  loadTemplatePreset(main);
+async function particlesInit(engine: Engine): Promise<void> {
+    loadTemplatePreset(engine);
 }
 ```
 
@@ -129,12 +133,12 @@ function particlesInit(main: Main): void {
 <Particles
         id="tsparticles"
         url="{particlesUrl}"
-        on:particlesInit="{onParticlesInit}"
+        particlesInit="{particlesInit}"
 />
 ```
 
 ```js
-let onParticlesInit = (main) => {
-  loadTemplatePreset(main);
+let particlesInit = async (engine) => {
+    await loadTemplatePreset(engine);
 };
 ```
