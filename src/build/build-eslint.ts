@@ -12,10 +12,10 @@ export async function lint(ci: boolean): Promise<boolean> {
     try {
         const eslint = new ESLint({
             baseConfig: {
-                extends: ["@tsparticles/eslint-config"]
+                extends: ["@tsparticles/eslint-config"],
             },
             extensions: [".js", ".jsx", ".ts", ".tsx"],
-            fix: !ci
+            fix: !ci,
         });
 
         const results = await eslint.lintFiles(["src"]),
@@ -28,7 +28,7 @@ export async function lint(ci: boolean): Promise<boolean> {
 
         if (errors.length > 0) {
             const messages = errors.map(t =>
-                t.messages.map(m => `${t.filePath} (${m.line},${m.column}): ${m.message}`).join("\n")
+                t.messages.map(m => `${t.filePath} (${m.line},${m.column}): ${m.message}`).join("\n"),
             );
 
             throw new Error(messages.join("\n"));

@@ -15,7 +15,7 @@ export async function updatePackageFile(
     packageName: string,
     description: string,
     fileName: string,
-    repoUrl: string
+    repoUrl: string,
 ): Promise<void> {
     const packagePath = path.resolve(destPath, "package.json"),
         packageContents = await fs.readFile(packagePath, "utf-8"),
@@ -48,7 +48,7 @@ export async function updatePackageDistFile(
     packageName: string,
     description: string,
     fileName: string,
-    repoUrl: string
+    repoUrl: string,
 ): Promise<void> {
     const packagePath = path.resolve(destPath, "package.dist.json"),
         packageContents = await fs.readFile(packagePath, "utf-8"),
@@ -79,7 +79,7 @@ export async function updateWebpackFile(
     destPath: string,
     name: string,
     description: string,
-    fnName: string
+    fnName: string,
 ): Promise<void> {
     const webpackPath = path.resolve(destPath, "webpack.config.js"),
         webpack = await fs.readFile(webpackPath, "utf-8"),
@@ -102,7 +102,7 @@ export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
 
     await fs.copy(emptyPath, destPath, {
         overwrite: true,
-        filter: copyFilter
+        filter: copyFilter,
     });
 }
 
@@ -121,7 +121,7 @@ export function copyFilter(src: string): boolean {
  */
 export function runInstall(destPath: string): void {
     execSync("npm install", {
-        cwd: destPath
+        cwd: destPath,
     });
 }
 
@@ -131,6 +131,6 @@ export function runInstall(destPath: string): void {
  */
 export function runBuild(destPath: string): void {
     execSync("npm run build", {
-        cwd: destPath
+        cwd: destPath,
     });
 }
