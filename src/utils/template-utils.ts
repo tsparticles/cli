@@ -102,7 +102,7 @@ export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
 
     await fs.copy(emptyPath, destPath, {
         overwrite: true,
-        filter: copyFilter,
+        filter: copyFilter
     });
 }
 
@@ -112,11 +112,7 @@ export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
  * @returns true if the file should be copied
  */
 export function copyFilter(src: string): boolean {
-    if (src.endsWith("node_modules") || src.endsWith("dist")) {
-        return false;
-    }
-
-    return true;
+    return !(src.endsWith("node_modules") || src.endsWith("dist"));
 }
 
 /**
@@ -125,7 +121,7 @@ export function copyFilter(src: string): boolean {
  */
 export function runInstall(destPath: string): void {
     execSync("npm install", {
-        cwd: destPath,
+        cwd: destPath
     });
 }
 
@@ -135,6 +131,6 @@ export function runInstall(destPath: string): void {
  */
 export function runBuild(destPath: string): void {
     execSync("npm run build", {
-        cwd: destPath,
+        cwd: destPath
     });
 }

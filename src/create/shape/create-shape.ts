@@ -40,7 +40,7 @@ async function updateShapePackageFile(
     destPath: string,
     name: string,
     description: string,
-    repoUrl: string
+    repoUrl: string,
 ): Promise<void> {
     const camelizedName = camelize(camelize(name, "-"), " "),
         dashedName = dash(camelizedName);
@@ -50,7 +50,7 @@ async function updateShapePackageFile(
         `"tsparticles-shape-${dashedName}"`,
         description,
         `"tsparticles.shape.${camelizedName}.min.js"`,
-        repoUrl
+        repoUrl,
     );
 }
 
@@ -65,7 +65,7 @@ async function updateShapePackageDistFile(
     destPath: string,
     name: string,
     description: string,
-    repoUrl: string
+    repoUrl: string,
 ): Promise<void> {
     const camelizedName = camelize(camelize(name, "-"), " "),
         dashedName = dash(camelizedName);
@@ -75,7 +75,7 @@ async function updateShapePackageDistFile(
         `"tsparticles-shape-${dashedName}"`,
         description,
         `"tsparticles.shape.${camelizedName}.min.js"`,
-        repoUrl
+        repoUrl,
     );
 }
 
@@ -97,12 +97,12 @@ async function updateReadmeFile(destPath: string, name: string, description: str
         readmePackageNameRegex = /tsparticles-shape-template/g,
         replacedPackageNameText = replacedDescriptionText.replace(
             readmePackageNameRegex,
-            `tsparticles-shape-${dashedName}`
+            `tsparticles-shape-${dashedName}`,
         ),
         readmeFileNameRegex = /tsparticles\.shape\.template(\.bundle)?\.min\.js/g,
         replacedFileNameText = replacedPackageNameText.replace(
             readmeFileNameRegex,
-            `tsparticles.shape.${camelizedName}$1.min.js`
+            `tsparticles.shape.${camelizedName}$1.min.js`,
         ),
         readmeFunctionNameRegex = /loadTemplateShape/g,
         replacedFunctionNameText = replacedFileNameText.replace(readmeFunctionNameRegex, `load${capitalizedName}Shape`),
@@ -110,7 +110,7 @@ async function updateReadmeFile(destPath: string, name: string, description: str
             /\[tsParticles]\(https:\/\/github.com\/matteobruni\/tsparticles\) additional template shape\./g,
         replacedMiniDescriptionText = replacedFunctionNameText.replace(
             readmeMiniDescriptionRegex,
-            `[tsParticles](https://github.com/matteobruni/tsparticles) additional ${name} shape.`
+            `[tsParticles](https://github.com/matteobruni/tsparticles) additional ${name} shape.`,
         ),
         readmeUsageRegex = /shape\.type: "template"/g,
         replacedUsageText = replacedMiniDescriptionText.replace(readmeUsageRegex, `shape.type: "${camelizedName}`),
@@ -121,7 +121,7 @@ async function updateReadmeFile(destPath: string, name: string, description: str
             : "tsparticles/shape-template",
         replacedText = replacedUsageText.replace(
             sampleImageRegex,
-            `![demo](https://raw.githubusercontent.com/${repoPath}/main/images/sample.png)`
+            `![demo](https://raw.githubusercontent.com/${repoPath}/main/images/sample.png)`,
         );
 
     await fs.writeFile(readmePath, replacedText);
@@ -138,7 +138,7 @@ async function updateShapeWebpackFile(destPath: string, name: string, descriptio
         destPath,
         camelize(capitalize(capitalize(name, "-"), " ")),
         `tsParticles ${description} Shape`,
-        "loadParticlesShape"
+        "loadParticlesShape",
     );
 }
 
@@ -153,7 +153,7 @@ export async function createShapeTemplate(
     name: string,
     description: string,
     repoUrl: string,
-    destPath: string
+    destPath: string,
 ): Promise<void> {
     const sourcePath = path.resolve(__dirname, "..", "..", "..", "files", "create-shape");
 

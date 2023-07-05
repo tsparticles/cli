@@ -40,7 +40,7 @@ async function updatePluginPackageFile(
     destPath: string,
     name: string,
     description: string,
-    repoUrl: string
+    repoUrl: string,
 ): Promise<void> {
     const camelizedName = camelize(camelize(name, "-"), " "),
         dashedName = dash(camelizedName);
@@ -50,7 +50,7 @@ async function updatePluginPackageFile(
         `"tsparticles-plugin-${dashedName}"`,
         description,
         `"tsparticles.plugin.${camelizedName}.min.js"`,
-        repoUrl
+        repoUrl,
     );
 }
 
@@ -65,7 +65,7 @@ async function updatePluginPackageDistFile(
     destPath: string,
     name: string,
     description: string,
-    repoUrl: string
+    repoUrl: string,
 ): Promise<void> {
     const camelizedName = camelize(camelize(name, "-"), " "),
         dashedName = dash(camelizedName);
@@ -75,7 +75,7 @@ async function updatePluginPackageDistFile(
         `"tsparticles-plugin-${dashedName}"`,
         description,
         `"tsparticles.plugin.${camelizedName}.min.js"`,
-        repoUrl
+        repoUrl,
     );
 }
 
@@ -97,23 +97,23 @@ async function updateReadmeFile(destPath: string, name: string, description: str
         readmePackageNameRegex = /tsparticles-plugin-template/g,
         replacedPackageNameText = replacedDescriptionText.replace(
             readmePackageNameRegex,
-            `tsparticles-plugin-${dashedName}`
+            `tsparticles-plugin-${dashedName}`,
         ),
         readmeFileNameRegex = /tsparticles\.plugin\.template(\.bundle)?\.min\.js/g,
         replacedFileNameText = replacedPackageNameText.replace(
             readmeFileNameRegex,
-            `tsparticles.plugin.${camelizedName}$1.min.js`
+            `tsparticles.plugin.${camelizedName}$1.min.js`,
         ),
         readmeFunctionNameRegex = /loadTemplatePlugin/g,
         replacedFunctionNameText = replacedFileNameText.replace(
             readmeFunctionNameRegex,
-            `load${capitalizedName}Plugin`
+            `load${capitalizedName}Plugin`,
         ),
         readmeMiniDescriptionRegex =
             /\[tsParticles]\(https:\/\/github.com\/matteobruni\/tsparticles\) additional template plugin\./g,
         replacedMiniDescriptionText = replacedFunctionNameText.replace(
             readmeMiniDescriptionRegex,
-            `[tsParticles](https://github.com/matteobruni/tsparticles) additional ${name} plugin.`
+            `[tsParticles](https://github.com/matteobruni/tsparticles) additional ${name} plugin.`,
         ),
         readmeUsageRegex = /plugin\.type: "template"/g,
         replacedUsageText = replacedMiniDescriptionText.replace(readmeUsageRegex, `plugin.type: "${camelizedName}`),
@@ -124,7 +124,7 @@ async function updateReadmeFile(destPath: string, name: string, description: str
             : "tsparticles/plugin-template",
         replacedText = replacedUsageText.replace(
             sampleImageRegex,
-            `![demo](https://raw.githubusercontent.com/${repoPath}/main/images/sample.png)`
+            `![demo](https://raw.githubusercontent.com/${repoPath}/main/images/sample.png)`,
         );
 
     await fs.writeFile(readmePath, replacedText);
@@ -141,7 +141,7 @@ async function updatePluginWebpackFile(destPath: string, name: string, descripti
         destPath,
         camelize(capitalize(capitalize(name, "-"), " ")),
         `tsParticles ${description} Plugin`,
-        "loadParticlesPlugin"
+        "loadParticlesPlugin",
     );
 }
 
@@ -156,7 +156,7 @@ export async function createPluginTemplate(
     name: string,
     description: string,
     repoUrl: string,
-    destPath: string
+    destPath: string,
 ): Promise<void> {
     const sourcePath = path.resolve(__dirname, "..", "..", "..", "files", "create-plugin");
 

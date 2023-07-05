@@ -7,15 +7,15 @@ import { ESLint } from "eslint";
 export async function lint(ci: boolean): Promise<boolean> {
     console.log("ESLint - started on src");
 
-    let res = false;
+    let res: boolean;
 
     try {
         const eslint = new ESLint({
             baseConfig: {
-                extends: ["@tsparticles/eslint-config"],
+                extends: ["@tsparticles/eslint-config"]
             },
             extensions: [".js", ".jsx", ".ts", ".tsx"],
-            fix: !ci,
+            fix: !ci
         });
 
         const results = await eslint.lintFiles(["src"]),

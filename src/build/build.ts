@@ -15,14 +15,14 @@ buildCommand.description("Build the library using TypeScript");
 buildCommand.option(
     "-a, --all",
     "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",
-    true
+    true,
 );
 buildCommand.option("-b, --bundle", "Bundle the library using Webpack", false);
 buildCommand.option("-c, --clean", "Clean the dist folder", false);
 buildCommand.option(
     "--ci",
     "Do all build steps for CI, no fixing files, only checking if they are formatted correctly",
-    false
+    false,
 );
 buildCommand.option("-d, --dist", "Build the dist files", false);
 buildCommand.option("-l, --lint", "Lint the source files", false);

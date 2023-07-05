@@ -12,7 +12,7 @@ import prettier from "prettier";
 export async function prettifySrc(basePath: string, srcPath: string, ci: boolean): Promise<boolean> {
     console.log("Prettier - started on src");
 
-    let res = false;
+    let res: boolean;
 
     try {
         for await (const file of klaw(srcPath)) {
@@ -29,11 +29,11 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
             options.tabWidth = 4;
 
             if (ci) {
-                if (!prettier.check(contents, options)) {
+                if (!(await prettier.check(contents, options))) {
                     throw new Error(`${file.path} is not formatted correctly`);
                 }
             } else {
-                const formatted = prettier.format(contents, options);
+                const formatted = await prettier.format(contents, options);
 
                 await fs.writeFile(file.path, formatted, "utf8");
             }
@@ -59,7 +59,7 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
 export async function prettifyReadme(basePath: string, ci: boolean): Promise<boolean> {
     console.log("Prettier - started on README.md");
 
-    let res = false;
+    let res: boolean;
 
     try {
         const contents = await fs.readFile("README.md", "utf8"),
@@ -70,11 +70,11 @@ export async function prettifyReadme(basePath: string, ci: boolean): Promise<boo
         options.parser = "markdown";
 
         if (ci) {
-            if (!prettier.check(contents, options)) {
+            if (!(await prettier.check(contents, options))) {
                 throw new Error(`README.md is not formatted correctly`);
             }
         } else {
-            const formatted = prettier.format(contents, options);
+            const formatted = await prettier.format(contents, options);
 
             await fs.writeFile("README.md", formatted, "utf8");
         }
@@ -123,11 +123,11 @@ async function prettifyTraductions(basePath: string, ci: boolean): Promise<boole
                 options.parser = "markdown";
 
                 if (ci) {
-                    if (!prettier.check(contents, options)) {
+                    if (!(await prettier.check(contents, options))) {
                         throw new Error(`${file.path} is not formatted correctly`);
                     }
                 } else {
-                    const formatted = prettier.format(contents, options);
+                    const formatted = await prettier.format(contents, options);
 
                     await fs.writeFile(file.path, formatted, "utf8");
                 }
@@ -178,11 +178,11 @@ async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean): Prom
                 options.parser = "markdown";
 
                 if (ci) {
-                    if (!prettier.check(contents, options)) {
+                    if (!(await prettier.check(contents, options))) {
                         throw new Error(`${file.path} is not formatted correctly`);
                     }
                 } else {
-                    const formatted = prettier.format(contents, options);
+                    const formatted = await prettier.format(contents, options);
 
                     await fs.writeFile(file.path, formatted, "utf8");
                 }
