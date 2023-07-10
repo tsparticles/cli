@@ -5,6 +5,9 @@ module.exports = {
     parserOptions: {
         project: "tsconfig.json",
         tsconfigRootDir: path.join(__dirname, "src"),
-        sourceType: "module",
+        sourceType: "module"
     },
+    rules: {
+        "no-console": "off"
+    }
 };
