@@ -83,10 +83,10 @@ export async function updateWebpackFile(
 ): Promise<void> {
     const webpackPath = path.resolve(destPath, "webpack.config.js"),
         webpack = await fs.readFile(webpackPath, "utf-8"),
-        webpackDescriptionRegex = /tsParticles Empty Template/g,
-        replacedDescriptionText = webpack.replace(webpackDescriptionRegex, description),
-        webpackEntryRegex = /"template(\.bundle)?"/g,
-        replacedNameText = replacedDescriptionText.replace(webpackEntryRegex, `"${name}$1"`),
+        webpackDescriptionRegex = /"Empty"/g,
+        replacedDescriptionText = webpack.replace(webpackDescriptionRegex, `"${description}"`),
+        webpackEntryRegex = /"empty"/g,
+        replacedNameText = replacedDescriptionText.replace(webpackEntryRegex, `"${name}"`),
         webpackFunctionNameRegex = /loadParticlesTemplate/g,
         replacedFunctionNameText = replacedNameText.replace(webpackFunctionNameRegex, fnName);
 

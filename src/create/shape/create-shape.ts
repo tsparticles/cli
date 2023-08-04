@@ -70,7 +70,7 @@ async function updateShapePackageDistFile(
     const camelizedName = camelize(camelize(name, "-"), " "),
         dashedName = dash(camelizedName);
 
-    updatePackageDistFile(
+    await updatePackageDistFile(
         destPath,
         `"tsparticles-shape-${dashedName}"`,
         description,
@@ -137,7 +137,7 @@ async function updateShapeWebpackFile(destPath: string, name: string, descriptio
     await updateWebpackFile(
         destPath,
         camelize(capitalize(capitalize(name, "-"), " ")),
-        `tsParticles ${description} Shape`,
+        description,
         "loadParticlesShape",
     );
 }

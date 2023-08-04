@@ -85,7 +85,7 @@ async function updatePresetPackageDistFile(
     const camelizedName = camelize(camelize(name, "-"), " "),
         dashedName = dash(camelizedName);
 
-    updatePackageDistFile(
+    await updatePackageDistFile(
         destPath,
         `"tsparticles-preset-${dashedName}"`,
         description,
@@ -155,7 +155,7 @@ async function updatePresetWebpackFile(destPath: string, name: string, descripti
     await updateWebpackFile(
         destPath,
         camelize(capitalize(capitalize(name, "-"), " ")),
-        `tsParticles ${description} Preset`,
+        description,
         "loadParticlesPreset",
     );
 }

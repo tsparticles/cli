@@ -45,7 +45,7 @@ async function updatePluginPackageFile(
     const camelizedName = camelize(camelize(name, "-"), " "),
         dashedName = dash(camelizedName);
 
-    updatePackageFile(
+    await updatePackageFile(
         destPath,
         `"tsparticles-plugin-${dashedName}"`,
         description,
@@ -140,7 +140,7 @@ async function updatePluginWebpackFile(destPath: string, name: string, descripti
     await updateWebpackFile(
         destPath,
         camelize(capitalize(capitalize(name, "-"), " ")),
-        `tsParticles ${description} Plugin`,
+        description,
         "loadParticlesPlugin",
     );
 }

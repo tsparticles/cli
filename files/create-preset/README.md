@@ -21,8 +21,8 @@ Once installed you need one more script to be included in your page (or you can 
 from [jsDelivr](https://www.jsdelivr.com/package/npm/tsparticles-preset-template):
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@1/tsparticles.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tsparticles-preset-template@1/tsparticles.preset.template.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2/tsparticles.engine.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles-preset-template/tsparticles.preset.template.min.js"></script>
 ```
 
 This script **MUST** be placed after the `tsParticles` one.
@@ -32,7 +32,7 @@ This script **MUST** be placed after the `tsParticles` one.
 A bundled script can also be used, this will include every needed plugin needed by the preset.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/tsparticles-preset-template@1/tsparticles.preset.template.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles-preset-template/tsparticles.preset.template.bundle.min.js"></script>
 ```
 
 ### Usage

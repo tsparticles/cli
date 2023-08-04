@@ -14,7 +14,7 @@ const emptyProjectPkgPath = path.join(__dirname, "..", "files", "empty-project",
 
         const obj = JSON.parse(data);
 
-        obj["devDependencies"]["@tsparticles/cli"] = pkg.version;
+        obj["devDependencies"]["@tsparticles/cli"] = `^${pkg.version}`;
 
         const result = JSON.stringify(obj, undefined, 2);
 
