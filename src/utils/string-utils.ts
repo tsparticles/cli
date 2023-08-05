@@ -1,23 +1,30 @@
 /**
  * This function is used to capitalize a string.
  * @param str - the string to capitalize (e.g. "my-string" -\> "MyString")
- * @param split - the character used to split the string, if not provided the string will be considered a single word
+ * @param splits - the characters used to split the string, if not provided the string will be considered a single word
  * @returns the capitalized string
  */
-export function capitalize(str: string, split?: string): string {
-    const words = split ? str.split(split) : [str];
+export function capitalize(str: string, ...splits: string[]): string {
+    let res = str.replace(/./, c => c.toUpperCase());
 
-    return words.map(w => w.replace(/./, c => c.toUpperCase())).join("");
+    for (const split of splits) {
+        res = res
+            .split(split)
+            .map(w => w.replace(/./, c => c.toUpperCase()))
+            .join("");
+    }
+
+    return res;
 }
 
 /**
  * This function is used to camelcase a string.
  * @param str - the string to camelcase (e.g. "my-string" -\> "myString")
- * @param split - the character used to split the string, if not provided the string will be considered a single word
+ * @param splits - the characters used to split the string, if not provided the string will be considered a single word
  * @returns the camelized string
  */
-export function camelize(str: string, split?: string): string {
-    return capitalize(str, split).replace(/./, c => c.toLowerCase());
+export function camelize(str: string, ...splits: string[]): string {
+    return capitalize(str, ...splits).replace(/./, c => c.toLowerCase());
 }
 
 /**

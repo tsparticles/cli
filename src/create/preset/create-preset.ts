@@ -10,6 +10,7 @@ import {
 } from "../../utils/template-utils";
 import fs from "fs-extra";
 import path from "path";
+import { replaceTokensInFile } from "../../utils/file-utils";
 
 /**
  * Updates the bundle file with the correct function name
@@ -17,13 +18,17 @@ import path from "path";
  * @param name - The name of the project
  */
 async function updateBundleFile(destPath: string, name: string): Promise<void> {
-    const bundlePath = path.resolve(destPath, "src", "bundle.ts"),
-        bundle = await fs.readFile(bundlePath, "utf-8"),
-        capitalizedName = capitalize(capitalize(name, "-"), " "),
-        bundleRegex = /loadTemplatePreset/g,
-        replacedText = bundle.replace(bundleRegex, `load${capitalizedName}Preset`);
+    const capitalizedName = capitalize(name, "-", " ");
 
-    await fs.writeFile(bundlePath, replacedText);
+    await replaceTokensInFile({
+        path: path.resolve(destPath, "src", "bundle.ts"),
+        tokens: [
+            {
+                from: /loadTemplatePreset/g,
+                to: `load${capitalizedName}Preset`,
+            },
+        ],
+    });
 }
 
 /**
@@ -32,16 +37,22 @@ async function updateBundleFile(destPath: string, name: string): Promise<void> {
  * @param name - The name of the project
  */
 async function updateIndexFile(destPath: string, name: string): Promise<void> {
-    const indexPath = path.resolve(destPath, "src", "index.ts"),
-        index = await fs.readFile(indexPath, "utf-8"),
-        capitalizedName = capitalize(capitalize(name, "-"), " "),
-        camelizedName = camelize(capitalizedName),
-        indexFunctionRegex = /loadTemplatePreset/g,
-        replacedFuncText = index.replace(indexFunctionRegex, `load${capitalizedName}Preset`),
-        indexNameRegex = /"#template#"/g,
-        replacedNameText = replacedFuncText.replace(indexNameRegex, `"${camelizedName}"`);
+    const capitalizedName = capitalize(name, "-", " "),
+        camelizedName = camelize(capitalizedName);
 
-    await fs.writeFile(indexPath, replacedNameText);
+    await replaceTokensInFile({
+        path: path.resolve(destPath, "src", "index.ts"),
+        tokens: [
+            {
+                from: /loadTemplatePreset/g,
+                to: `load${capitalizedName}Preset`,
+            },
+            {
+                from: /"#template#"/g,
+                to: `"${camelizedName}"`,
+            },
+        ],
+    });
 }
 
 /**
@@ -57,14 +68,14 @@ async function updatePresetPackageFile(
     description: string,
     repoUrl: string,
 ): Promise<void> {
-    const camelizedName = camelize(camelize(name, "-"), " "),
+    const camelizedName = camelize(name, "-", " "),
         dashedName = dash(camelizedName);
 
-    updatePackageFile(
+    await updatePackageFile(
         destPath,
-        `"tsparticles-preset-${dashedName}"`,
+        `tsparticles-preset-${dashedName}`,
         description,
-        `"tsparticles.preset.${camelizedName}.min.js"`,
+        `tsparticles.preset.${camelizedName}.min.js`,
         repoUrl,
     );
 }
@@ -82,14 +93,14 @@ async function updatePresetPackageDistFile(
     description: string,
     repoUrl: string,
 ): Promise<void> {
-    const camelizedName = camelize(camelize(name, "-"), " "),
+    const camelizedName = camelize(name, "-", " "),
         dashedName = dash(camelizedName);
 
     await updatePackageDistFile(
         destPath,
-        `"tsparticles-preset-${dashedName}"`,
+        `tsparticles-preset-${dashedName}`,
         description,
-        `"tsparticles.preset.${camelizedName}.min.js"`,
+        `tsparticles.preset.${camelizedName}.min.js`,
         repoUrl,
     );
 }
@@ -102,47 +113,46 @@ async function updatePresetPackageDistFile(
  * @param repoUrl - The repository url
  */
 async function updateReadmeFile(destPath: string, name: string, description: string, repoUrl: string): Promise<void> {
-    const readmePath = path.resolve(destPath, "README.md"),
-        readme = await fs.readFile(readmePath, "utf-8"),
-        capitalizedName = capitalize(capitalize(name, "-"), " "),
+    const capitalizedName = capitalize(name, "-", " "),
         camelizedName = camelize(capitalizedName),
         dashedName = dash(camelizedName),
-        readmeDescriptionRegex = /tsParticles Template Preset/g,
-        replacedDescriptionText = readme.replace(readmeDescriptionRegex, `tsParticles ${description} Preset`),
-        readmePackageNameRegex = /tsparticles-preset-template/g,
-        replacedPackageNameText = replacedDescriptionText.replace(
-            readmePackageNameRegex,
-            `tsparticles-preset-${dashedName}`,
-        ),
-        readmeFileNameRegex = /tsparticles\.preset\.template(\.bundle)?\.min\.js/g,
-        replacedFileNameText = replacedPackageNameText.replace(
-            readmeFileNameRegex,
-            `tsparticles.preset.${camelizedName}$1.min.js`,
-        ),
-        readmeFunctionNameRegex = /loadTemplatePreset/g,
-        replacedFunctionNameText = replacedFileNameText.replace(
-            readmeFunctionNameRegex,
-            `load${capitalizedName}Preset`,
-        ),
-        readmeMiniDescriptionRegex =
-            /\[tsParticles]\(https:\/\/github.com\/matteobruni\/tsparticles\) preset template\./g,
-        replacedMiniDescriptionText = replacedFunctionNameText.replace(
-            readmeMiniDescriptionRegex,
-            `[tsParticles](https://github.com/matteobruni/tsparticles) preset ${name}.`,
-        ),
-        readmeUsageRegex = /preset: "template"/g,
-        replacedUsageText = replacedMiniDescriptionText.replace(readmeUsageRegex, `preset: "${camelizedName}`),
-        sampleImageRegex =
-            /!\[demo]\(https:\/\/raw.githubusercontent.com\/tsparticles\/preset-template\/main\/images\/sample.png\)/g,
         repoPath = repoUrl.includes("github.com")
             ? repoUrl.substring(repoUrl.indexOf("github.com/") + 11, repoUrl.indexOf(".git"))
-            : "tsparticles/preset-template",
-        replacedText = replacedUsageText.replace(
-            sampleImageRegex,
-            `![demo](https://raw.githubusercontent.com/${repoPath}/main/images/sample.png)`,
-        );
+            : "tsparticles/preset-template";
 
-    await fs.writeFile(readmePath, replacedText);
+    await replaceTokensInFile({
+        path: path.resolve(destPath, "README.md"),
+        tokens: [
+            {
+                from: /tsParticles Template Preset/g,
+                to: `tsParticles ${description} Preset`,
+            },
+            {
+                from: /tsparticles-preset-template/g,
+                to: `tsparticles-preset-${dashedName}`,
+            },
+            {
+                from: /tsparticles\.preset\.template(\.bundle)?\.min\.js/g,
+                to: `tsparticles.preset.${camelizedName}$1.min.js`,
+            },
+            {
+                from: /loadTemplatePreset/g,
+                to: `load${capitalizedName}Preset`,
+            },
+            {
+                from: /\[tsParticles]\(https:\/\/github.com\/matteobruni\/tsparticles\) preset template\./g,
+                to: `[tsParticles](https://github.com/matteobruni/tsparticles) preset ${name}.`,
+            },
+            {
+                from: /preset: "template"/g,
+                to: `preset: "${camelizedName}`,
+            },
+            {
+                from: /!\[demo]\(https:\/\/raw.githubusercontent.com\/tsparticles\/preset-template\/main\/images\/sample.png\)/g,
+                to: `![demo](https://raw.githubusercontent.com/${repoPath}/main/images/sample.png)`,
+            },
+        ],
+    });
 }
 
 /**
@@ -152,12 +162,7 @@ async function updateReadmeFile(destPath: string, name: string, description: str
  * @param description - The description of the project
  */
 async function updatePresetWebpackFile(destPath: string, name: string, description: string): Promise<void> {
-    await updateWebpackFile(
-        destPath,
-        camelize(capitalize(capitalize(name, "-"), " ")),
-        description,
-        "loadParticlesPreset",
-    );
+    await updateWebpackFile(destPath, camelize(capitalize(name, "-", " ")), description, "loadParticlesPreset");
 }
 
 /**
