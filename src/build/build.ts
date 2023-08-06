@@ -11,7 +11,7 @@ import path from "path";
 
 const buildCommand = new Command("build");
 
-buildCommand.description("Build the library using TypeScript");
+buildCommand.description("Build the tsParticles library using TypeScript");
 buildCommand.option(
     "-a, --all",
     "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",

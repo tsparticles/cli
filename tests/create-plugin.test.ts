@@ -6,7 +6,7 @@ import fs from "fs-extra";
 
 describe("create-plugin", async () => {
     it("should have created the plugin project", async () => {
-        const destDir = path.resolve(path.join(__dirname, "tests", "tmp-files", "foo-plugin"));
+        const destDir = path.resolve(path.join(__dirname, "tmp-files", "foo-plugin"));
 
         await createPluginTemplate("foo", "Foo", "", destDir);
 
@@ -18,7 +18,7 @@ describe("create-plugin", async () => {
     });
 
     it("should have created the plugin project, w/ repo", async () => {
-        const destDir = path.resolve(path.join(__dirname, "tests", "tmp-files", "bar-plugin"));
+        const destDir = path.resolve(path.join(__dirname, "tmp-files", "bar-plugin"));
 
         await createPluginTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
 

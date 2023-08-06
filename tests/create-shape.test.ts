@@ -6,7 +6,7 @@ import fs from "fs-extra";
 
 describe("create-shape", async () => {
     it("should have created the shape project", async () => {
-        const destDir = path.resolve(path.join(__dirname, "tests", "tmp-files", "foo-shape"));
+        const destDir = path.resolve(path.join(__dirname, "tmp-files", "foo-shape"));
 
         await createShapeTemplate("foo", "Foo", "", destDir);
 
@@ -18,7 +18,7 @@ describe("create-shape", async () => {
     });
 
     it("should have created the shape project, w/ repo", async () => {
-        const destDir = path.resolve(path.join(__dirname, "tests", "tmp-files", "bar-shape"));
+        const destDir = path.resolve(path.join(__dirname, "tmp-files", "bar-shape"));
 
         await createShapeTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
 
