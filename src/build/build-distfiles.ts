@@ -71,7 +71,7 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
             await fs.writeFile(file.path, contents.replaceAll("__VERSION__", `"${pkgInfo.version}"`), "utf8");
         }
 
-        /*for await (const file of klaw(path.join(distPath, "cjs"))) {
+        for await (const file of klaw(path.join(distPath, "cjs"))) {
             await fs.rename(file.path, file.path.replace(/\.js$/, ".cjs"));
         }
 
@@ -80,7 +80,7 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
         }
 
         await fs.writeFile(path.join(distPath, "cjs", "package.json"), `{ "type": "commonjs" }`);
-        await fs.writeFile(path.join(distPath, "esm", "package.json"), `{ "type": "module" }`);*/
+        await fs.writeFile(path.join(distPath, "esm", "package.json"), `{ "type": "module" }`);
 
         res = true;
     } catch (e) {
