@@ -81,6 +81,7 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
 
         await fs.writeFile(path.join(distPath, "cjs", "package.json"), `{ "type": "commonjs" }`);
         await fs.writeFile(path.join(distPath, "esm", "package.json"), `{ "type": "module" }`);
+        await fs.writeFile(path.join(distPath, "browser", "package.json"), `{ "type": "module" }`);
 
         res = true;
     } catch (e) {
