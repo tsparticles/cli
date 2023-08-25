@@ -54,6 +54,88 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
 /**
  * @param basePath -
  * @param ci -
+ * @returns true if the prettify package.json process was successful
+ */
+export async function prettifyPackageJson(basePath: string, ci: boolean): Promise<boolean> {
+    console.log("Prettier - started on package.json");
+
+    let res: boolean;
+
+    try {
+        const contents = await fs.readFile("package.json", "utf8"),
+            options = (await prettier.resolveConfig(basePath)) ?? {};
+
+        options.tabWidth = 2;
+        options.printWidth = 120;
+        options.endOfLine = "lf";
+        options.parser = "json";
+
+        if (ci) {
+            if (!(await prettier.check(contents, options))) {
+                throw new Error(`pacakge.json is not formatted correctly`);
+            }
+        } else {
+            const formatted = await prettier.format(contents, options);
+
+            await fs.writeFile("pacakge.json", formatted, "utf8");
+        }
+
+        res = true;
+    } catch (e) {
+        console.error(e);
+
+        res = false;
+    }
+
+    console.log("Prettier - done on pacakge.json");
+
+    return res;
+}
+
+/**
+ * @param basePath -
+ * @param ci -
+ * @returns true if the prettify package.dist.json process was successful
+ */
+export async function prettifyPackageDistJson(basePath: string, ci: boolean): Promise<boolean> {
+    console.log("Prettier - started on package.dist.json");
+
+    let res: boolean;
+
+    try {
+        const contents = await fs.readFile("package.dist.json", "utf8"),
+            options = (await prettier.resolveConfig(basePath)) ?? {};
+
+        options.tabWidth = 2;
+        options.printWidth = 120;
+        options.endOfLine = "lf";
+        options.parser = "json";
+
+        if (ci) {
+            if (!(await prettier.check(contents, options))) {
+                throw new Error(`package.dist.json is not formatted correctly`);
+            }
+        } else {
+            const formatted = await prettier.format(contents, options);
+
+            await fs.writeFile("pacakge.dist.json", formatted, "utf8");
+        }
+
+        res = true;
+    } catch (e) {
+        console.error(e);
+
+        res = false;
+    }
+
+    console.log("Prettier - done on pacakge.dist.json");
+
+    return res;
+}
+
+/**
+ * @param basePath -
+ * @param ci -
  * @returns true if the prettify readme process was successful
  */
 export async function prettifyReadme(basePath: string, ci: boolean): Promise<boolean> {

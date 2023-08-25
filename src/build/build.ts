@@ -1,4 +1,4 @@
-import { prettifyReadme, prettifySrc } from "./build-prettier";
+import { prettifyPackageDistJson, prettifyPackageJson, prettifyReadme, prettifySrc } from "./build-prettier";
 import { Command } from "commander";
 import { buildDistFiles } from "./build-distfiles";
 import { buildTS } from "./build-tsc";
@@ -74,6 +74,8 @@ buildCommand.action(async (argPath: string) => {
 
     if (canContinue && prettier) {
         canContinue = await prettifyReadme(basePath, ci);
+        canContinue = await prettifyPackageJson(basePath, ci);
+        canContinue = await prettifyPackageDistJson(basePath, ci);
     }
 
     if (canContinue && distfiles) {
