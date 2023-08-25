@@ -72,12 +72,12 @@ export async function prettifyPackageJson(basePath: string, ci: boolean): Promis
 
         if (ci) {
             if (!(await prettier.check(contents, options))) {
-                throw new Error(`pacakge.json is not formatted correctly`);
+                throw new Error(`package.json is not formatted correctly`);
             }
         } else {
             const formatted = await prettier.format(contents, options);
 
-            await fs.writeFile("pacakge.json", formatted, "utf8");
+            await fs.writeFile("package.json", formatted, "utf8");
         }
 
         res = true;
@@ -87,7 +87,7 @@ export async function prettifyPackageJson(basePath: string, ci: boolean): Promis
         res = false;
     }
 
-    console.log("Prettier - done on pacakge.json");
+    console.log("Prettier - done on package.json");
 
     return res;
 }
@@ -118,7 +118,7 @@ export async function prettifyPackageDistJson(basePath: string, ci: boolean): Pr
         } else {
             const formatted = await prettier.format(contents, options);
 
-            await fs.writeFile("pacakge.dist.json", formatted, "utf8");
+            await fs.writeFile("package.dist.json", formatted, "utf8");
         }
 
         res = true;
@@ -128,7 +128,7 @@ export async function prettifyPackageDistJson(basePath: string, ci: boolean): Pr
         res = false;
     }
 
-    console.log("Prettier - done on pacakge.dist.json");
+    console.log("Prettier - done on package.dist.json");
 
     return res;
 }
