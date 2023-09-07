@@ -15,7 +15,7 @@ buildCommand.description("Build the tsParticles library using TypeScript");
 buildCommand.option(
     "-a, --all",
     "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",
-    true,
+    false,
 );
 buildCommand.option("-b, --bundle", "Bundle the library using Webpack", false);
 buildCommand.option("-c, --clean", "Clean the dist folder", false);
@@ -33,7 +33,7 @@ buildCommand.argument("[path]", `Path to the project root folder, default is "sr
 buildCommand.action(async (argPath: string) => {
     const opts = buildCommand.opts(),
         ci = !!opts.ci,
-        all = !!opts.all,
+        all = !!opts.all || (!opts.bundle && !opts.clean && !opts.dist && !opts.lint && !opts.prettify && !opts.tsc),
         doBundle = all || !!opts.bundle,
         clean = all || !!opts.clean,
         distfiles = all || !!opts.dist,
