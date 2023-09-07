@@ -94,10 +94,10 @@ export async function prettifyPackageJson(basePath: string, ci: boolean): Promis
 
 /**
  * @param basePath -
- * @param ci -
+ * @param _ci -
  * @returns true if the prettify package.dist.json process was successful
  */
-export async function prettifyPackageDistJson(basePath: string, ci: boolean): Promise<boolean> {
+export async function prettifyPackageDistJson(basePath: string, _ci: boolean): Promise<boolean> {
     console.log("Prettier - started on package.dist.json");
 
     let res: boolean;
@@ -111,15 +111,17 @@ export async function prettifyPackageDistJson(basePath: string, ci: boolean): Pr
         options.endOfLine = "lf";
         options.parser = "json";
 
-        if (ci) {
+        // TODO: disabled this check until "prettier-plugin-multiline-arrays" package is compatible with Prettier 3.0.0
+
+        /*if (ci) {
             if (!(await prettier.check(contents, options))) {
                 throw new Error(`package.dist.json is not formatted correctly`);
             }
-        } else {
-            const formatted = await prettier.format(contents, options);
+        } else {*/
+        const formatted = await prettier.format(contents, options);
 
-            await fs.writeFile("package.dist.json", formatted, "utf8");
-        }
+        await fs.writeFile("package.dist.json", formatted, "utf8");
+        //}
 
         res = true;
     } catch (e) {
