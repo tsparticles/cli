@@ -1,15 +1,10 @@
-import type { IDelta, IShapeDrawer, Particle } from "@tsparticles/engine";
+import type { IShapeDrawData, IShapeDrawer } from "@tsparticles/engine";
 
 export class ShapeDrawer implements IShapeDrawer {
-    draw(_context: CanvasRenderingContext2D,
-         _particle: Particle,
-         _radius: number,
-         _opacity: number,
-         _delta: IDelta,
-         _pixelRatio: number): void {
+    draw(_data: IShapeDrawData): void {
         // draw the particle using the context
         // which is already centered in the particle position
-        // colors are already handles, just draw the shape
+        // colors are already handled, just draw the shape
         // the bounds are -radius to radius
         // delta is the frame time difference between the last frame and this one, in ms, use it for animated shapes
         // pixelRatio is the canvas ratio used by the tsParticles instance, you may need it for density-independent shapes
