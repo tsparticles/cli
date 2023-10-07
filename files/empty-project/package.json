@@ -83,7 +83,7 @@
   "prettier": "@tsparticles/prettier-config",
   "devDependencies": {
     "@babel/core": "^7.23.0",
-    "@tsparticles/cli": "^2.0.0-beta.8",
+    "@tsparticles/cli": "^2.0.0-beta.9",
     "@tsparticles/eslint-config": "^2.0.0-beta.2",
     "@tsparticles/prettier-config": "^2.0.0-beta.2",
     "@tsparticles/tsconfig": "^2.0.0-beta.1",
