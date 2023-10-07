@@ -1,5 +1,5 @@
 import { loadTemplatePreset } from ".";
-import { tsParticles } from "tsparticles-engine";
+import { tsParticles } from "@tsparticles/engine";
 
 loadTemplatePreset(tsParticles);
 

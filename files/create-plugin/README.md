@@ -54,7 +54,7 @@ $ yarn add tsparticles-plugin-template
 Then you need to import it in the app, like this:
 
 ```javascript
-const { tsParticles } = require("tsparticles-engine");
+const { tsParticles } = require("@tsparticles/engine");
 const { loadTemplatePlugin } = require("tsparticles-plugin-template");
 
 (async () => {
@@ -65,7 +65,7 @@ const { loadTemplatePlugin } = require("tsparticles-plugin-template");
 or
 
 ```javascript
-import { tsParticles } from "tsparticles-engine";
+import { tsParticles } from "@tsparticles/engine";
 import { loadTemplatePlugin } from "tsparticles-plugin-template";
 
 (async () => {

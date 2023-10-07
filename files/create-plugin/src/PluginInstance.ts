@@ -1,4 +1,4 @@
-import { type Container, type Engine, type IContainerPlugin } from "tsparticles-engine";
+import { type Container, type Engine, type IContainerPlugin } from "@tsparticles/engine";
 
 export class PluginInstance implements IContainerPlugin {
     private readonly _container;

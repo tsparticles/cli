@@ -1,4 +1,4 @@
-import type { Container, Engine, IPlugin, ISourceOptions, Options } from "tsparticles-engine";
+import type { Container, Engine, IPlugin, ISourceOptions, Options } from "@tsparticles/engine";
 import { PluginInstance } from "./PluginInstance";
 
 /**

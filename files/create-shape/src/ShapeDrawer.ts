@@ -1,4 +1,4 @@
-import type { IDelta, IShapeDrawer, Particle } from "tsparticles-engine";
+import type { IDelta, IShapeDrawer, Particle } from "@tsparticles/engine";
 
 export class ShapeDrawer implements IShapeDrawer {
     draw(_context: CanvasRenderingContext2D,
