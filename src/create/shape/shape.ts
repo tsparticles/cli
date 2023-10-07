@@ -11,7 +11,7 @@ shapeCommand.description("Create a new tsParticles shape");
 shapeCommand.argument("<destination>", "Destination folder");
 shapeCommand.action(async (destination: string) => {
     const destPath = await getDestinationDir(destination),
-        repoUrl = getRepositoryUrl();
+        repoUrl = await getRepositoryUrl();
 
     const initialName = destPath.split(path.sep).pop(),
         questions: PromptObject[] = [

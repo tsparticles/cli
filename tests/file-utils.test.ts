@@ -90,8 +90,8 @@ describe("file-utils", async () => {
     });
 
     describe("get repository url", () => {
-        it("should return the repository url", () => {
-            expect(getRepositoryUrl()).to.be.not.equal("");
+        it("should return the repository url", async () => {
+            expect(await getRepositoryUrl()).to.be.not.equal("");
         });
     });
 

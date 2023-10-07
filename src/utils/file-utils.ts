@@ -1,5 +1,6 @@
-import { execSync } from "child_process";
+import { exec } from "child_process";
 import fs from "fs-extra";
+import { lookpath } from "lookpath";
 import path from "path";
 
 export type ReplaceTokensOptions = {
@@ -66,10 +67,20 @@ export async function getDestinationDir(destination: string): Promise<string> {
 /**
  * @returns the repository URL
  */
-export function getRepositoryUrl(): string {
-    try {
-        return execSync("git config --get remote.origin.url").toString();
-    } catch {
+export async function getRepositoryUrl(): Promise<string> {
+    if (!(await lookpath("git"))) {
         return "";
     }
+
+    return new Promise<string>((resolve, reject) => {
+        exec("git config --get remote.origin.url", (error, stdout) => {
+            if (error) {
+                reject(error);
+
+                return;
+            }
+
+            resolve(stdout.toString());
+        });
+    });
 }

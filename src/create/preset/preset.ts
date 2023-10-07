@@ -11,7 +11,7 @@ presetCommand.description("Create a new tsParticles preset");
 presetCommand.argument("<destination>", "Destination folder");
 presetCommand.action(async (destination: string) => {
     const destPath = await getDestinationDir(destination),
-        repoUrl = getRepositoryUrl();
+        repoUrl = await getRepositoryUrl();
 
     const initialName = destPath.split(path.sep).pop(),
         questions: PromptObject[] = [

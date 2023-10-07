@@ -11,7 +11,7 @@ pluginCommand.description("Create a new tsParticles plugin");
 pluginCommand.argument("<destination>", "Destination folder");
 pluginCommand.action(async (destination: string) => {
     const destPath = await getDestinationDir(destination),
-        repoUrl = getRepositoryUrl();
+        repoUrl = await getRepositoryUrl();
 
     const initialName = destPath.split(path.sep).pop(),
         questions: PromptObject[] = [

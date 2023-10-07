@@ -174,6 +174,6 @@ export async function createShapeTemplate(
     await updateReadmeFile(destPath, name, description, repoUrl);
     await updateShapeWebpackFile(destPath, name, description);
 
-    runInstall(destPath);
-    runBuild(destPath);
+    await runInstall(destPath);
+    await runBuild(destPath);
 }

@@ -175,6 +175,6 @@ export async function createPluginTemplate(
     await updateReadmeFile(destPath, name, description, repoUrl);
     await updatePluginWebpackFile(destPath, name, description);
 
-    runInstall(destPath);
-    runBuild(destPath);
+    await runInstall(destPath);
+    await runBuild(destPath);
 }

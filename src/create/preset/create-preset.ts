@@ -194,6 +194,6 @@ export async function createPresetTemplate(
     await updateReadmeFile(destPath, name, description, repoUrl);
     await updatePresetWebpackFile(destPath, name, description);
 
-    runInstall(destPath);
-    runBuild(destPath);
+    await runInstall(destPath);
+    await runBuild(destPath);
 }
