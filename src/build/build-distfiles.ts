@@ -12,13 +12,18 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
     let res: boolean;
 
     try {
-        const pkgInfo = await import(path.join(basePath, "package.json")),
+        const pkgInfo = (await import(path.join(basePath, "package.json"))) as {
+                dependencies?: Record<string, string>;
+                peerDependencies?: Record<string, string>;
+                publishConfig?: { directory?: string };
+                version: string;
+            },
             libPackage = path.join(basePath, "package.dist.json"),
-            distPath = path.join(basePath, pkgInfo.publishConfig?.directory || "dist");
+            distPath = path.join(basePath, pkgInfo.publishConfig?.directory ?? "dist");
 
         const data = await fs.readFile(libPackage),
             text = data.toString(),
-            libObj = JSON.parse(text);
+            libObj = JSON.parse(text) as Record<string, unknown>;
 
         libObj.version = pkgInfo.version;
 
@@ -71,13 +76,13 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
             await fs.writeFile(file.path, contents.replaceAll("__VERSION__", `"${pkgInfo.version}"`), "utf8");
         }
 
-        /*for await (const file of klaw(path.join(distPath, "cjs"))) {
+        /* for await (const file of klaw(path.join(distPath, "cjs"))) {
             await fs.rename(file.path, file.path.replace(/\.js$/, ".cjs"));
         }
 
         for await (const file of klaw(path.join(distPath, "esm"))) {
             await fs.rename(file.path, file.path.replace(/\.js$/, ".mjs"));
-        }*/
+        } */
 
         await fs.writeFile(path.join(distPath, "cjs", "package.json"), `{ "type": "commonjs" }`);
         await fs.writeFile(path.join(distPath, "esm", "package.json"), `{ "type": "module" }`);

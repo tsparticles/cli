@@ -113,15 +113,15 @@ export async function prettifyPackageDistJson(basePath: string, _ci: boolean): P
 
         // TODO: disabled this check until "prettier-plugin-multiline-arrays" package is compatible with Prettier 3.0.0
 
-        /*if (ci) {
+        /* if (ci) {
             if (!(await prettier.check(contents, options))) {
                 throw new Error(`package.dist.json is not formatted correctly`);
             }
-        } else {*/
+        } else { */
         const formatted = await prettier.format(contents, options);
 
         await fs.writeFile("package.dist.json", formatted, "utf8");
-        //}
+        // }
 
         res = true;
     } catch (e) {

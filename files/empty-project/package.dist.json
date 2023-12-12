@@ -72,6 +72,6 @@
   "module": "index.js",
   "types": "index.d.ts",
   "dependencies": {
-    "@tsparticles/engine": "^3.0.0-beta.3"
+    "@tsparticles/engine": "^3.0.2"
   }
 }

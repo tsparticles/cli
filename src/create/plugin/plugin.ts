@@ -27,7 +27,7 @@ pluginCommand.action(async (destination: string) => {
                 name: "description",
                 message: "What is the description of the plugin?",
                 validate: (value: string) => (value ? true : "The description can't be empty"),
-                initial: capitalize(initialName || ""),
+                initial: capitalize(initialName ?? ""),
             },
             {
                 type: "text",
@@ -37,7 +37,11 @@ pluginCommand.action(async (destination: string) => {
             },
         ];
 
-    const { name, description, repositoryUrl } = await prompts(questions);
+    const { name, description, repositoryUrl } = (await prompts(questions)) as {
+        description: string;
+        name: string;
+        repositoryUrl: string;
+    };
 
     await createPluginTemplate(name.trim(), description.trim(), repositoryUrl.trim(), destPath);
 });

@@ -57,7 +57,7 @@ async function getFolderStats(folderPath: string, bundlePath?: string): Promise<
 export async function getDistStats(basePath: string): Promise<IDistStats> {
     const distFolder = path.join(basePath, "dist"),
         pkgInfo = (await fs.exists(path.join(distFolder, "package.json")))
-            ? await import(path.join(distFolder, "package.json"))
+            ? ((await import(path.join(distFolder, "package.json"))) as { jsdelivr?: string })
             : {},
         bundlePath =
             (await fs.exists(distFolder)) && pkgInfo.jsdelivr

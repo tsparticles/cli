@@ -11,12 +11,12 @@ export async function bundle(basePath: string): Promise<boolean> {
     let res = false;
 
     try {
-        const options = await import(path.join(basePath, "webpack.config.js"));
+        const options = (await import(path.join(basePath, "webpack.config.js"))) as { default: webpack.Configuration };
 
         res = await new Promise<boolean>((resolve, reject) => {
             webpack(options.default, (err, stats) => {
                 if (err) {
-                    console.error(err.stack || err);
+                    console.error(err.stack ?? err);
 
                     reject(err);
 

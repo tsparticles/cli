@@ -3,15 +3,15 @@ import fs from "fs-extra";
 import { lookpath } from "lookpath";
 import path from "path";
 
-export type ReplaceTokensOptions = {
+export interface ReplaceTokensOptions {
     path: string;
     tokens: ReplaceTokensData[];
-};
+}
 
-export type ReplaceTokensData = {
+export interface ReplaceTokensData {
     from: string | RegExp;
     to: string;
-};
+}
 
 /**
  *
