@@ -3,11 +3,11 @@ import path from "path";
 import ts from "typescript";
 
 const enum ExitCodes {
-    OK,
-    EmitErrors,
-    NoDataOrOptions,
-    NoOptions,
-    ParseError,
+    OK = 0,
+    EmitErrors = 1,
+    NoDataOrOptions = 2,
+    NoOptions = 3,
+    ParseError = 4,
 }
 
 /**
