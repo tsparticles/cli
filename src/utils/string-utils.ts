@@ -33,7 +33,9 @@ export function camelize(str: string, ...splits: string[]): string {
  * @returns the dashed string
  */
 export function dash(str: string): string {
-    const dashed = str.replace(/([A-Z])/g, g => `-${g[0].toLowerCase()}`);
+    const index = 0,
+        dashed = str.replace(/([A-Z])/g, g => `-${g[index].toLowerCase()}`),
+        startPos = 1;
 
-    return dashed.startsWith("-") ? dashed.substring(1) : dashed;
+    return dashed.startsWith("-") ? dashed.substring(startPos) : dashed;
 }

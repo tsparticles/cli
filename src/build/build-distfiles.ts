@@ -33,7 +33,9 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
             libObj.peerDependencies = JSON.parse(JSON.stringify(pkgInfo.peerDependencies).replaceAll("workspace:", ""));
         }
 
-        fs.writeFileSync(libPackage, `${JSON.stringify(libObj, undefined, 2)}\n`, "utf8");
+        const jsonIndent = 2;
+
+        fs.writeFileSync(libPackage, `${JSON.stringify(libObj, undefined, jsonIndent)}\n`, "utf8");
 
         console.log(`package.dist.json updated successfully to version ${pkgInfo.version}`);
 

@@ -89,7 +89,8 @@ buildCommand.action(async (argPath: string) => {
     const newStats = await getDistStats(basePath),
         diffSize = newStats.totalSize - oldStats.totalSize,
         bundleDiffSize = newStats.bundleSize - oldStats.bundleSize,
-        bundleSizeIncreased = bundleDiffSize > 0,
+        minSize = 0,
+        bundleSizeIncreased = bundleDiffSize > minSize,
         outputFunc = bundleSizeIncreased ? console.warn : console.info,
         texts = [
             !bundleDiffSize
@@ -99,7 +100,7 @@ buildCommand.action(async (argPath: string) => {
                   } (${Math.abs(bundleDiffSize)}B)`,
             !diffSize
                 ? "Size unchanged"
-                : `Size ${diffSize > 0 ? "increased" : "decreased"} from ${oldStats.totalSize} to ${
+                : `Size ${diffSize > minSize ? "increased" : "decreased"} from ${oldStats.totalSize} to ${
                       newStats.totalSize
                   } (${Math.abs(diffSize)}B)`,
             `Files count changed from ${oldStats.totalFiles} to ${newStats.totalFiles} (${

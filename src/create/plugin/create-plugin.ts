@@ -98,8 +98,13 @@ async function updateReadmeFile(destPath: string, name: string, description: str
         capitalizedName = capitalize(name, "-", " "),
         camelizedName = camelize(capitalizedName),
         dashedName = dash(camelizedName),
-        repoPath = repoUrl.includes("github.com")
-            ? repoUrl.substring(repoUrl.indexOf("github.com/") + 11, repoUrl.indexOf(".git"))
+        stringSearch = "github.com",
+        trailingSlashSearch = "github.com/",
+        repoPath = repoUrl.includes(stringSearch)
+            ? repoUrl.substring(
+                  repoUrl.indexOf(trailingSlashSearch) + trailingSlashSearch.length,
+                  repoUrl.indexOf(".git"),
+              )
             : "tsparticles/plugin-template";
 
     await replaceTokensInFile({

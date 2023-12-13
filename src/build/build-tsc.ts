@@ -2,6 +2,14 @@ import fs from "fs-extra";
 import path from "path";
 import ts from "typescript";
 
+const enum ExitCodes {
+    OK,
+    EmitErrors,
+    NoDataOrOptions,
+    NoOptions,
+    ParseError,
+}
+
 /**
  * @param basePath -
  * @param file -
@@ -104,7 +112,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
     }
 
     if (!data && !options) {
-        return 2;
+        return ExitCodes.NoDataOrOptions;
     }
 
     if (!options && data) {
@@ -112,13 +120,13 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
     }
 
     if (!options) {
-        return 3;
+        return ExitCodes.NoOptions;
     }
 
     const parsed = ts.parseJsonConfigFileContent(options, ts.sys, basePath);
 
     if (!parsed) {
-        return 4;
+        return ExitCodes.ParseError;
     }
 
     const program = ts.createProgram(parsed.fileNames, parsed.options),
@@ -131,16 +139,21 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
         failed = failed || diagnostic.category === ts.DiagnosticCategory.Error;
 
         if (diagnostic.file) {
-            const { line, character } = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start ?? 0),
-                message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+            const startingPos = 0,
+                { line, character } = ts.getLineAndCharacterOfPosition(
+                    diagnostic.file,
+                    diagnostic.start ?? startingPos,
+                ),
+                message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"),
+                increment = 1;
 
-            console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
+            console.log(`${diagnostic.file.fileName} (${line + increment},${character + increment}): ${message}`);
         } else {
             console.log(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
         }
     });
 
-    const exitCode = emitResult.emitSkipped || failed ? 1 : 0;
+    const exitCode = emitResult.emitSkipped || failed ? ExitCodes.EmitErrors : ExitCodes.OK;
 
     console.log(`TSC for ${type} done with exit code: '${exitCode}'.`);
 

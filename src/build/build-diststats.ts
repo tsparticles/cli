@@ -28,10 +28,12 @@ async function getFolderStats(folderPath: string, bundlePath?: string): Promise<
     const dir = await fs.promises.opendir(folderPath);
 
     for await (const dirent of dir) {
+        const increment = 1;
+
         if (dirent.isDirectory()) {
             const subDirStats = await getFolderStats(path.join(folderPath, dirent.name), bundlePath);
 
-            stats.totalFolders += subDirStats.totalFolders + 1;
+            stats.totalFolders += subDirStats.totalFolders + increment;
             stats.totalFiles += subDirStats.totalFiles;
             stats.totalSize += subDirStats.totalSize;
         } else {
