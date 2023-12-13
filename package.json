@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/cli",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "MIT",
   "bin": {
     "tsparticles-cli": "dist/cli.js"
