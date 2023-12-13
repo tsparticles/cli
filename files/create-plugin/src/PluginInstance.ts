@@ -10,6 +10,7 @@ export class PluginInstance implements IContainerPlugin {
     }
 
     async init(): Promise<void> {
-        // add your plugin initialization here
+        // add your plugin initialization here, replace the empty promise
+        return await Promise.resolve();
     }
 }

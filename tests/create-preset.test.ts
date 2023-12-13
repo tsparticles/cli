@@ -4,7 +4,7 @@ import { createPresetTemplate } from "../src/create/preset/create-preset";
 import path from "path";
 import fs from "fs-extra";
 
-describe("create-plugin", async () => {
+describe("create-preset", async () => {
     it("should have created the preset project", async () => {
         const destDir = path.resolve(path.join(__dirname, "tmp-files", "foo-preset"));
 
