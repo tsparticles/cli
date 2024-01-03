@@ -12,8 +12,8 @@ dependencies:
     specifier: ^2.0.0
     version: 2.0.1
   '@tsparticles/tsconfig':
-    specifier: ^1.14.0
-    version: 1.14.0
+    specifier: ^2.0.0
+    version: 2.0.1
   '@tsparticles/webpack-plugin':
     specifier: ^2.0.0
     version: 2.0.4
@@ -1784,10 +1784,10 @@ packages:
       prettier-plugin-multiline-arrays: 3.0.1(prettier@3.1.1)
     dev: false
 
-  /@tsparticles/tsconfig@1.14.0:
-    resolution: {integrity: sha512-/4Lyy0v55QtWmgzt/oi/wRFXyJGdCY1DLGmqbUNpdWm+URFnADENd1y4kEvuyPEvUKgoU6BxztdYmHZ05EOYjg==}
+  /@tsparticles/tsconfig@2.0.1:
+    resolution: {integrity: sha512-kZPJavtpDvvOCUXrM/SFBycL3dlmAa8kxBx1FQRaRY7VIuD6lVXl0/HxzyBuPXtiqq6tr8teZg0pCLfApafNEA==}
     dependencies:
-      typescript: 5.1.6
+      typescript: 5.3.3
     dev: false
 
   /@tsparticles/webpack-plugin@2.0.4:

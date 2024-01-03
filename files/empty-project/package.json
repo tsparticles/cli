@@ -86,7 +86,7 @@
     "@tsparticles/cli": "^2.0.0",
     "@tsparticles/eslint-config": "^1.19.0",
     "@tsparticles/prettier-config": "^2.0.0",
-    "@tsparticles/tsconfig": "^1.14.0",
+    "@tsparticles/tsconfig": "^2.0.0",
     "@tsparticles/webpack-plugin": "^2.0.0",
     "@types/webpack-env": "^1.18.1",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
