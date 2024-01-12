@@ -1,5 +1,6 @@
-import { execSync } from "child_process";
+import { exec } from "child_process";
 import fs from "fs-extra";
+import { lookpath } from "lookpath";
 import path from "path";
 import { replaceTokensInFile } from "./file-utils";
 
@@ -151,9 +152,27 @@ export function copyFilter(src: string): boolean {
  * Runs npm install in the given path
  * @param destPath - The path where the project will be created
  */
-export function runInstall(destPath: string): void {
-    execSync("npm install", {
-        cwd: destPath,
+export async function runInstall(destPath: string): Promise<void> {
+    if (!(await lookpath("npm"))) {
+        return;
+    }
+
+    return new Promise((resolve, reject) => {
+        exec(
+            "npm install",
+            {
+                cwd: destPath,
+            },
+            error => {
+                if (error) {
+                    reject(error);
+
+                    return;
+                }
+
+                resolve();
+            },
+        );
     });
 }
 
@@ -161,8 +180,26 @@ export function runInstall(destPath: string): void {
  * Runs npm run build in the given path
  * @param destPath - The path where the project will be build
  */
-export function runBuild(destPath: string): void {
-    execSync("npm run build", {
-        cwd: destPath,
+export async function runBuild(destPath: string): Promise<void> {
+    if (!(await lookpath("npm"))) {
+        return;
+    }
+
+    return new Promise((resolve, reject) => {
+        exec(
+            "npm run build",
+            {
+                cwd: destPath,
+            },
+            error => {
+                if (error) {
+                    reject(error);
+
+                    return;
+                }
+
+                resolve();
+            },
+        );
     });
 }

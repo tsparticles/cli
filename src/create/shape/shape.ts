@@ -11,7 +11,7 @@ shapeCommand.description("Create a new tsParticles shape");
 shapeCommand.argument("<destination>", "Destination folder");
 shapeCommand.action(async (destination: string) => {
     const destPath = await getDestinationDir(destination),
-        repoUrl = getRepositoryUrl();
+        repoUrl = await getRepositoryUrl();
 
     const initialName = destPath.split(path.sep).pop(),
         questions: PromptObject[] = [
@@ -27,7 +27,7 @@ shapeCommand.action(async (destination: string) => {
                 name: "description",
                 message: "What is the description of the shape?",
                 validate: (value: string) => (value ? true : "The description can't be empty"),
-                initial: capitalize(initialName || ""),
+                initial: capitalize(initialName ?? ""),
             },
             {
                 type: "text",
@@ -37,7 +37,11 @@ shapeCommand.action(async (destination: string) => {
             },
         ];
 
-    const { name, description, repositoryUrl } = await prompts(questions);
+    const { name, description, repositoryUrl } = (await prompts(questions)) as {
+        description: string;
+        name: string;
+        repositoryUrl: string;
+    };
 
     await createShapeTemplate(name.trim(), description.trim(), repositoryUrl.trim(), destPath);
 });

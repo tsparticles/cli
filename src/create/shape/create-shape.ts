@@ -97,8 +97,13 @@ async function updateReadmeFile(destPath: string, name: string, description: str
     const capitalizedName = capitalize(name, "-", " "),
         camelizedName = camelize(capitalizedName),
         dashedName = dash(camelizedName),
-        repoPath = repoUrl.includes("github.com")
-            ? repoUrl.substring(repoUrl.indexOf("github.com/") + 11, repoUrl.indexOf(".git"))
+        stringSearch = "github.com",
+        trailingSlashSearch = "github.com/",
+        repoPath = repoUrl.includes(stringSearch)
+            ? repoUrl.substring(
+                  repoUrl.indexOf(trailingSlashSearch) + trailingSlashSearch.length,
+                  repoUrl.indexOf(".git"),
+              )
             : "tsparticles/shape-template";
 
     await replaceTokensInFile({
@@ -174,6 +179,6 @@ export async function createShapeTemplate(
     await updateReadmeFile(destPath, name, description, repoUrl);
     await updateShapeWebpackFile(destPath, name, description);
 
-    runInstall(destPath);
-    runBuild(destPath);
+    await runInstall(destPath);
+    await runBuild(destPath);
 }

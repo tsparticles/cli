@@ -1,4 +1,4 @@
-import { prettifyReadme, prettifySrc } from "./build-prettier";
+import { prettifyPackageDistJson, prettifyPackageJson, prettifyReadme, prettifySrc } from "./build-prettier";
 import { Command } from "commander";
 import { buildDistFiles } from "./build-distfiles";
 import { buildTS } from "./build-tsc";
@@ -15,7 +15,7 @@ buildCommand.description("Build the tsParticles library using TypeScript");
 buildCommand.option(
     "-a, --all",
     "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",
-    true,
+    false,
 );
 buildCommand.option("-b, --bundle", "Bundle the library using Webpack", false);
 buildCommand.option("-c, --clean", "Clean the dist folder", false);
@@ -33,7 +33,7 @@ buildCommand.argument("[path]", `Path to the project root folder, default is "sr
 buildCommand.action(async (argPath: string) => {
     const opts = buildCommand.opts(),
         ci = !!opts.ci,
-        all = !!opts.all,
+        all = !!opts.all || (!opts.bundle && !opts.clean && !opts.dist && !opts.lint && !opts.prettify && !opts.tsc),
         doBundle = all || !!opts.bundle,
         clean = all || !!opts.clean,
         distfiles = all || !!opts.dist,
@@ -74,6 +74,8 @@ buildCommand.action(async (argPath: string) => {
 
     if (canContinue && prettier) {
         canContinue = await prettifyReadme(basePath, ci);
+        canContinue = await prettifyPackageJson(basePath, ci);
+        canContinue = await prettifyPackageDistJson(basePath, ci);
     }
 
     if (canContinue && distfiles) {
@@ -87,7 +89,8 @@ buildCommand.action(async (argPath: string) => {
     const newStats = await getDistStats(basePath),
         diffSize = newStats.totalSize - oldStats.totalSize,
         bundleDiffSize = newStats.bundleSize - oldStats.bundleSize,
-        bundleSizeIncreased = bundleDiffSize > 0,
+        minSize = 0,
+        bundleSizeIncreased = bundleDiffSize > minSize,
         outputFunc = bundleSizeIncreased ? console.warn : console.info,
         texts = [
             !bundleDiffSize
@@ -97,7 +100,7 @@ buildCommand.action(async (argPath: string) => {
                   } (${Math.abs(bundleDiffSize)}B)`,
             !diffSize
                 ? "Size unchanged"
-                : `Size ${diffSize > 0 ? "increased" : "decreased"} from ${oldStats.totalSize} to ${
+                : `Size ${diffSize > minSize ? "increased" : "decreased"} from ${oldStats.totalSize} to ${
                       newStats.totalSize
                   } (${Math.abs(diffSize)}B)`,
             `Files count changed from ${oldStats.totalFiles} to ${newStats.totalFiles} (${

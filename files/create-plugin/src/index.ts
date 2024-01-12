@@ -1,4 +1,4 @@
-import type { Container, Engine, IPlugin, ISourceOptions, Options } from "tsparticles-engine";
+import type { Container, Engine, IPlugin, ISourceOptions, Options } from "@tsparticles/engine";
 import { PluginInstance } from "./PluginInstance";
 
 /**
@@ -20,6 +20,8 @@ class Plugin implements IPlugin {
 
     loadOptions(_options: Options, _source?: ISourceOptions): void {
         if (!this.needsPlugin()) {
+            // ignore plugin options when not needed
+
             return;
         }
 
@@ -27,7 +29,7 @@ class Plugin implements IPlugin {
     }
 
     needsPlugin(_options?: ISourceOptions): boolean {
-        return true; // add your condition here
+        return true; // add your condition here, replace true with condition if needed
     }
 }
 

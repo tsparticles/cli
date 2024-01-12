@@ -24,9 +24,10 @@ export async function lint(ci: boolean): Promise<boolean> {
         await ESLint.outputFixes(results);
 
         const formatter = await eslint.loadFormatter("stylish"),
-            resultText = formatter.format(results);
+            resultText = formatter.format(results),
+            minimumLength = 0;
 
-        if (errors.length > 0) {
+        if (errors.length > minimumLength) {
             const messages = errors.map(t =>
                 t.messages.map(m => `${t.filePath} (${m.line},${m.column}): ${m.message}`).join("\n"),
             );

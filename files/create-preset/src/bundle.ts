@@ -1,6 +1,6 @@
-import { loadTemplatePreset } from ".";
-import { tsParticles } from "tsparticles-engine";
+import { loadTemplatePreset } from "./index.js";
+import { tsParticles } from "@tsparticles/engine";
 
-loadTemplatePreset(tsParticles);
+void loadTemplatePreset(tsParticles);
 
 export { loadTemplatePreset, tsParticles };

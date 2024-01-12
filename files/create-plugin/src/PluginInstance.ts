@@ -1,4 +1,4 @@
-import { type Container, type Engine, type IContainerPlugin } from "tsparticles-engine";
+import { type Container, type Engine, type IContainerPlugin } from "@tsparticles/engine";
 
 export class PluginInstance implements IContainerPlugin {
     private readonly _container;
@@ -10,6 +10,7 @@ export class PluginInstance implements IContainerPlugin {
     }
 
     async init(): Promise<void> {
-        // add your plugin initialization here
+        // add your plugin initialization here, replace the empty promise
+        return await Promise.resolve();
     }
 }
