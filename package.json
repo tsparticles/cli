@@ -34,12 +34,6 @@
     "@tsparticles/tsconfig": "^2.0.1",
     "@tsparticles/webpack-plugin": "^2.0.4",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
-    "@typescript-eslint/parser": "^6.18.1",
-    "commander": "^11.1.0",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-jsdoc": "^48.0.2",
-=======
     "@tsparticles/eslint-config": "^2.0.0",
     "@tsparticles/prettier-config": "^2.0.0",
     "@tsparticles/tsconfig": "^2.0.0",
