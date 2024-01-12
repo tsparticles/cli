@@ -28,6 +28,7 @@
     "version": "node scripts/postversion.js && git add files/empty-project/package.json"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@tsparticles/eslint-config": "^2.0.4",
     "@tsparticles/prettier-config": "^2.0.1",
     "@tsparticles/tsconfig": "^2.0.1",
@@ -38,6 +39,18 @@
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsdoc": "^48.0.2",
+=======
+    "@tsparticles/eslint-config": "^2.0.0",
+    "@tsparticles/prettier-config": "^2.0.0",
+    "@tsparticles/tsconfig": "^2.0.0",
+    "@tsparticles/webpack-plugin": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "commander": "^11.0.0",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-jsdoc": "^48.0.0",
+>>>>>>> origin/main
     "eslint-plugin-tsdoc": "^0.2.17",
     "fs-extra": "^11.2.0",
     "klaw": "^4.1.0",
