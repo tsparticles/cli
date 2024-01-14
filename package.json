@@ -28,10 +28,10 @@
     "version": "node scripts/postversion.js && git add files/empty-project/package.json"
   },
   "dependencies": {
-    "@tsparticles/eslint-config": "^2.0.4",
-    "@tsparticles/prettier-config": "^2.0.1",
+    "@tsparticles/eslint-config": "^2.0.5",
+    "@tsparticles/prettier-config": "^2.0.2",
     "@tsparticles/tsconfig": "^2.0.1",
-    "@tsparticles/webpack-plugin": "^2.0.4",
+    "@tsparticles/webpack-plugin": "^2.0.5",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "commander": "^11.1.0",
@@ -43,7 +43,7 @@
     "klaw": "^4.1.0",
     "lookpath": "^1.2.2",
     "path-scurry": "^1.10.1",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.2",
     "prettier-plugin-multiline-arrays": "^3.0.1",
     "prompts": "^2.4.2",
     "rimraf": "^5.0.5",
