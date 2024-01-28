@@ -35,7 +35,7 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
 
         const jsonIndent = 2;
 
-        fs.writeFileSync(libPackage, `${JSON.stringify(libObj, undefined, jsonIndent)}\n`, "utf8");
+        await fs.writeFile(libPackage, `${JSON.stringify(libObj, undefined, jsonIndent)}\n`, "utf8");
 
         console.log(`package.dist.json updated successfully to version ${pkgInfo.version}`);
 
@@ -52,19 +52,19 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
             const src = path.join(basePath, typeof file === "string" ? file : file.source),
                 dest = path.join(distPath, typeof file === "string" ? file : file.destination);
 
-            fs.copyFileSync(src, dest);
+            await fs.copyFile(src, dest);
         }
 
         const scriptsPath = path.join(basePath, "scripts"),
             distScriptsPath = path.join(distPath, "scripts");
 
-        if (fs.existsSync(scriptsPath) && !fs.existsSync(distScriptsPath)) {
-            fs.mkdirSync(distScriptsPath);
+        if ((await fs.exists(scriptsPath)) && !(await fs.exists(distScriptsPath))) {
+            await fs.mkdir(distScriptsPath);
 
             const installPath = path.join(scriptsPath, "install.js");
 
-            if (fs.existsSync(installPath)) {
-                fs.copyFileSync(installPath, path.join(distScriptsPath, "install.js"));
+            if (await fs.exists(installPath)) {
+                await fs.copyFile(installPath, path.join(distScriptsPath, "install.js"));
             }
         }
 

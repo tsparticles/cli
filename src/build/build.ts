@@ -1,13 +1,4 @@
-import { prettifyPackageDistJson, prettifyPackageJson, prettifyReadme, prettifySrc } from "./build-prettier";
 import { Command } from "commander";
-import { buildDistFiles } from "./build-distfiles";
-import { buildTS } from "./build-tsc";
-import { bundle } from "./build-bundle";
-import { clearDist } from "./build-clear";
-import fs from "fs-extra";
-import { getDistStats } from "./build-diststats";
-import { lint } from "./build-eslint";
-import path from "path";
 
 const buildCommand = new Command("build");
 
@@ -42,13 +33,18 @@ buildCommand.action(async (argPath: string) => {
         tsc = all || !!opts.tsc;
 
     const basePath = process.cwd(),
+        { getDistStats } = await import("./build-diststats.js"),
         oldStats = await getDistStats(basePath);
 
     if (clean) {
+        const { clearDist } = await import("./build-clear.js");
+
         await clearDist(basePath);
     }
 
-    const srcPath = path.join(basePath, argPath);
+    const path = await import("path"),
+        srcPath = path.join(basePath, argPath),
+        fs = await import("fs-extra");
 
     if (!(await fs.pathExists(srcPath))) {
         throw new Error("Provided path does not exist");
@@ -57,28 +53,40 @@ buildCommand.action(async (argPath: string) => {
     let canContinue = true;
 
     if (canContinue && prettier) {
+        const { prettifySrc } = await import("./build-prettier.js");
+
         canContinue = await prettifySrc(basePath, srcPath, ci);
     }
 
     if (canContinue && doLint) {
+        const { lint } = await import("./build-eslint.js");
+
         canContinue = await lint(ci);
     }
 
     if (canContinue && tsc) {
+        const { buildTS } = await import("./build-tsc.js");
+
         canContinue = await buildTS(basePath);
     }
 
     if (canContinue && doBundle) {
+        const { bundle } = await import("./build-bundle.js");
+
         canContinue = await bundle(basePath);
     }
 
     if (canContinue && prettier) {
+        const { prettifyReadme, prettifyPackageJson, prettifyPackageDistJson } = await import("./build-prettier");
+
         canContinue = await prettifyReadme(basePath, ci);
         canContinue = await prettifyPackageJson(basePath, ci);
         canContinue = await prettifyPackageDistJson(basePath, ci);
     }
 
     if (canContinue && distfiles) {
+        const { buildDistFiles } = await import("./build-distfiles.js");
+
         canContinue = await buildDistFiles(basePath);
     }
 
