@@ -11,9 +11,8 @@ shapeCommand.description("Create a new tsParticles shape");
 shapeCommand.argument("<destination>", "Destination folder");
 shapeCommand.action(async (destination: string) => {
     const destPath = await getDestinationDir(destination),
-        repoUrl = await getRepositoryUrl();
-
-    const initialName = destPath.split(path.sep).pop(),
+        repoUrl = await getRepositoryUrl(),
+        initialName = destPath.split(path.sep).pop(),
         questions: PromptObject[] = [
             {
                 type: "text",
@@ -35,13 +34,12 @@ shapeCommand.action(async (destination: string) => {
                 message: "What is the repository URL? (optional)",
                 initial: repoUrl.trim(),
             },
-        ];
-
-    const { name, description, repositoryUrl } = (await prompts(questions)) as {
-        description: string;
-        name: string;
-        repositoryUrl: string;
-    };
+        ],
+        { name, description, repositoryUrl } = (await prompts(questions)) as {
+            description: string;
+            name: string;
+            repositoryUrl: string;
+        };
 
     await createShapeTemplate(name.trim(), description.trim(), repositoryUrl.trim(), destPath);
 });

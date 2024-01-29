@@ -1,5 +1,4 @@
 import fs from "fs-extra";
-import path from "path";
 
 export interface IDistStats {
     bundleSize: number;
@@ -25,7 +24,8 @@ async function getFolderStats(folderPath: string, bundlePath?: string): Promise<
         return stats;
     }
 
-    const dir = await fs.promises.opendir(folderPath);
+    const dir = await fs.promises.opendir(folderPath),
+        path = await import("path");
 
     for await (const dirent of dir) {
         const increment = 1;
@@ -57,7 +57,8 @@ async function getFolderStats(folderPath: string, bundlePath?: string): Promise<
  * @returns the stats for the dist folder
  */
 export async function getDistStats(basePath: string): Promise<IDistStats> {
-    const distFolder = path.join(basePath, "dist"),
+    const path = await import("path"),
+        distFolder = path.join(basePath, "dist"),
         pkgInfo = (await fs.exists(path.join(distFolder, "package.json")))
             ? ((await import(path.join(distFolder, "package.json"))) as { jsdelivr?: string })
             : {},

@@ -1,6 +1,5 @@
 import fs from "fs-extra";
 import path from "path";
-import ts from "typescript";
 
 const enum ExitCodes {
     OK = 0,
@@ -123,7 +122,8 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
         return ExitCodes.NoOptions;
     }
 
-    const parsed = ts.parseJsonConfigFileContent(options, ts.sys, basePath);
+    const ts = await import("typescript"),
+        parsed = ts.parseJsonConfigFileContent(options, ts.sys, basePath);
 
     if (!parsed) {
         return ExitCodes.ParseError;
