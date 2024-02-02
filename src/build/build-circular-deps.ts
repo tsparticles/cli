@@ -13,16 +13,24 @@ export async function buildCircularDeps(basePath: string): Promise<boolean> {
         const madgeRes = await madge(path.join(basePath, "src"), {
                 fileExtensions: ["ts"],
                 detectiveOptions: {
-                    skipTypeImports: true,
+                    ts: {
+                        skipTypeImports: true,
+                    },
                 },
             }),
             circularDeps = madgeRes.circular();
 
         if (circularDeps.length) {
-            throw new Error(`Circular dependencies found: ${circularDeps.join(", ")}`);
-        }
+            console.error("Circular dependencies found!");
 
-        res = true;
+            for (const dep of circularDeps) {
+                console.error(`${dep.join(" > ")}`);
+            }
+
+            res = false;
+        } else {
+            res = true;
+        }
     } catch (e) {
         console.error(e);
     }
