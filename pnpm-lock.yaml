@@ -55,7 +55,7 @@ dependencies:
     version: 3.2.4
   prettier-plugin-multiline-arrays:
     specifier: ^3.0.1
-    version: 3.0.1(prettier@3.2.4)
+    version: 3.0.4(prettier@3.2.4)
   prompts:
     specifier: ^2.4.2
     version: 2.4.2
@@ -118,12 +118,12 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
 
-  /@augment-vir/common@22.1.1:
-    resolution: {integrity: sha512-6u6M1NgCfD3QyG7H8ovWvgHW/E4ZRbmJTXggxZHg+Oc3hO9W6xOO5xF2UuE6lY7xnUs4KlhIX5AUsx8u2XRl8w==}
+  /@augment-vir/common@23.4.0:
+    resolution: {integrity: sha512-QIrJ1doD00TNbOzeVrk9KgPTzRlIjayxERnhtbQjK/AFPj5yElcB03GbnGdQZPzws/R+5gfMM5cZiH7QyBP+Kg==}
     dependencies:
       browser-or-node: 2.1.1
-      run-time-assertions: 0.2.1
-      type-fest: 4.9.0
+      run-time-assertions: 1.0.0
+      type-fest: 4.10.3
     dev: false
 
   /@babel/code-frame@7.23.5:
@@ -1605,7 +1605,7 @@ packages:
     resolution: {integrity: sha512-Y8xmLkj4SULvMXyA0k9VXXm8C/aZ+Lqwr27GOoNO7aIMDkpQHe09MITHtS9o7pKUdgell5aLT0Orm95B1MJo6g==}
     dependencies:
       prettier: 3.2.4
-      prettier-plugin-multiline-arrays: 3.0.1(prettier@3.2.4)
+      prettier-plugin-multiline-arrays: 3.0.4(prettier@3.2.4)
     dev: false
 
   /@tsparticles/tsconfig@2.0.1:
@@ -1635,7 +1635,7 @@ packages:
       eslint-plugin-jsdoc: 48.0.4(eslint@8.56.0)
       eslint-plugin-tsdoc: 0.2.17
       prettier: 3.2.4
-      prettier-plugin-multiline-arrays: 3.0.1(prettier@3.2.4)
+      prettier-plugin-multiline-arrays: 3.0.4(prettier@3.2.4)
       rimraf: 5.0.5
       terser-webpack-plugin: 5.3.10(webpack@5.90.0)
       typescript: 5.3.3
@@ -2447,7 +2447,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /chrome-trace-event@1.0.3:
@@ -3181,8 +3181,8 @@ packages:
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
-  /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+  /fsevents@2.3.3:
+    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -4293,14 +4293,14 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: false
 
-  /prettier-plugin-multiline-arrays@3.0.1(prettier@3.2.4):
-    resolution: {integrity: sha512-xRwqy/6eMU7234W3/XFjviTn00X2JlXyiUUdpFk4R0HbLJ0QJDA1i5fLZnVQrcSrWzidrHvs1SauEpFsBDxWAQ==}
+  /prettier-plugin-multiline-arrays@3.0.4(prettier@3.2.4):
+    resolution: {integrity: sha512-Oj9ZfEisLOF0did1CGXXQLTA0WEChT2pfI06pNA1PbvWqbys9a5xoys6DoZlDL+Uio0uW1XwKZkeKMAkG1EEfQ==}
     peerDependencies:
-      prettier: ^3.0.0
+      prettier: '>=3.0.0'
     dependencies:
-      '@augment-vir/common': 22.1.1
+      '@augment-vir/common': 23.4.0
       prettier: 3.2.4
-      proxy-vir: 0.0.2
+      proxy-vir: 1.0.0
     dev: false
 
   /prettier@3.2.4:
@@ -4328,10 +4328,10 @@ packages:
       sisteransi: 1.0.5
     dev: false
 
-  /proxy-vir@0.0.2:
-    resolution: {integrity: sha512-4yP9ol7cFb1lUwYyj0B1+M+EpQz7tAu7PTgHCqOQenn0abXOJ3epfS3d2e+9zTgpBfYFzutL5tD2hyFz/smXyw==}
+  /proxy-vir@1.0.0:
+    resolution: {integrity: sha512-WV1gkBxUOwLSz0Bn09tisIqLK7leAqtFm/474t3L0hQKJw7/gdrkGcWw0/OT1PhSy+TDS6swfq7Niuoq3XJhkQ==}
     dependencies:
-      '@augment-vir/common': 22.1.1
+      '@augment-vir/common': 23.4.0
     dev: false
 
   /punycode@2.3.0:
@@ -4509,12 +4509,12 @@ packages:
       queue-microtask: 1.2.3
     dev: false
 
-  /run-time-assertions@0.2.1:
-    resolution: {integrity: sha512-nJrck8ekwrfilGPgGREZlNDR8US7Q+aVMWAWGKxyeeEf0X8TrPM9x5aGvHiPPsGszteUfZrABepByxgHCSWbag==}
+  /run-time-assertions@1.0.0:
+    resolution: {integrity: sha512-2MgjLxjJbgrXIAEROObGvz9me4A5Mj0vYIGrJ/9NERO6MrtY3OqJZz2iqfezTcXOWT/zJfdAasVmSLpnwHJIZw==}
     dependencies:
-      '@augment-vir/common': 22.1.1
+      '@augment-vir/common': 23.4.0
       expect-type: 0.15.0
-      type-fest: 4.9.0
+      type-fest: 4.10.3
     dev: false
 
   /safe-array-concat@1.0.0:
@@ -4930,8 +4930,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /type-fest@4.9.0:
-    resolution: {integrity: sha512-KS/6lh/ynPGiHD/LnAobrEFq3Ad4pBzOlJ1wAnJx9N4EYoqFhMfLIBjUT2UEx4wg5ZE+cC1ob6DCSpppVo+rtg==}
+  /type-fest@4.10.3:
+    resolution: {integrity: sha512-JLXyjizi072smKGGcZiAJDCNweT8J+AuRxmPZ1aG7TERg4ijx9REl8CNhbr36RV4qXqL1gO1FF9HL8OkVmmrsA==}
     engines: {node: '>=16'}
     dev: false
 
