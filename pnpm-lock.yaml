@@ -52,10 +52,10 @@ dependencies:
     version: 1.10.1
   prettier:
     specifier: ^3.2.4
-    version: 3.2.4
+    version: 3.2.5
   prettier-plugin-multiline-arrays:
     specifier: ^3.0.1
-    version: 3.0.1(prettier@3.2.4)
+    version: 3.0.1(prettier@3.2.5)
   prompts:
     specifier: ^2.4.2
     version: 2.4.2
@@ -1593,7 +1593,7 @@ packages:
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.19.1)(eslint@8.56.0)
       eslint-plugin-jsdoc: 48.0.4(eslint@8.56.0)
       eslint-plugin-tsdoc: 0.2.17
-      prettier: 3.2.4
+      prettier: 3.2.5
       typescript: 5.3.3
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
@@ -1604,8 +1604,8 @@ packages:
   /@tsparticles/prettier-config@2.1.0:
     resolution: {integrity: sha512-Y8xmLkj4SULvMXyA0k9VXXm8C/aZ+Lqwr27GOoNO7aIMDkpQHe09MITHtS9o7pKUdgell5aLT0Orm95B1MJo6g==}
     dependencies:
-      prettier: 3.2.4
-      prettier-plugin-multiline-arrays: 3.0.1(prettier@3.2.4)
+      prettier: 3.2.5
+      prettier-plugin-multiline-arrays: 3.0.1(prettier@3.2.5)
     dev: false
 
   /@tsparticles/tsconfig@2.0.1:
@@ -1634,8 +1634,8 @@ packages:
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.19.1)(eslint@8.56.0)
       eslint-plugin-jsdoc: 48.0.4(eslint@8.56.0)
       eslint-plugin-tsdoc: 0.2.17
-      prettier: 3.2.4
-      prettier-plugin-multiline-arrays: 3.0.1(prettier@3.2.4)
+      prettier: 3.2.5
+      prettier-plugin-multiline-arrays: 3.0.1(prettier@3.2.5)
       rimraf: 5.0.5
       terser-webpack-plugin: 5.3.10(webpack@5.90.0)
       typescript: 5.3.3
@@ -2447,7 +2447,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /chrome-trace-event@1.0.3:
@@ -3181,8 +3181,8 @@ packages:
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
-  /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+  /fsevents@2.3.3:
+    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -4293,18 +4293,18 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: false
 
-  /prettier-plugin-multiline-arrays@3.0.1(prettier@3.2.4):
+  /prettier-plugin-multiline-arrays@3.0.1(prettier@3.2.5):
     resolution: {integrity: sha512-xRwqy/6eMU7234W3/XFjviTn00X2JlXyiUUdpFk4R0HbLJ0QJDA1i5fLZnVQrcSrWzidrHvs1SauEpFsBDxWAQ==}
     peerDependencies:
       prettier: ^3.0.0
     dependencies:
       '@augment-vir/common': 22.1.1
-      prettier: 3.2.4
+      prettier: 3.2.5
       proxy-vir: 0.0.2
     dev: false
 
-  /prettier@3.2.4:
-    resolution: {integrity: sha512-FWu1oLHKCrtpO1ypU6J0SbK2d9Ckwysq6bHj/uaCP26DxrPpppCLQRGVuqAxSTvhF00AcvDRyYrLNW7ocBhFFQ==}
+  /prettier@3.2.5:
+    resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
     engines: {node: '>=14'}
     hasBin: true
     dev: false
