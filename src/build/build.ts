@@ -85,7 +85,7 @@ buildCommand.action(async (argPath: string) => {
     }
 
     if (canContinue && prettier) {
-        const { prettifyReadme, prettifyPackageJson, prettifyPackageDistJson } = await import("./build-prettier");
+        const { prettifyReadme, prettifyPackageJson, prettifyPackageDistJson } = await import("./build-prettier.js");
 
         canContinue = await prettifyReadme(basePath, ci);
         canContinue = await prettifyPackageJson(basePath, ci);

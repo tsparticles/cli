@@ -31,7 +31,7 @@
   "dependencies": {
     "@tsparticles/eslint-config": "^2.1.4",
     "@tsparticles/prettier-config": "^2.1.0",
-    "@tsparticles/tsconfig": "^2.1.6",
+    "@tsparticles/tsconfig": "^2.1.7",
     "@tsparticles/webpack-plugin": "^2.1.6",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
