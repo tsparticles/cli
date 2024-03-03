@@ -27,6 +27,7 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
             options.endOfLine = "lf";
             options.parser = "typescript";
             options.tabWidth = 4;
+            options.arrowParens = "avoid" as const;
 
             if (ci) {
                 if (!(await prettier.check(contents, options))) {
