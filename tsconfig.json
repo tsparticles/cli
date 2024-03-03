@@ -1,9 +1,21 @@
 {
-    "compilerOptions": {
-        "rootDir": ".",
-        "outDir": ".",
-        "resolveJsonModule": true,
-        "composite": true
-    },
-    "files": ["package.json"]
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": ".",
+    "resolveJsonModule": true,
+    "composite": true,
+    "types": [
+      "node",
+      "chai",
+      "mocha",
+      "fs-extra",
+      "klaw",
+      "madge",
+      "prompts",
+      "eslint"
+    ]
+  },
+  "files": [
+    "package.json"
+  ]
 }

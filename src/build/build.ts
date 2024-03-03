@@ -15,6 +15,7 @@ buildCommand.option(
     "Do all build steps for CI, no fixing files, only checking if they are formatted correctly",
     false,
 );
+buildCommand.option("-cd, --circular-deps", "Check for circular dependencies", false);
 buildCommand.option("-d, --dist", "Build the dist files", false);
 buildCommand.option("-l, --lint", "Lint the source files", false);
 buildCommand.option("-p, --prettify", "Prettify the source files", false);
@@ -26,6 +27,7 @@ buildCommand.action(async (argPath: string) => {
         ci = !!opts.ci,
         all = !!opts.all || (!opts.bundle && !opts.clean && !opts.dist && !opts.lint && !opts.prettify && !opts.tsc),
         doBundle = all || !!opts.bundle,
+        circularDeps = all || !!opts.circularDeps,
         clean = all || !!opts.clean,
         distfiles = all || !!opts.dist,
         doLint = all || !!opts.lint,
@@ -70,6 +72,12 @@ buildCommand.action(async (argPath: string) => {
         canContinue = await buildTS(basePath);
     }
 
+    if (canContinue && circularDeps) {
+        const { buildCircularDeps } = await import("./build-circular-deps.js");
+
+        canContinue = await buildCircularDeps(basePath);
+    }
+
     if (canContinue && doBundle) {
         const { bundle } = await import("./build-bundle.js");
 
@@ -77,7 +85,7 @@ buildCommand.action(async (argPath: string) => {
     }
 
     if (canContinue && prettier) {
-        const { prettifyReadme, prettifyPackageJson, prettifyPackageDistJson } = await import("./build-prettier");
+        const { prettifyReadme, prettifyPackageJson, prettifyPackageDistJson } = await import("./build-prettier.js");
 
         canContinue = await prettifyReadme(basePath, ci);
         canContinue = await prettifyPackageJson(basePath, ci);
