@@ -29,12 +29,12 @@
     "version": "node scripts/postversion.js && git add files/empty-project/package.json"
   },
   "dependencies": {
-    "@tsparticles/eslint-config": "^2.2.1",
+    "@tsparticles/eslint-config": "^2.3.0",
     "@tsparticles/prettier-config": "^2.1.6",
-    "@tsparticles/tsconfig": "^2.1.7",
-    "@tsparticles/webpack-plugin": "^2.2.1",
-    "@typescript-eslint/eslint-plugin": "^7.1.0",
-    "@typescript-eslint/parser": "^7.1.0",
+    "@tsparticles/tsconfig": "^2.3.0",
+    "@tsparticles/webpack-plugin": "^2.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "commander": "^12.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -50,7 +50,7 @@
     "prettier-plugin-multiline-arrays": "^3.0.4",
     "prompts": "^2.4.2",
     "rimraf": "^5.0.5",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "webpack": "^5.90.3"
   },
   "devDependencies": {
