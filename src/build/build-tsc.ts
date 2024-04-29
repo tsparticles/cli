@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 
-const enum ExitCodes {
+enum ExitCodes {
     OK = 0,
     EmitErrors = 1,
     NoDataOrOptions = 2,
