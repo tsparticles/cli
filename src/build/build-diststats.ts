@@ -64,7 +64,7 @@ export async function getDistStats(basePath: string): Promise<IDistStats> {
             : {},
         bundlePath =
             (await fs.exists(distFolder)) && pkgInfo.jsdelivr
-                ? path.resolve(path.join(distFolder, pkgInfo.jsdelivr))
+                ? path.join(distFolder, pkgInfo.jsdelivr)
                 : undefined;
 
     return await getFolderStats(distFolder, bundlePath);

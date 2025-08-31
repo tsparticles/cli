@@ -10,7 +10,7 @@ export default defineConfig([
     {
         languageOptions: {
             parserOptions: {
-                project: [path.resolve(__dirname, "src/tsconfig.json")],
+                project: [path.join(__dirname, "src", "tsconfig.json")],
                 tsconfigRootDir: __dirname,
                 sourceType: "module"
             }

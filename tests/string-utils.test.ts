@@ -1,9 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { camelize, capitalize, dash } from "../src/utils/string-utils";
+import { camelize, capitalize, dash } from "../src/utils/string-utils.js";
 
 describe("capitalize", () => {
     describe("empty string", () => {
-        expect(capitalize("")).toBe("");
+        it("should successfully compare empty strings", () => {
+            expect(capitalize("")).toBe("");
+        });
     });
 
     describe("lowercase string", () => {
@@ -49,7 +51,9 @@ describe("capitalize", () => {
 
 describe("camelize", () => {
     describe("empty string", () => {
-        expect(camelize("")).toBe("");
+        it("should successfully compare empty strings", () => {
+            expect(camelize("")).toBe("");
+        });
     });
 
     describe("lowercase string", () => {
@@ -95,7 +99,9 @@ describe("camelize", () => {
 
 describe("dash", () => {
     describe("empty string", () => {
-        expect(dash("")).toBe("");
+        it("should successfully compare empty strings", () => {
+            expect(dash("")).toBe("");
+        });
     });
 
     describe("lowercase string", () => {

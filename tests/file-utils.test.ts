@@ -1,4 +1,4 @@
-import { describe, it, expect, after } from "vitest";
+import {afterAll, describe, it, expect} from "vitest";
 import fs from "fs-extra";
 import path from "path";
 import {
@@ -6,10 +6,10 @@ import {
     getRepositoryUrl,
     replaceTokensInFile,
     replaceTokensInFiles,
-} from "../src/utils/file-utils";
+} from "../src/utils/file-utils.js";
 
 describe("file-utils", async () => {
-    const baseDir = path.join(__dirname, "tmp-files");
+    const baseDir = path.resolve("tmp-files");
 
     await fs.ensureDir(baseDir);
 
@@ -59,14 +59,14 @@ describe("file-utils", async () => {
     });
 
     describe("get destination dir", async () => {
-        const destDir = await getDestinationDir(path.join(baseDir, "baz"));
+        const destDir = await getDestinationDir(path.join("tmp-files", "baz"));
 
         it("should return the destination dir", () => {
             expect(destDir).toBe(path.join(baseDir, "baz"));
         });
 
         it("should return the destination dir", async () => {
-            const destDir2 = await getDestinationDir(path.join(baseDir, "baz"));
+            const destDir2 = await getDestinationDir(path.join("tmp-files", "baz"));
 
             expect(destDir2).toBe(path.join(baseDir, "baz"));
         });
@@ -77,7 +77,7 @@ describe("file-utils", async () => {
             let ex = false;
 
             try {
-                await getDestinationDir(path.join(baseDir, "baz"));
+                await getDestinationDir(path.join("tmp-files", "baz"));
 
                 console.log("never");
             } catch {
@@ -94,7 +94,7 @@ describe("file-utils", async () => {
         });
     });
 
-    after(async () => {
+    afterAll(async () => {
         await fs.remove(baseDir);
     });
 });

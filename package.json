@@ -22,7 +22,7 @@
     "compile:ci": "pnpm run build:ts",
     "build:ts": "pnpm run build:ts:cjs",
     "build:ts:cjs": "tsc -p src",
-    "test": "vitest run",
+    "test": "vitest run --silent=false",
     "build": "pnpm run clear:dist && pnpm run prettify:src && pnpm run lint && pnpm run compile && pnpm run circular-deps && pnpm run prettify:readme && chmod +x dist/cli.js && chmod +x dist/build/build.js && chmod +x dist/create/create.js && chmod +x dist/create/preset/preset.js",
     "build:ci": "pnpm run clear:dist && pnpm run prettify:ci:src && pnpm run lint:ci && pnpm run compile:ci && pnpm run prettify:ci:readme",
     "clear:dist": "rimraf ./dist",
