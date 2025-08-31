@@ -1,10 +1,9 @@
-import { describe, it } from "mocha";
-import { expect } from "chai";
+import { describe, it, expect } from "vitest";
 import { createPresetTemplate } from "../src/create/preset/create-preset";
 import path from "path";
 import fs from "fs-extra";
 
-describe("create-preset", async () => {
+describe("create-preset", () => {
     it("should have created the preset project", async () => {
         const destDir = path.resolve(path.join(__dirname, "tmp-files", "foo-preset"));
 
@@ -12,7 +11,7 @@ describe("create-preset", async () => {
 
         const pkgInfo = await fs.readJSON(path.join(destDir, "package.json"));
 
-        expect(pkgInfo.name).to.be.equal("tsparticles-preset-foo");
+        expect(pkgInfo.name).toBe("tsparticles-preset-foo");
 
         await fs.remove(destDir);
     });
@@ -24,7 +23,7 @@ describe("create-preset", async () => {
 
         const pkgInfo = await fs.readJSON(path.join(destDir, "package.json"));
 
-        expect(pkgInfo.name).to.be.equal("tsparticles-preset-bar");
+        expect(pkgInfo.name).toBe("tsparticles-preset-bar");
 
         await fs.remove(destDir);
     });

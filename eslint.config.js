@@ -10,7 +10,6 @@ export default defineConfig([
     {
         languageOptions: {
             parserOptions: {
-                // Usa il tsconfig nella cartella src che contiene i sorgenti effettivi
                 project: [path.resolve(__dirname, "src/tsconfig.json")],
                 tsconfigRootDir: __dirname,
                 sourceType: "module"

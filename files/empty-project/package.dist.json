@@ -2,6 +2,7 @@
   "name": "@tsparticles/empty-template",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "author": "Matteo Bruni <matteo.bruni@me.com>",
   "description": "tsParticles empty template",
   "homepage": "https://particles.js.org",

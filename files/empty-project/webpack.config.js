@@ -1,4 +1,11 @@
-const { loadParticlesTemplate } = require("@tsparticles/webpack-plugin"),
-    version = require("./package.json").version;
+import {loadParticlesTemplate} from "@tsparticles/webpack-plugin";
+import {fileURLToPath} from 'url';
+import path from 'path';
+import fs from 'fs';
 
-module.exports = loadParticlesTemplate({ moduleName: "empty", templateName: "Empty", version, dir: __dirname });
+const __filename = fileURLToPath(import.meta.url),
+    __dirname = path.dirname(__filename),
+    pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8')),
+    version = pkg.version;
+
+export default loadParticlesTemplate({moduleName: "empty", templateName: "Empty", version, dir: __dirname});

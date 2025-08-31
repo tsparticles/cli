@@ -1,10 +1,9 @@
-import { describe, it } from "mocha";
-import { expect } from "chai";
+import { describe, it, expect } from "vitest";
 import { createShapeTemplate } from "../src/create/shape/create-shape";
 import path from "path";
 import fs from "fs-extra";
 
-describe("create-shape", async () => {
+describe("create-shape", () => {
     it("should have created the shape project", async () => {
         const destDir = path.resolve(path.join(__dirname, "tmp-files", "foo-shape"));
 
@@ -12,7 +11,7 @@ describe("create-shape", async () => {
 
         const pkgInfo = await fs.readJSON(path.join(destDir, "package.json"));
 
-        expect(pkgInfo.name).to.be.equal("tsparticles-shape-foo");
+        expect(pkgInfo.name).toBe("tsparticles-shape-foo");
 
         await fs.remove(destDir);
     });
@@ -24,7 +23,7 @@ describe("create-shape", async () => {
 
         const pkgInfo = await fs.readJSON(path.join(destDir, "package.json"));
 
-        expect(pkgInfo.name).to.be.equal("tsparticles-shape-bar");
+        expect(pkgInfo.name).toBe("tsparticles-shape-bar");
 
         await fs.remove(destDir);
     });

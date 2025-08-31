@@ -2,6 +2,7 @@
   "name": "@tsparticles/empty-template",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "tsParticles empty template",
   "homepage": "https://particles.js.org",
   "scripts": {
