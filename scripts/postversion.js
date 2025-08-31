@@ -1,8 +1,11 @@
+import { fileURLToPath } from "url";
 import fs from "fs-extra";
 import path from "path";
 
-const emptyProjectPkgPath = path.join(__dirname, "..", "files", "empty-project", "package.json");
-const rootPkgPath = path.join(__dirname, "..", "package.json");
+const __filename = fileURLToPath(import.meta.url),
+    __dirname = path.dirname(__filename),
+    emptyProjectPkgPath = path.join(__dirname, "..", "files", "empty-project", "package.json"),
+    rootPkgPath = path.join(__dirname, "..", "package.json");
 
 (async () => {
     try {
