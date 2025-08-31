@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { buildCommand } from "./build/build.js";
 import { createCommand } from "./create/create.js";
-import pkgInfo from "../package.json";
+import pkgInfo from "../package.json" assert { type: "json" };
 import { program } from "commander";
 
 program.name("tsparticles-cli");
