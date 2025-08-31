@@ -1,6 +1,6 @@
-const pkg = require("../package.json");
-const fs = require("fs-extra");
-const path = require("path");
+import pkg from "../package.json";
+import fs from "fs-extra";
+import path from "path";
 
 const emptyProjectPkgPath = path.join(__dirname, "..", "files", "empty-project", "package.json");
 
