@@ -9,17 +9,17 @@ importers:
   .:
     dependencies:
       '@tsparticles/eslint-config':
-        specifier: ^3.0.0
-        version: 3.0.0(eslint@9.34.0)
+        specifier: ^3.0.3
+        version: 3.0.3(eslint@9.34.0)
       '@tsparticles/prettier-config':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@tsparticles/tsconfig':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@tsparticles/webpack-plugin':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.3
+        version: 3.0.3
       commander:
         specifier: ^14.0.0
         version: 14.0.0
@@ -1485,28 +1485,28 @@ packages:
   '@tsparticles/eslint-config@2.3.0':
     resolution: {integrity: sha512-pIvds4gm+wG7MT/U5u/q/rvzqpy50YymohL6qPTPkVLrP98RIMMrMxtfLLz9jXTJa3m1/DOZsv5m4ZlmYTcNTw==}
 
-  '@tsparticles/eslint-config@3.0.0':
-    resolution: {integrity: sha512-53IbfO1UOfjZoP/vyj2V1VSHhnoTcpsw7y/fjjxoa8XOwDDHGKu+JvX4Kvk/B9cFwhvWKYHcIJc3TrDWCPE22w==}
+  '@tsparticles/eslint-config@3.0.3':
+    resolution: {integrity: sha512-F+EIyjA2vZ/6pHAA6WlXNWMirvUMjQyhC4lGiN/7quoJlaZZ9TNutXk35OkOY7gcOD1kKP7yOxJwsrMEI7BGFA==}
     peerDependencies:
       eslint: ^9.0.0
 
   '@tsparticles/prettier-config@2.1.6':
     resolution: {integrity: sha512-KaiIN2QB9KVpsI+irHGpOdVEoAhlrTRGdjF+MhCawdMINlChgZfxXvvREzt1gSYxusqmEv/mF1u/fp0tBhGPqg==}
 
-  '@tsparticles/prettier-config@3.0.0':
-    resolution: {integrity: sha512-IPcIh/+N5oYPm2QLF5R6bhKS3Av1jd0o/xkFArJBOs3jetyJ0a97ucKkMV8kuUcEKsoy386mFYh4QRcHJZK5cA==}
+  '@tsparticles/prettier-config@3.0.1':
+    resolution: {integrity: sha512-ucyR1O5M2kXfGML7i7rJFBJNku61/1op6bpKkC4zcR4GaYrQJH2mm8PVl8DeqbXmXnlvumRceG3E2BFzqa74fw==}
 
   '@tsparticles/tsconfig@2.3.0':
     resolution: {integrity: sha512-XBtRoIQcBzC+R7/tcoYu4+JB9DbVrSbn09IJ+QMyATLZK0P4Expj3Z/hPpJzejWOvepMSYBZlCodnjFQyk17YA==}
 
-  '@tsparticles/tsconfig@3.0.0':
-    resolution: {integrity: sha512-D3R28/glHMVjLebdnG+7PX6N0HcuL4OhtPKSeSNlwiVXpOAqlvpV9PwWRABZdEQK8ARIXRKe+O/ugV0F9vQOFw==}
+  '@tsparticles/tsconfig@3.0.1':
+    resolution: {integrity: sha512-cb6+expKvf6cm0xUkcHFI4x1cthOEO2WOfUYixOBZAhUaAp/XxM98n3DrFYc446e3bTRbPZXJWpRsSkiZY65+A==}
 
   '@tsparticles/webpack-plugin@2.3.0':
     resolution: {integrity: sha512-+SSh+I6dn/w+7C1APP5pPcD9jl9qrzkT7T00NGzk4+tII2dWURfrRF5DgyuInzFZA/AuR3K+QNCBTuo5INOD5Q==}
 
-  '@tsparticles/webpack-plugin@3.0.0':
-    resolution: {integrity: sha512-4OeF2J+GFHSNJrEMqc6MAe+T+TimSPr6VS7KjP0zGqOTV18R5HiSLA6oQi8Sdd3nu0h1lDEwVHoGhJ6Z9IzfzA==}
+  '@tsparticles/webpack-plugin@3.0.3':
+    resolution: {integrity: sha512-wkYSPKDY2c7XJsfCeWiFbYOPimLkFHP0LYLP453L+qd7aJoPYcKHUJmaQlB48VPRzgQzRzvNDfYcOcTPkZUd2w==}
 
   '@types/chai@5.2.2':
     resolution: {integrity: sha512-8kB30R7Hwqf40JPiKhVzodJs2Qc1ZJ5zuT3uzw5Hq/dhNCl3G3l83jfpdI1e20BP348+fV7VIL/+FxaXkqBmWg==}
@@ -6655,7 +6655,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  '@tsparticles/eslint-config@3.0.0(eslint@9.34.0)':
+  '@tsparticles/eslint-config@3.0.3(eslint@9.34.0)':
     dependencies:
       eslint: 9.34.0
 
@@ -6664,7 +6664,7 @@ snapshots:
       prettier: 3.6.2
       prettier-plugin-multiline-arrays: 3.0.4(prettier@3.6.2)
 
-  '@tsparticles/prettier-config@3.0.0':
+  '@tsparticles/prettier-config@3.0.1':
     dependencies:
       prettier: 3.6.2
       prettier-plugin-multiline-arrays: 4.0.3(prettier@3.6.2)
@@ -6673,7 +6673,7 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
-  '@tsparticles/tsconfig@3.0.0':
+  '@tsparticles/tsconfig@3.0.1':
     dependencies:
       typescript: 5.9.2
 
@@ -6718,13 +6718,13 @@ snapshots:
       - utf-8-validate
       - webpack-dev-server
 
-  '@tsparticles/webpack-plugin@3.0.0':
+  '@tsparticles/webpack-plugin@3.0.3':
     dependencies:
       '@babel/core': 7.28.3
       '@babel/preset-env': 7.28.3(@babel/core@7.28.3)
       '@stylistic/eslint-plugin': 5.2.3(eslint@9.34.0)
-      '@tsparticles/eslint-config': 3.0.0(eslint@9.34.0)
-      '@tsparticles/prettier-config': 3.0.0
+      '@tsparticles/eslint-config': 3.0.3(eslint@9.34.0)
+      '@tsparticles/prettier-config': 3.0.1
       '@types/node': 24.3.0
       '@types/webpack-bundle-analyzer': 4.7.0(webpack-cli@6.0.1)
       '@types/webpack-env': 1.18.8
@@ -7409,7 +7409,7 @@ snapshots:
       call-bind: 1.0.8
       define-properties: 1.2.1
       es-abstract: 1.24.0
-      es-shim-unscopables: 1.0.2
+      es-shim-unscopables: 1.1.0
 
   array.prototype.flatmap@1.3.2:
     dependencies:
@@ -7423,7 +7423,7 @@ snapshots:
       call-bind: 1.0.8
       define-properties: 1.2.1
       es-abstract: 1.24.0
-      es-shim-unscopables: 1.0.2
+      es-shim-unscopables: 1.1.0
 
   arraybuffer.prototype.slice@1.0.3:
     dependencies:
@@ -7593,7 +7593,7 @@ snapshots:
   call-bind@1.0.8:
     dependencies:
       call-bind-apply-helpers: 1.0.2
-      es-define-property: 1.0.0
+      es-define-property: 1.0.1
       get-intrinsic: 1.3.0
       set-function-length: 1.2.2
 
@@ -8195,8 +8195,8 @@ snapshots:
   es-to-primitive@1.3.0:
     dependencies:
       is-callable: 1.2.7
-      is-date-object: 1.0.5
-      is-symbol: 1.0.4
+      is-date-object: 1.1.0
+      is-symbol: 1.1.1
 
   es6-error@4.1.1: {}
 
@@ -9552,7 +9552,7 @@ snapshots:
 
   object.fromentries@2.0.8:
     dependencies:
-      call-bind: 1.0.7
+      call-bind: 1.0.8
       define-properties: 1.2.1
       es-abstract: 1.24.0
       es-object-atoms: 1.1.1
@@ -9567,7 +9567,7 @@ snapshots:
 
   object.groupby@1.0.3:
     dependencies:
-      call-bind: 1.0.7
+      call-bind: 1.0.8
       define-properties: 1.2.1
       es-abstract: 1.24.0
 
@@ -10134,7 +10134,7 @@ snapshots:
       es-errors: 1.3.0
       function-bind: 1.1.2
       get-intrinsic: 1.3.0
-      gopd: 1.0.1
+      gopd: 1.2.0
       has-property-descriptors: 1.0.2
 
   set-function-name@2.0.2:
@@ -10495,7 +10495,7 @@ snapshots:
   typed-array-byte-length@1.0.3:
     dependencies:
       call-bind: 1.0.8
-      for-each: 0.3.3
+      for-each: 0.3.5
       gopd: 1.2.0
       has-proto: 1.2.0
       is-typed-array: 1.1.15
@@ -10513,7 +10513,7 @@ snapshots:
     dependencies:
       available-typed-arrays: 1.0.7
       call-bind: 1.0.8
-      for-each: 0.3.3
+      for-each: 0.3.5
       gopd: 1.2.0
       has-proto: 1.2.0
       is-typed-array: 1.1.15
@@ -10531,7 +10531,7 @@ snapshots:
   typed-array-length@1.0.7:
     dependencies:
       call-bind: 1.0.8
-      for-each: 0.3.3
+      for-each: 0.3.5
       gopd: 1.2.0
       is-typed-array: 1.1.15
       possible-typed-array-names: 1.0.0

@@ -1,4 +1,6 @@
 import { ESLint } from "eslint";
+import { defineConfig } from "eslint/config";
+import tsParticlesESLintConfig from "@tsparticles/eslint-config";
 
 /**
  * @param ci -
@@ -10,7 +12,7 @@ export async function lint(ci: boolean): Promise<boolean> {
     let res: boolean;
 
     try {
-        const eslint = new ESLint({ fix: !ci });
+        const eslint = new ESLint({ baseConfig: defineConfig([tsParticlesESLintConfig]), fix: !ci });
 
         const results = await eslint.lintFiles(["src"]),
             errors = ESLint.getErrorResults(results);
