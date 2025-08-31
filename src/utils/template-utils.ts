@@ -2,7 +2,7 @@ import { exec } from "child_process";
 import fs from "fs-extra";
 import { lookpath } from "lookpath";
 import path from "path";
-import { replaceTokensInFile } from "./file-utils";
+import { replaceTokensInFile } from "./file-utils.js";
 
 /**
  * Updates the package.json file

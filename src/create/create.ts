@@ -1,7 +1,7 @@
 import { Command } from "commander";
-import { pluginCommand } from "./plugin/plugin";
-import { presetCommand } from "./preset/preset";
-import { shapeCommand } from "./shape/shape";
+import { pluginCommand } from "./plugin/plugin.js";
+import { presetCommand } from "./preset/preset.js";
+import { shapeCommand } from "./shape/shape.js";
 
 const createCommand = new Command("create");
 

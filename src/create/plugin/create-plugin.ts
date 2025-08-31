@@ -1,4 +1,4 @@
-import { camelize, capitalize, dash } from "../../utils/string-utils";
+import { camelize, capitalize, dash } from "../../utils/string-utils.js";
 import {
     copyEmptyTemplateFiles,
     copyFilter,
@@ -7,10 +7,10 @@ import {
     updatePackageDistFile,
     updatePackageFile,
     updateWebpackFile,
-} from "../../utils/template-utils";
+} from "../../utils/template-utils.js";
 import fs from "fs-extra";
 import path from "path";
-import { replaceTokensInFile } from "../../utils/file-utils";
+import { replaceTokensInFile } from "../../utils/file-utils.js";
 
 /**
  * Updates the index file with the correct function name

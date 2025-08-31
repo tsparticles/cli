@@ -1,8 +1,8 @@
-import { getDestinationDir, getRepositoryUrl } from "../../utils/file-utils";
+import { getDestinationDir, getRepositoryUrl } from "../../utils/file-utils.js";
 import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
-import { capitalize } from "../../utils/string-utils";
-import { createShapeTemplate } from "./create-shape";
+import { capitalize } from "../../utils/string-utils.js";
+import { createShapeTemplate } from "./create-shape.js";
 import path from "path";
 
 const shapeCommand = new Command("shape");
