@@ -15,8 +15,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       '@tsparticles/tsconfig':
-        specifier: ^3.0.1
-        version: 3.0.1
+        specifier: ^3.0.4
+        version: 3.0.4
       '@tsparticles/webpack-plugin':
         specifier: ^3.0.3
         version: 3.0.3
@@ -1729,8 +1729,8 @@ packages:
   '@tsparticles/tsconfig@2.3.0':
     resolution: {integrity: sha512-XBtRoIQcBzC+R7/tcoYu4+JB9DbVrSbn09IJ+QMyATLZK0P4Expj3Z/hPpJzejWOvepMSYBZlCodnjFQyk17YA==}
 
-  '@tsparticles/tsconfig@3.0.1':
-    resolution: {integrity: sha512-cb6+expKvf6cm0xUkcHFI4x1cthOEO2WOfUYixOBZAhUaAp/XxM98n3DrFYc446e3bTRbPZXJWpRsSkiZY65+A==}
+  '@tsparticles/tsconfig@3.0.4':
+    resolution: {integrity: sha512-ccIi5mQdsD4CcR9XENJa3nFT4kYG1u4An//1IG71iwYGcrq1D5IMhLXWorlcwj9oBp/czXJT01+4x8UCzc8ZvA==}
 
   '@tsparticles/webpack-plugin@2.3.0':
     resolution: {integrity: sha512-+SSh+I6dn/w+7C1APP5pPcD9jl9qrzkT7T00NGzk4+tII2dWURfrRF5DgyuInzFZA/AuR3K+QNCBTuo5INOD5Q==}
@@ -6961,7 +6961,7 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
-  '@tsparticles/tsconfig@3.0.1':
+  '@tsparticles/tsconfig@3.0.4':
     dependencies:
       typescript: 5.9.2
 
