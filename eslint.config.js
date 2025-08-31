@@ -1,9 +1,9 @@
 import path from "path";
 import {fileURLToPath} from "url";
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 import {defineConfig} from "eslint/config";
 import tsParticlesESLintConfig from "@tsparticles/eslint-config";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig([
     tsParticlesESLintConfig,

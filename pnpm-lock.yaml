@@ -9,17 +9,17 @@ importers:
   .:
     dependencies:
       '@tsparticles/eslint-config':
-        specifier: ^3.0.3
-        version: 3.0.3(eslint@9.34.0)
+        specifier: ^3.0.5
+        version: 3.0.5(eslint@9.34.0)
       '@tsparticles/prettier-config':
         specifier: ^3.0.1
         version: 3.0.1
       '@tsparticles/tsconfig':
-        specifier: ^3.0.4
-        version: 3.0.4
+        specifier: ^3.0.5
+        version: 3.0.5
       '@tsparticles/webpack-plugin':
-        specifier: ^3.0.3
-        version: 3.0.3
+        specifier: ^3.0.5
+        version: 3.0.5
       commander:
         specifier: ^14.0.0
         version: 14.0.0
@@ -1715,8 +1715,8 @@ packages:
   '@tsparticles/eslint-config@2.3.0':
     resolution: {integrity: sha512-pIvds4gm+wG7MT/U5u/q/rvzqpy50YymohL6qPTPkVLrP98RIMMrMxtfLLz9jXTJa3m1/DOZsv5m4ZlmYTcNTw==}
 
-  '@tsparticles/eslint-config@3.0.3':
-    resolution: {integrity: sha512-F+EIyjA2vZ/6pHAA6WlXNWMirvUMjQyhC4lGiN/7quoJlaZZ9TNutXk35OkOY7gcOD1kKP7yOxJwsrMEI7BGFA==}
+  '@tsparticles/eslint-config@3.0.5':
+    resolution: {integrity: sha512-o8qz53TOzW37j254vPTDWjjydMKQjnz4iqAmOqwKybUsRLoetLzcLgHaE+70ybgrzcR2iG/rRK8bLaWKTi9l1A==}
     peerDependencies:
       eslint: ^9.0.0
 
@@ -1729,14 +1729,14 @@ packages:
   '@tsparticles/tsconfig@2.3.0':
     resolution: {integrity: sha512-XBtRoIQcBzC+R7/tcoYu4+JB9DbVrSbn09IJ+QMyATLZK0P4Expj3Z/hPpJzejWOvepMSYBZlCodnjFQyk17YA==}
 
-  '@tsparticles/tsconfig@3.0.4':
-    resolution: {integrity: sha512-ccIi5mQdsD4CcR9XENJa3nFT4kYG1u4An//1IG71iwYGcrq1D5IMhLXWorlcwj9oBp/czXJT01+4x8UCzc8ZvA==}
+  '@tsparticles/tsconfig@3.0.5':
+    resolution: {integrity: sha512-cQrMdErOFb1rt2wXh/K5rzgWyC/LH5ORkRdYBJXKxDOETDKiQXVuiyoVYdGiWcwcy9W2Ss7umiSB598buSrSQQ==}
 
   '@tsparticles/webpack-plugin@2.3.0':
     resolution: {integrity: sha512-+SSh+I6dn/w+7C1APP5pPcD9jl9qrzkT7T00NGzk4+tII2dWURfrRF5DgyuInzFZA/AuR3K+QNCBTuo5INOD5Q==}
 
-  '@tsparticles/webpack-plugin@3.0.3':
-    resolution: {integrity: sha512-wkYSPKDY2c7XJsfCeWiFbYOPimLkFHP0LYLP453L+qd7aJoPYcKHUJmaQlB48VPRzgQzRzvNDfYcOcTPkZUd2w==}
+  '@tsparticles/webpack-plugin@3.0.5':
+    resolution: {integrity: sha512-nw/IOhPW3njjNwYjsSyJR+ilQo0bUwMnkIGeYUURAj1ymKwVeDncuMgjFnpwNQtyG0HEP6sQFyRJ/trXov/sCQ==}
 
   '@types/eslint-scope@3.7.7':
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
@@ -6943,7 +6943,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  '@tsparticles/eslint-config@3.0.3(eslint@9.34.0)':
+  '@tsparticles/eslint-config@3.0.5(eslint@9.34.0)':
     dependencies:
       eslint: 9.34.0
 
@@ -6961,7 +6961,7 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
-  '@tsparticles/tsconfig@3.0.4':
+  '@tsparticles/tsconfig@3.0.5':
     dependencies:
       typescript: 5.9.2
 
@@ -7006,12 +7006,12 @@ snapshots:
       - utf-8-validate
       - webpack-dev-server
 
-  '@tsparticles/webpack-plugin@3.0.3':
+  '@tsparticles/webpack-plugin@3.0.5':
     dependencies:
       '@babel/core': 7.28.3
       '@babel/preset-env': 7.28.3(@babel/core@7.28.3)
       '@stylistic/eslint-plugin': 5.2.3(eslint@9.34.0)
-      '@tsparticles/eslint-config': 3.0.3(eslint@9.34.0)
+      '@tsparticles/eslint-config': 3.0.5(eslint@9.34.0)
       '@tsparticles/prettier-config': 3.0.1
       '@types/node': 24.3.0
       '@types/webpack-bundle-analyzer': 4.7.0(webpack-cli@6.0.1)
