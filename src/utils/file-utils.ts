@@ -80,7 +80,7 @@ export async function getRepositoryUrl(): Promise<string> {
                 return;
             }
 
-            resolve(stdout.toString());
+            resolve(stdout);
         });
     });
 }

@@ -24,7 +24,7 @@ export async function bundle(basePath: string): Promise<boolean> {
                 }
 
                 if (!stats) {
-                    const err = "No stats returned from webpack";
+                    const err = new Error("No stats returned from webpack");
 
                     console.error(err);
 
@@ -38,7 +38,7 @@ export async function bundle(basePath: string): Promise<boolean> {
                 if (stats.hasErrors()) {
                     console.error(info.errors);
 
-                    reject(info.errors);
+                    reject(new Error(info.errors?.map(error => error.message).join("\n")));
                 }
 
                 if (stats.hasWarnings()) {

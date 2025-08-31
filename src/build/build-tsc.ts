@@ -125,7 +125,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
     const ts = await import("typescript"),
         parsed = ts.parseJsonConfigFileContent(options, ts.sys, basePath);
 
-    if (!parsed) {
+    if (parsed.errors.length) {
         return ExitCodes.ParseError;
     }
 
@@ -135,7 +135,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
 
     let failed = false;
 
-    allDiagnostics.forEach(diagnostic => {
+    for (const diagnostic of allDiagnostics) {
         failed = failed || diagnostic.category === ts.DiagnosticCategory.Error;
 
         if (diagnostic.file) {
@@ -147,15 +147,17 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
                 message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"),
                 increment = 1;
 
-            console.log(`${diagnostic.file.fileName} (${line + increment},${character + increment}): ${message}`);
+            console.log(
+                `${diagnostic.file.fileName} (${(line + increment).toString()},${(character + increment).toString()}): ${message}`,
+            );
         } else {
             console.log(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
         }
-    });
+    }
 
     const exitCode = emitResult.emitSkipped || failed ? ExitCodes.EmitErrors : ExitCodes.OK;
 
-    console.log(`TSC for ${type} done with exit code: '${exitCode}'.`);
+    console.log(`TSC for ${type} done with exit code: '${exitCode.toLocaleString()}'.`);
 
     return exitCode;
 }
@@ -171,7 +173,7 @@ export async function buildTS(basePath: string): Promise<boolean> {
 
     const types: ("browser" | "cjs" | "esm" | "types" | "umd")[] = ["browser", "cjs", "esm", "types", "umd"];
 
-    for await (const type of types) {
+    for (const type of types) {
         console.log(`Building TS files for ${type} configuration`);
 
         const exitCode = await compile(basePath, type);

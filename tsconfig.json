@@ -15,7 +15,9 @@
       "eslint"
     ]
   },
-  "files": [
-    "package.json"
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "files/**/*"
   ]
 }

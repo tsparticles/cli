@@ -24,10 +24,8 @@ export async function buildCircularDeps(basePath: string): Promise<boolean> {
             console.error("Circular dependencies found!");
 
             for (const dep of circularDeps) {
-                console.error(`${dep.join(" > ")}`);
+                console.error(dep.join(" > "));
             }
-
-            res = false;
         } else {
             res = true;
         }
