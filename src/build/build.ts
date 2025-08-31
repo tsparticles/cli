@@ -15,7 +15,7 @@ buildCommand.option(
     "Do all build steps for CI, no fixing files, only checking if they are formatted correctly",
     false,
 );
-buildCommand.option("-cd, --circular-deps", "Check for circular dependencies", false);
+buildCommand.option("-r, --cd, --circular-deps", "Check for circular dependencies", false);
 buildCommand.option("-d, --dist", "Build the dist files", false);
 buildCommand.option("-l, --lint", "Lint the source files", false);
 buildCommand.option("-p, --prettify", "Prettify the source files", false);
