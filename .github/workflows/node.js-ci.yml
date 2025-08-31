@@ -12,18 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         name: Checkout [main]
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: "16"
-      - uses: pnpm/action-setup@v3.0.0
+          node-version: "22"
+      - uses: pnpm/action-setup@v3
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8
+          version: 10
           run_install: false
       - name: Get pnpm version
         id: pnpm-version
@@ -49,19 +49,19 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: "16"
-      - uses: pnpm/action-setup@v3.0.0
+          node-version: "22"
+      - uses: pnpm/action-setup@v3
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8
+          version: 10
           run_install: false
       - name: Get pnpm version
         id: pnpm-version
