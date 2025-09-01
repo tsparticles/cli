@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.3",
-    "@tsparticles/cli": "^2.3.3",
+    "@tsparticles/cli": "^3.0.10",
     "@tsparticles/engine": "^3.9.1",
     "@types/eslint": "^9.6.1",
     "@types/estree": "^1.0.8",
