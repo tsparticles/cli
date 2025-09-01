@@ -12,7 +12,7 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
     let res: boolean;
 
     try {
-        const pkgInfo = (await import(path.join(basePath, "package.json"))) as {
+        const pkgInfo = JSON.parse((await fs.readFile(path.join(basePath, "package.json"))).toString()) as {
                 dependencies?: Record<string, string>;
                 peerDependencies?: Record<string, string>;
                 publishConfig?: { directory?: string };

@@ -9,11 +9,8 @@ describe("create-preset", () => {
 
         await createPresetTemplate("foo", "Foo", "", destDir);
 
-        const pkgPath = path.join(destDir, "package.json");
-
-        console.log(pkgPath);
-
-        const pkgInfo = await fs.readJSON(pkgPath);
+        const pkgPath = path.join(destDir, "package.json"),
+            pkgInfo = await fs.readJSON(pkgPath);
 
         expect(pkgInfo.name).toBe("tsparticles-preset-foo");
 
@@ -25,11 +22,8 @@ describe("create-preset", () => {
 
         await createPresetTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
 
-        const pkgPath = path.join(destDir, "package.json");
-
-        console.log(pkgPath);
-
-        const pkgInfo = await fs.readJSON(pkgPath);
+        const pkgPath = path.join(destDir, "package.json"),
+            pkgInfo = await fs.readJSON(pkgPath);
 
         expect(pkgInfo.name).toBe("tsparticles-preset-bar");
 

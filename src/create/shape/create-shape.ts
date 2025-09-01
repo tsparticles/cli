@@ -28,6 +28,12 @@ async function updateIndexFile(destPath: string, name: string): Promise<void> {
                 from: /loadTemplateShape/g,
                 to: `load${capitalizedName}Shape`,
             },
+        ],
+    });
+
+    await replaceTokensInFile({
+        path: path.join(destPath, "src", "ShapeDrawer.ts"),
+        tokens: [
             {
                 from: /"#template#"/g,
                 to: `"${camelizedName}"`,

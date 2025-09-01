@@ -8,8 +8,6 @@ describe("create-plugin", () => {
         const destDir = path.join(__dirname, "tmp-files", "foo-plugin"),
             pkgPath = path.join(destDir, "package.json");
 
-        console.log("pkgPath - plugin", pkgPath);
-
         await createPluginTemplate("foo", "Foo", "", destDir);
 
         const pkgInfo = await fs.readJSON(pkgPath);
@@ -24,11 +22,8 @@ describe("create-plugin", () => {
 
         await createPluginTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
 
-        const pkgPath = path.join(destDir, "package.json");
-
-        console.log(pkgPath);
-
-        const pkgInfo = await fs.readJSON(pkgPath);
+        const pkgPath = path.join(destDir, "package.json"),
+            pkgInfo = await fs.readJSON(pkgPath);
 
         expect(pkgInfo.name).toBe("tsparticles-plugin-bar");
 

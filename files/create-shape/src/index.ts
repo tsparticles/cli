@@ -6,5 +6,5 @@ import type { Engine } from "@tsparticles/engine";
 export async function loadTemplateShape(engine: Engine): Promise<void> {
     const { ShapeDrawer } = await import("./ShapeDrawer.js");
 
-    await engine.addShape("#template#", new ShapeDrawer());
+    await engine.addShape(new ShapeDrawer());
 }

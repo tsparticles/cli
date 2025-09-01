@@ -179,7 +179,6 @@ export async function createPluginTemplate(
     await updatePluginPackageDistFile(destPath, name, description, repoUrl);
     await updateReadmeFile(destPath, name, description, repoUrl);
     await updatePluginWebpackFile(destPath, name, description);
-
     await runInstall(destPath);
     await runBuild(destPath);
 }
