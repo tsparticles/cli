@@ -24,15 +24,17 @@ buildCommand.option("-t, --tsc", "Build the library using TypeScript", false);
 buildCommand.argument("[path]", `Path to the project root folder, default is "src"`, "src");
 buildCommand.action(async (argPath: string) => {
     const opts = buildCommand.opts(),
-        ci = !!opts.ci,
-        all = !!opts.all || (!opts.bundle && !opts.clean && !opts.dist && !opts.lint && !opts.prettify && !opts.tsc),
-        doBundle = all || !!opts.bundle,
-        circularDeps = all || !!opts.circularDeps,
-        clean = all || !!opts.clean,
-        distfiles = all || !!opts.dist,
-        doLint = all || !!opts.lint,
-        prettier = all || !!opts.prettify,
-        tsc = all || !!opts.tsc;
+        ci = !!opts["ci"],
+        all =
+            !!opts["all"] ||
+            (!opts["bundle"] && !opts["clean"] && !opts["dist"] && !opts["lint"] && !opts["prettify"] && !opts["tsc"]),
+        doBundle = all || !!opts["bundle"],
+        circularDeps = all || !!opts["circularDeps"],
+        clean = all || !!opts["clean"],
+        distfiles = all || !!opts["dist"],
+        doLint = all || !!opts["lint"],
+        prettier = all || !!opts["prettify"],
+        tsc = all || !!opts["tsc"];
 
     const basePath = process.cwd(),
         { getDistStats } = await import("./build-diststats.js"),

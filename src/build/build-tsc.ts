@@ -22,6 +22,8 @@ async function readConfig(basePath: string, file: string): Promise<string | unde
 
         return data.toString();
     }
+
+    return undefined;
 }
 
 /**

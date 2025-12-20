@@ -25,12 +25,14 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
             text = data.toString(),
             libObj = JSON.parse(text) as Record<string, unknown>;
 
-        libObj.version = pkgInfo.version;
+        libObj["version"] = pkgInfo.version;
 
         if (pkgInfo.dependencies) {
-            libObj.dependencies = JSON.parse(JSON.stringify(pkgInfo.dependencies).replaceAll("workspace:", ""));
+            libObj["dependencies"] = JSON.parse(JSON.stringify(pkgInfo.dependencies).replaceAll("workspace:", ""));
         } else if (pkgInfo.peerDependencies) {
-            libObj.peerDependencies = JSON.parse(JSON.stringify(pkgInfo.peerDependencies).replaceAll("workspace:", ""));
+            libObj["peerDependencies"] = JSON.parse(
+                JSON.stringify(pkgInfo.peerDependencies).replaceAll("workspace:", ""),
+            );
         }
 
         const jsonIndent = 2;
