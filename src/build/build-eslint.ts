@@ -27,8 +27,7 @@ export async function lint(ci: boolean): Promise<boolean> {
             const messages = errors.map(t =>
                 t.messages
                     .map(m => `${t.filePath} (${m.line.toString()},${m.column.toString()}): ${m.message}`)
-                    .join("\n"),
-            );
+                    .join("\n"));
 
             throw new Error(messages.join("\n"));
         }
