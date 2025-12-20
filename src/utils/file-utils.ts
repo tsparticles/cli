@@ -19,7 +19,7 @@ export interface ReplaceTokensData {
  */
 export async function replaceTokensInFiles(options: ReplaceTokensOptions[]): Promise<void> {
     for (const item of options) {
-        const filePath = path.resolve(item.path);
+        const filePath = item.path;
 
         let data = await fs.readFile(filePath, "utf-8");
 
@@ -47,7 +47,7 @@ export async function replaceTokensInFile(options: ReplaceTokensOptions): Promis
  * @returns the destination directory path
  */
 export async function getDestinationDir(destination: string): Promise<string> {
-    const destPath = path.resolve(path.join(process.cwd(), destination)),
+    const destPath = path.join(process.cwd(), destination),
         destExists = await fs.pathExists(destPath);
 
     if (destExists) {
@@ -80,7 +80,7 @@ export async function getRepositoryUrl(): Promise<string> {
                 return;
             }
 
-            resolve(stdout.toString());
+            resolve(stdout);
         });
     });
 }

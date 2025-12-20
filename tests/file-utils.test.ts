@@ -1,5 +1,4 @@
-import { describe, it } from "mocha";
-import { expect } from "chai";
+import {afterAll, describe, it, expect} from "vitest";
 import fs from "fs-extra";
 import path from "path";
 import {
@@ -7,10 +6,10 @@ import {
     getRepositoryUrl,
     replaceTokensInFile,
     replaceTokensInFiles,
-} from "../src/utils/file-utils";
+} from "../src/utils/file-utils.js";
 
 describe("file-utils", async () => {
-    const baseDir = path.join(__dirname, "tmp-files");
+    const baseDir = path.resolve("tmp-files");
 
     await fs.ensureDir(baseDir);
 
@@ -36,8 +35,8 @@ describe("file-utils", async () => {
             const data1 = await fs.readFile(path.join(baseDir, "files1.txt"), "utf8"),
                 data2 = await fs.readFile(path.join(baseDir, "files2.txt"), "utf8");
 
-            expect(data1).to.be.equal("test1");
-            expect(data2).to.be.equal("test2");
+            expect(data1).toBe("test1");
+            expect(data2).toBe("test2");
         });
     });
 
@@ -55,21 +54,21 @@ describe("file-utils", async () => {
         it("should replace tokens in files", async () => {
             const data = await fs.readFile(path.join(baseDir, "file1.txt"), "utf8");
 
-            expect(data).to.be.equal("test1");
+            expect(data).toBe("test1");
         });
     });
 
     describe("get destination dir", async () => {
-        const destDir = await getDestinationDir(path.join(baseDir, "baz"));
+        const destDir = await getDestinationDir(path.join("tmp-files", "baz"));
 
         it("should return the destination dir", () => {
-            expect(destDir).to.be.equal(path.join(baseDir, "baz"));
+            expect(destDir).toBe(path.join(baseDir, "baz"));
         });
 
         it("should return the destination dir", async () => {
-            const destDir2 = await getDestinationDir(path.join(baseDir, "baz"));
+            const destDir2 = await getDestinationDir(path.join("tmp-files", "baz"));
 
-            expect(destDir2).to.be.equal(path.join(baseDir, "baz"));
+            expect(destDir2).toBe(path.join(baseDir, "baz"));
         });
 
         it("should throw exception", async () => {
@@ -78,24 +77,24 @@ describe("file-utils", async () => {
             let ex = false;
 
             try {
-                await getDestinationDir(path.join(baseDir, "baz"));
+                await getDestinationDir(path.join("tmp-files", "baz"));
 
                 console.log("never");
             } catch {
                 ex = true;
             }
 
-            expect(ex).to.be.equal(true);
+            expect(ex).toBe(true);
         });
     });
 
     describe("get repository url", () => {
         it("should return the repository url", async () => {
-            expect(await getRepositoryUrl()).to.be.not.equal("");
+            expect(await getRepositoryUrl()).not.toBe("");
         });
     });
 
-    after(async () => {
+    afterAll(async () => {
         await fs.remove(baseDir);
     });
 });

@@ -2,7 +2,7 @@ import { exec } from "child_process";
 import fs from "fs-extra";
 import { lookpath } from "lookpath";
 import path from "path";
-import { replaceTokensInFile } from "./file-utils";
+import { replaceTokensInFile } from "./file-utils.js";
 
 /**
  * Updates the package.json file
@@ -20,7 +20,7 @@ export async function updatePackageFile(
     repoUrl: string,
 ): Promise<void> {
     await replaceTokensInFile({
-        path: path.resolve(destPath, "package.json"),
+        path: path.join(destPath, "package.json"),
         tokens: [
             {
                 from: /"tsParticles empty template"/g,
@@ -66,7 +66,7 @@ export async function updatePackageDistFile(
     repoUrl: string,
 ): Promise<void> {
     await replaceTokensInFile({
-        path: path.resolve(destPath, "package.dist.json"),
+        path: path.join(destPath, "package.dist.json"),
         tokens: [
             {
                 from: /"tsParticles empty template"/g,
@@ -110,7 +110,7 @@ export async function updateWebpackFile(
     fnName: string,
 ): Promise<void> {
     await replaceTokensInFile({
-        path: path.resolve(destPath, "webpack.config.js"),
+        path: path.join(destPath, "webpack.config.js"),
         tokens: [
             {
                 from: /"Empty"/g,
@@ -133,7 +133,7 @@ export async function updateWebpackFile(
  * @param destPath - The path where the project will be created
  */
 export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
-    await fs.copy(path.resolve(__dirname, "..", "..", "files", "empty-project"), destPath, {
+    await fs.copy(path.join(__dirname, "..", "..", "files", "empty-project"), destPath, {
         overwrite: true,
         filter: copyFilter,
     });

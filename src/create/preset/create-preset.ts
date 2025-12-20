@@ -1,4 +1,4 @@
-import { camelize, capitalize, dash } from "../../utils/string-utils";
+import { camelize, capitalize, dash } from "../../utils/string-utils.js";
 import {
     copyEmptyTemplateFiles,
     copyFilter,
@@ -7,10 +7,10 @@ import {
     updatePackageDistFile,
     updatePackageFile,
     updateWebpackFile,
-} from "../../utils/template-utils";
+} from "../../utils/template-utils.js";
 import fs from "fs-extra";
 import path from "path";
-import { replaceTokensInFile } from "../../utils/file-utils";
+import { replaceTokensInFile } from "../../utils/file-utils.js";
 
 /**
  * Updates the bundle file with the correct function name
@@ -21,7 +21,7 @@ async function updateBundleFile(destPath: string, name: string): Promise<void> {
     const capitalizedName = capitalize(name, "-", " ");
 
     await replaceTokensInFile({
-        path: path.resolve(destPath, "src", "bundle.ts"),
+        path: path.join(destPath, "src", "bundle.ts"),
         tokens: [
             {
                 from: /loadTemplatePreset/g,
@@ -41,7 +41,7 @@ async function updateIndexFile(destPath: string, name: string): Promise<void> {
         camelizedName = camelize(capitalizedName);
 
     await replaceTokensInFile({
-        path: path.resolve(destPath, "src", "index.ts"),
+        path: path.join(destPath, "src", "index.ts"),
         tokens: [
             {
                 from: /loadTemplatePreset/g,
@@ -126,7 +126,7 @@ async function updateReadmeFile(destPath: string, name: string, description: str
             : "tsparticles/preset-template";
 
     await replaceTokensInFile({
-        path: path.resolve(destPath, "README.md"),
+        path: path.join(destPath, "README.md"),
         tokens: [
             {
                 from: /tsParticles Template Preset/g,
@@ -183,7 +183,7 @@ export async function createPresetTemplate(
     repoUrl: string,
     destPath: string,
 ): Promise<void> {
-    const sourcePath = path.resolve(__dirname, "..", "..", "..", "files", "create-preset");
+    const sourcePath = path.join(__dirname, "..", "..", "..", "files", "create-preset");
 
     await copyEmptyTemplateFiles(destPath);
 

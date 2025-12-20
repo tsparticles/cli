@@ -1,6 +1,8 @@
 import type { IShapeDrawData, IShapeDrawer } from "@tsparticles/engine";
 
 export class ShapeDrawer implements IShapeDrawer {
+    readonly validTypes = ["#template#"] as const;
+
     draw(_data: IShapeDrawData): void {
         // draw the particle using the context
         // which is already centered in the particle position

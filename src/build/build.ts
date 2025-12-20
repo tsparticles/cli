@@ -15,7 +15,7 @@ buildCommand.option(
     "Do all build steps for CI, no fixing files, only checking if they are formatted correctly",
     false,
 );
-buildCommand.option("-cd, --circular-deps", "Check for circular dependencies", false);
+buildCommand.option("-r, --circular-deps", "Check for circular dependencies", false);
 buildCommand.option("-d, --dist", "Build the dist files", false);
 buildCommand.option("-l, --lint", "Lint the source files", false);
 buildCommand.option("-p, --prettify", "Prettify the source files", false);
@@ -24,15 +24,17 @@ buildCommand.option("-t, --tsc", "Build the library using TypeScript", false);
 buildCommand.argument("[path]", `Path to the project root folder, default is "src"`, "src");
 buildCommand.action(async (argPath: string) => {
     const opts = buildCommand.opts(),
-        ci = !!opts.ci,
-        all = !!opts.all || (!opts.bundle && !opts.clean && !opts.dist && !opts.lint && !opts.prettify && !opts.tsc),
-        doBundle = all || !!opts.bundle,
-        circularDeps = all || !!opts.circularDeps,
-        clean = all || !!opts.clean,
-        distfiles = all || !!opts.dist,
-        doLint = all || !!opts.lint,
-        prettier = all || !!opts.prettify,
-        tsc = all || !!opts.tsc;
+        ci = !!opts["ci"],
+        all =
+            !!opts["all"] ||
+            (!opts["bundle"] && !opts["clean"] && !opts["dist"] && !opts["lint"] && !opts["prettify"] && !opts["tsc"]),
+        doBundle = all || !!opts["bundle"],
+        circularDeps = all || !!opts["circularDeps"],
+        clean = all || !!opts["clean"],
+        distfiles = all || !!opts["dist"],
+        doLint = all || !!opts["lint"],
+        prettier = all || !!opts["prettify"],
+        tsc = all || !!opts["tsc"];
 
     const basePath = process.cwd(),
         { getDistStats } = await import("./build-diststats.js"),
@@ -54,7 +56,7 @@ buildCommand.action(async (argPath: string) => {
 
     let canContinue = true;
 
-    if (canContinue && prettier) {
+    if (prettier) {
         const { prettifySrc } = await import("./build-prettier.js");
 
         canContinue = await prettifySrc(basePath, srcPath, ci);
@@ -87,9 +89,10 @@ buildCommand.action(async (argPath: string) => {
     if (canContinue && prettier) {
         const { prettifyReadme, prettifyPackageJson, prettifyPackageDistJson } = await import("./build-prettier.js");
 
-        canContinue = await prettifyReadme(basePath, ci);
-        canContinue = await prettifyPackageJson(basePath, ci);
-        canContinue = await prettifyPackageDistJson(basePath, ci);
+        canContinue =
+            (await prettifyReadme(basePath, ci)) &&
+            (await prettifyPackageJson(basePath, ci)) &&
+            (await prettifyPackageDistJson(basePath, ci));
     }
 
     if (canContinue && distfiles) {
@@ -108,23 +111,21 @@ buildCommand.action(async (argPath: string) => {
         minSize = 0,
         bundleSizeIncreased = bundleDiffSize > minSize,
         outputFunc = bundleSizeIncreased ? console.warn : console.info,
+        bundleSizeIncreasedText = bundleSizeIncreased ? "increased" : "decreased",
+        diffSizeIncreasedText = diffSize > minSize ? "increased" : "decreased",
         texts = [
             !bundleDiffSize
                 ? "Bundle size unchanged"
-                : `Bundle size ${bundleSizeIncreased ? "increased" : "decreased"} from ${oldStats.bundleSize} to ${
-                      newStats.bundleSize
-                  } (${Math.abs(bundleDiffSize)}B)`,
+                : `Bundle size ${bundleSizeIncreasedText} from ${oldStats.bundleSize.toString()} to ${newStats.bundleSize.toString()} (${Math.abs(bundleDiffSize).toString()}B)`,
             !diffSize
                 ? "Size unchanged"
-                : `Size ${diffSize > minSize ? "increased" : "decreased"} from ${oldStats.totalSize} to ${
-                      newStats.totalSize
-                  } (${Math.abs(diffSize)}B)`,
-            `Files count changed from ${oldStats.totalFiles} to ${newStats.totalFiles} (${
+                : `Size ${diffSizeIncreasedText} from ${oldStats.totalSize.toString()} to ${newStats.totalSize.toString()} (${Math.abs(diffSize).toString()}B)`,
+            `Files count changed from ${oldStats.totalFiles.toString()} to ${newStats.totalFiles.toString()} (${(
                 newStats.totalFiles - oldStats.totalFiles
-            })`,
-            `Folders count changed from ${oldStats.totalFolders} to ${newStats.totalFolders} (${
+            ).toString()})`,
+            `Folders count changed from ${oldStats.totalFolders.toString()} to ${newStats.totalFolders.toString()} (${(
                 newStats.totalFolders - oldStats.totalFolders
-            })`,
+            ).toString()})`,
         ];
 
     console.log("Build finished successfully!");

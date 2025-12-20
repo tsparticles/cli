@@ -1,125 +1,130 @@
-import { describe, it } from "mocha";
-import { expect } from "chai";
-import { camelize, capitalize, dash } from "../src/utils/string-utils";
+import { describe, it, expect } from "vitest";
+import { camelize, capitalize, dash } from "../src/utils/string-utils.js";
 
 describe("capitalize", () => {
     describe("empty string", () => {
-        expect(capitalize("")).to.be.equal("");
+        it("should successfully compare empty strings", () => {
+            expect(capitalize("")).toBe("");
+        });
     });
 
     describe("lowercase string", () => {
         it("should return capitalized string", () => {
-            expect(capitalize("test")).to.be.equal("Test");
+            expect(capitalize("test")).toBe("Test");
         });
     });
 
     describe("capitalized string", () => {
         it("should return capitalized string", () => {
-            expect(capitalize("Test")).to.be.equal("Test");
+            expect(capitalize("Test")).toBe("Test");
         });
     });
 
     describe("multiple lowercase words string", () => {
         it("should return capitalized string, no split", () => {
-            expect(capitalize("test test")).to.be.equal("Test test");
+            expect(capitalize("test test")).toBe("Test test");
         });
 
         it("should return capitalized string, split", () => {
-            expect(capitalize("test test", " ")).to.be.equal("TestTest");
+            expect(capitalize("test test", " ")).toBe("TestTest");
         });
 
         it("should return capitalized string, wrong split", () => {
-            expect(capitalize("test test", ";")).to.be.equal("Test test");
+            expect(capitalize("test test", ";")).toBe("Test test");
         });
     });
 
     describe("multiple uppercase words string", () => {
         it("should return capitalized string, no split", () => {
-            expect(capitalize("Test Test")).to.be.equal("Test Test");
+            expect(capitalize("Test Test")).toBe("Test Test");
         });
 
         it("should return capitalized string, split", () => {
-            expect(capitalize("Test Test", " ")).to.be.equal("TestTest");
+            expect(capitalize("Test Test", " ")).toBe("TestTest");
         });
 
         it("should return capitalized string, wrong split", () => {
-            expect(capitalize("Test Test", ";")).to.be.equal("Test Test");
+            expect(capitalize("Test Test", ";")).toBe("Test Test");
         });
     });
 });
 
 describe("camelize", () => {
     describe("empty string", () => {
-        expect(camelize("")).to.be.equal("");
+        it("should successfully compare empty strings", () => {
+            expect(camelize("")).toBe("");
+        });
     });
 
     describe("lowercase string", () => {
         it("should return camelized string", () => {
-            expect(camelize("test")).to.be.equal("test");
+            expect(camelize("test")).toBe("test");
         });
     });
 
     describe("uppercase string", () => {
         it("should return camelized string", () => {
-            expect(camelize("Test")).to.be.equal("test");
+            expect(camelize("Test")).toBe("test");
         });
     });
 
     describe("multiple lowercase words string", () => {
         it("should return camelized string, no split", () => {
-            expect(camelize("test test")).to.be.equal("test test");
+            expect(camelize("test test")).toBe("test test");
         });
 
         it("should return camelized string, split", () => {
-            expect(camelize("test test", " ")).to.be.equal("testTest");
+            expect(camelize("test test", " ")).toBe("testTest");
         });
 
         it("should return camelized string, wrong split", () => {
-            expect(camelize("test test", ";")).to.be.equal("test test");
+            expect(camelize("test test", ";")).toBe("test test");
         });
     });
 
     describe("multiple uppercase words string", () => {
         it("should return camelized string, no split", () => {
-            expect(camelize("Test Test")).to.be.equal("test Test");
+            expect(camelize("Test Test")).toBe("test Test");
         });
 
         it("should return camelized string, split", () => {
-            expect(camelize("Test Test", " ")).to.be.equal("testTest");
+            expect(camelize("Test Test", " ")).toBe("testTest");
         });
 
         it("should return camelized string, wrong split", () => {
-            expect(camelize("Test Test", ";")).to.be.equal("test Test");
+            expect(camelize("Test Test", ";")).toBe("test Test");
         });
     });
 });
 
 describe("dash", () => {
     describe("empty string", () => {
-        expect(dash("")).to.be.equal("");
+        it("should successfully compare empty strings", () => {
+            expect(dash("")).toBe("");
+        });
     });
 
     describe("lowercase string", () => {
         it("should return dashed string", () => {
-            expect(dash("test")).to.be.equal("test");
+            expect(dash("test")).toBe("test");
         });
     });
 
     describe("uppercase string", () => {
         it("should return dashed string", () => {
-            expect(dash("Test")).to.be.equal("test");
+            expect(dash("Test")).toBe("test");
         });
     });
 
     describe("capitalized word string", () => {
         it("should return dashed string", () => {
-            expect(dash("TestTest")).to.be.equal("test-test");
+            expect(dash("TestTest")).toBe("test-test");
         });
     });
 
     describe("camelized word string", () => {
         it("should return dashed string", () => {
-            expect(dash("testTest")).to.be.equal("test-test");
+            expect(dash("testTest")).toBe("test-test");
         });
     });
 });

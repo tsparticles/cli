@@ -1,4 +1,4 @@
-import { camelize, capitalize, dash } from "../../utils/string-utils";
+import { camelize, capitalize, dash } from "../../utils/string-utils.js";
 import {
     copyEmptyTemplateFiles,
     copyFilter,
@@ -7,10 +7,10 @@ import {
     updatePackageDistFile,
     updatePackageFile,
     updateWebpackFile,
-} from "../../utils/template-utils";
+} from "../../utils/template-utils.js";
 import fs from "fs-extra";
 import path from "path";
-import { replaceTokensInFile } from "../../utils/file-utils";
+import { replaceTokensInFile } from "../../utils/file-utils.js";
 
 /**
  * Updates the index file with the correct function name
@@ -22,7 +22,7 @@ async function updateIndexFile(destPath: string, name: string): Promise<void> {
         camelizedName = camelize(capitalizedName);
 
     await replaceTokensInFile({
-        path: path.resolve(destPath, "src", "index.ts"),
+        path: path.join(destPath, "src", "index.ts"),
         tokens: [
             {
                 from: /loadTemplatePlugin/g,
@@ -94,7 +94,7 @@ async function updatePluginPackageDistFile(
  * @param repoUrl - The repository url
  */
 async function updateReadmeFile(destPath: string, name: string, description: string, repoUrl: string): Promise<void> {
-    const readmePath = path.resolve(destPath, "README.md"),
+    const readmePath = path.join(destPath, "README.md"),
         capitalizedName = capitalize(name, "-", " "),
         camelizedName = camelize(capitalizedName),
         dashedName = dash(camelizedName),
@@ -165,7 +165,7 @@ export async function createPluginTemplate(
     repoUrl: string,
     destPath: string,
 ): Promise<void> {
-    const sourcePath = path.resolve(__dirname, "..", "..", "..", "files", "create-plugin");
+    const sourcePath = path.join(__dirname, "..", "..", "..", "files", "create-plugin");
 
     await copyEmptyTemplateFiles(destPath);
 
@@ -179,7 +179,6 @@ export async function createPluginTemplate(
     await updatePluginPackageDistFile(destPath, name, description, repoUrl);
     await updateReadmeFile(destPath, name, description, repoUrl);
     await updatePluginWebpackFile(destPath, name, description);
-
     await runInstall(destPath);
     await runBuild(destPath);
 }

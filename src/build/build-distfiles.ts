@@ -12,7 +12,7 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
     let res: boolean;
 
     try {
-        const pkgInfo = (await import(path.join(basePath, "package.json"))) as {
+        const pkgInfo = JSON.parse((await fs.readFile(path.join(basePath, "package.json"))).toString()) as {
                 dependencies?: Record<string, string>;
                 peerDependencies?: Record<string, string>;
                 publishConfig?: { directory?: string };
@@ -25,12 +25,14 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
             text = data.toString(),
             libObj = JSON.parse(text) as Record<string, unknown>;
 
-        libObj.version = pkgInfo.version;
+        libObj["version"] = pkgInfo.version;
 
         if (pkgInfo.dependencies) {
-            libObj.dependencies = JSON.parse(JSON.stringify(pkgInfo.dependencies).replaceAll("workspace:", ""));
+            libObj["dependencies"] = JSON.parse(JSON.stringify(pkgInfo.dependencies).replaceAll("workspace:", ""));
         } else if (pkgInfo.peerDependencies) {
-            libObj.peerDependencies = JSON.parse(JSON.stringify(pkgInfo.peerDependencies).replaceAll("workspace:", ""));
+            libObj["peerDependencies"] = JSON.parse(
+                JSON.stringify(pkgInfo.peerDependencies).replaceAll("workspace:", ""),
+            );
         }
 
         const jsonIndent = 2;

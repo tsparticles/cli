@@ -1,4 +1,4 @@
-import { camelize, capitalize, dash } from "../../utils/string-utils";
+import { camelize, capitalize, dash } from "../../utils/string-utils.js";
 import {
     copyEmptyTemplateFiles,
     copyFilter,
@@ -7,10 +7,10 @@ import {
     updatePackageDistFile,
     updatePackageFile,
     updateWebpackFile,
-} from "../../utils/template-utils";
+} from "../../utils/template-utils.js";
 import fs from "fs-extra";
 import path from "path";
-import { replaceTokensInFile } from "../../utils/file-utils";
+import { replaceTokensInFile } from "../../utils/file-utils.js";
 
 /**
  * Updates the index file with the correct function name
@@ -22,12 +22,18 @@ async function updateIndexFile(destPath: string, name: string): Promise<void> {
         camelizedName = camelize(capitalizedName);
 
     await replaceTokensInFile({
-        path: path.resolve(destPath, "src", "index.ts"),
+        path: path.join(destPath, "src", "index.ts"),
         tokens: [
             {
                 from: /loadTemplateShape/g,
                 to: `load${capitalizedName}Shape`,
             },
+        ],
+    });
+
+    await replaceTokensInFile({
+        path: path.join(destPath, "src", "ShapeDrawer.ts"),
+        tokens: [
             {
                 from: /"#template#"/g,
                 to: `"${camelizedName}"`,
@@ -107,7 +113,7 @@ async function updateReadmeFile(destPath: string, name: string, description: str
             : "tsparticles/shape-template";
 
     await replaceTokensInFile({
-        path: path.resolve(destPath, "README.md"),
+        path: path.join(destPath, "README.md"),
         tokens: [
             {
                 from: /tsParticles Template Shape/g,
@@ -164,7 +170,7 @@ export async function createShapeTemplate(
     repoUrl: string,
     destPath: string,
 ): Promise<void> {
-    const sourcePath = path.resolve(__dirname, "..", "..", "..", "files", "create-shape");
+    const sourcePath = path.join(__dirname, "..", "..", "..", "files", "create-shape");
 
     await copyEmptyTemplateFiles(destPath);
 

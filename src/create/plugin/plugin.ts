@@ -1,8 +1,8 @@
-import { getDestinationDir, getRepositoryUrl } from "../../utils/file-utils";
+import { getDestinationDir, getRepositoryUrl } from "../../utils/file-utils.js";
 import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
-import { capitalize } from "../../utils/string-utils";
-import { createPluginTemplate } from "./create-plugin";
+import { capitalize } from "../../utils/string-utils.js";
+import { createPluginTemplate } from "./create-plugin.js";
 import path from "path";
 
 const pluginCommand = new Command("plugin");
