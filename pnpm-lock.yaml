@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@tsparticles/eslint-config':
         specifier: ^3.0.6
-        version: 3.0.6(eslint@9.39.2)
+        version: 3.0.9(eslint@9.39.2)
       '@tsparticles/prettier-config':
         specifier: ^3.0.6
         version: 3.0.6
@@ -1147,8 +1147,8 @@ packages:
   '@tsparticles/engine@3.9.1':
     resolution: {integrity: sha512-DpdgAhWMZ3Eh2gyxik8FXS6BKZ8vyea+Eu5BC4epsahqTGY9V3JGGJcXC6lRJx6cPMAx1A0FaQAojPF3v6rkmQ==}
 
-  '@tsparticles/eslint-config@3.0.6':
-    resolution: {integrity: sha512-1OH3Ifccom2bo/ULCCA8iGWjyPHZ3C78HRWUFFvPnteHaFIYEgHZwsudwki+X4jhjNkqIpXMwBanOPityzBsZA==}
+  '@tsparticles/eslint-config@3.0.9':
+    resolution: {integrity: sha512-Mm6vqanJbV1pkHpl0DzDGHgPThYiUtdcVDOR2i9lY0cosNRX3tC1pV0WpoKXDK+gMaa3CseOWYRbaS6mVMO3sw==}
     peerDependencies:
       eslint: ^9.0.0
 
@@ -2225,6 +2225,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
@@ -2308,6 +2309,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -4661,7 +4663,7 @@ snapshots:
 
   '@tsparticles/cli@3.0.11(@types/eslint@9.6.1)(webpack-cli@6.0.1)':
     dependencies:
-      '@tsparticles/eslint-config': 3.0.6(eslint@9.39.2)
+      '@tsparticles/eslint-config': 3.0.9(eslint@9.39.2)
       '@tsparticles/prettier-config': 3.0.6
       '@tsparticles/tsconfig': 3.0.6
       '@tsparticles/webpack-plugin': 3.0.6
@@ -4699,7 +4701,7 @@ snapshots:
 
   '@tsparticles/engine@3.9.1': {}
 
-  '@tsparticles/eslint-config@3.0.6(eslint@9.39.2)':
+  '@tsparticles/eslint-config@3.0.9(eslint@9.39.2)':
     dependencies:
       eslint: 9.39.2
 
@@ -4717,7 +4719,7 @@ snapshots:
       '@babel/core': 7.28.5
       '@babel/preset-env': 7.28.5(@babel/core@7.28.5)
       '@stylistic/eslint-plugin': 5.6.1(eslint@9.39.2)
-      '@tsparticles/eslint-config': 3.0.6(eslint@9.39.2)
+      '@tsparticles/eslint-config': 3.0.9(eslint@9.39.2)
       '@tsparticles/prettier-config': 3.0.6
       '@types/node': 25.0.3
       '@types/webpack-bundle-analyzer': 4.7.0(webpack-cli@6.0.1)
