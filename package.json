@@ -30,10 +30,10 @@
     "version": "node scripts/postversion.js && git add files/empty-project/package.json"
   },
   "dependencies": {
-    "@tsparticles/eslint-config": "^3.0.7",
+    "@tsparticles/eslint-config": "^3.0.9",
     "@tsparticles/prettier-config": "^3.0.7",
-    "@tsparticles/tsconfig": "^3.0.8",
-    "@tsparticles/webpack-plugin": "^3.0.7",
+    "@tsparticles/tsconfig": "^3.0.9",
+    "@tsparticles/webpack-plugin": "^3.0.9",
     "commander": "^14.0.2",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
