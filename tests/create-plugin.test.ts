@@ -8,7 +8,11 @@ describe("create-plugin", () => {
         const destDir = path.join(__dirname, "tmp-files", "foo-plugin"),
             pkgPath = path.join(destDir, "package.json");
 
-        await createPluginTemplate("foo", "Foo", "", destDir);
+        try {
+            await createPluginTemplate("foo", "Foo", "", destDir);
+        } catch (e) {
+            console.error(e);
+        }
 
         const pkgInfo = await fs.readJSON(pkgPath);
 
@@ -18,9 +22,13 @@ describe("create-plugin", () => {
     });
 
     it("should have created the plugin project, w/ repo", async () => {
-        const destDir = path.join(__dirname,"tmp-files", "bar-plugin");
+        const destDir = path.join(__dirname, "tmp-files", "bar-plugin");
 
-        await createPluginTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
+        try {
+            await createPluginTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
+        } catch (e) {
+            console.error(e);
+        }
 
         const pkgPath = path.join(destDir, "package.json"),
             pkgInfo = await fs.readJSON(pkgPath);

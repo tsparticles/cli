@@ -1,4 +1,4 @@
-import { type Container, type Engine, type IPlugin, type ISourceOptions, type Options } from "@tsparticles/engine";
+import { /*type Container, type Engine,*/ type IPlugin, type ISourceOptions, type Options } from "@tsparticles/engine";
 import type { PluginInstance } from "./PluginInstance.js";
 
 /**
@@ -6,18 +6,18 @@ import type { PluginInstance } from "./PluginInstance.js";
 export class Plugin implements IPlugin {
     readonly id;
 
-    private readonly _engine;
+    //private readonly _engine;
 
-    constructor(engine: Engine) {
+    constructor(/*engine: Engine*/) {
         this.id = "#template#";
 
-        this._engine = engine;
+        //this._engine = engine;
     }
 
-    async getPlugin(container: Container): Promise<PluginInstance> {
+    async getPlugin(/*container: Container*/): Promise<PluginInstance> {
         const { PluginInstance } = await import("./PluginInstance.js");
 
-        return new PluginInstance(container, this._engine);
+        return new PluginInstance(/*container, this._engine*/);
     }
 
     loadOptions(_options: Options, _source?: ISourceOptions): void {

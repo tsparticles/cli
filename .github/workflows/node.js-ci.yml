@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         name: Checkout [main]
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: "24"
       - uses: pnpm/action-setup@v4
@@ -35,13 +35,16 @@ jobs:
         run: |
           echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      - name: Clean tmp-files directory
+        run: rm -rf tests/tmp-files
+        if: always()
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm run build:ci
       - run: pnpm test
@@ -49,15 +52,15 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: "24"
-      - uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v4
         name: Install pnpm
         id: pnpm-install
         with:
@@ -73,13 +76,16 @@ jobs:
         run: |
           echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      - name: Clean tmp-files directory
+        run: rm -rf tests/tmp-files
+        if: always()
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm run build:ci
       - run: pnpm test

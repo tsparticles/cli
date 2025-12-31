@@ -1,24 +1,12 @@
 {
+    "extends": "../tsconfig.json",
     "compilerOptions": {
-        "target": "ES2021",
-        "module": "NodeNext",
-        "lib": ["ESNext", "ES2024", "ES2023", "ES2022", "ES2021", "ES2020", "ES2019", "ES2018", "ES2017", "ES2016", "ES2015", "DOM"],
-        "types": ["jsdom", "vitest", "node"],
-        "allowJs": true,
         "rootDir": ".",
+        "target": "ES2021",
+        "allowJs": true,
         "declaration": false,
         "removeComments": true,
-        "importHelpers": false,
-        "strict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "alwaysStrict": true,
-        "noFallthroughCasesInSwitch": true,
-        "moduleResolution": "NodeNext",
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "forceConsistentCasingInFileNames": true
+        "importHelpers": false
     },
     "references": [{ "path": "../src" }],
     "include": ["**/*.ts"]
