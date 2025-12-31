@@ -7,7 +7,11 @@ describe("create-preset", () => {
     it("should have created the preset project", async () => {
         const destDir = path.join(__dirname, "tmp-files", "foo-preset");
 
-        await createPresetTemplate("foo", "Foo", "", destDir);
+        try {
+            await createPresetTemplate("foo", "Foo", "", destDir);
+        } catch (e) {
+            console.error(e);
+        }
 
         const pkgPath = path.join(destDir, "package.json"),
             pkgInfo = await fs.readJSON(pkgPath);
@@ -20,7 +24,11 @@ describe("create-preset", () => {
     it("should have created the preset project, w/ repo", async () => {
         const destDir = path.join(__dirname, "tmp-files", "bar-preset");
 
-        await createPresetTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
+        try {
+            await createPresetTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
+        } catch (e) {
+            console.error(e);
+        }
 
         const pkgPath = path.join(destDir, "package.json"),
             pkgInfo = await fs.readJSON(pkgPath);

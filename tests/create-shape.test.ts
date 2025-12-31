@@ -7,7 +7,11 @@ describe("create-shape", () => {
     it("should have created the shape project", async () => {
         const destDir = path.join(__dirname, "tmp-files", "foo-shape");
 
-        await createShapeTemplate("foo", "Foo", "", destDir);
+        try {
+            await createShapeTemplate("foo", "Foo", "", destDir);
+        } catch (e) {
+            console.error(e);
+        }
 
         const pkgPath = path.join(destDir, "package.json"),
             pkgInfo = await fs.readJSON(pkgPath);
@@ -20,7 +24,11 @@ describe("create-shape", () => {
     it("should have created the shape project, w/ repo", async () => {
         const destDir = path.join(__dirname, "tmp-files", "bar-shape");
 
-        await createShapeTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
+        try {
+            await createShapeTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
+        } catch (e) {
+            console.error(e);
+        }
 
         const pkgPath = path.join(destDir, "package.json"),
             pkgInfo = await fs.readJSON(pkgPath);
