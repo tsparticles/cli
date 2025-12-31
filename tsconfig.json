@@ -1,23 +1,38 @@
 {
-  "compilerOptions": {
-    "rootDir": ".",
-    "outDir": ".",
-    "resolveJsonModule": true,
-    "composite": true,
-    "types": [
-      "node",
-      "chai",
-      "mocha",
-      "fs-extra",
-      "klaw",
-      "madge",
-      "prompts",
-      "eslint"
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": ".",
+        "resolveJsonModule": true,
+        "composite": true,
+        "types": [
+            "node",
+            "fs-extra",
+            "klaw",
+            "madge",
+            "prompts",
+            "eslint"
+        ],
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "useUnknownInCatchVariables": true,
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "exactOptionalPropertyTypes": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true
+    },
+    "include": [
+        "src/**/*",
+        "tests/**/*",
+        "files/**/*"
     ]
-  },
-  "include": [
-    "src/**/*",
-    "tests/**/*",
-    "files/**/*"
-  ]
 }

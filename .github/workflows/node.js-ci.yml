@@ -42,6 +42,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      - name: Clean tmp-files directory
+        run: rm -rf tests/tmp-files
+        if: always()
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm run build:ci
       - run: pnpm test
@@ -80,6 +83,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      - name: Clean tmp-files directory
+        run: rm -rf tests/tmp-files
+        if: always()
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm run build:ci
       - run: pnpm test
