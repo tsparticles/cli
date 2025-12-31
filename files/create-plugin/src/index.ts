@@ -6,5 +6,5 @@ import type { Engine } from "@tsparticles/engine";
 export async function loadTemplatePlugin(engine: Engine): Promise<void> {
     const { Plugin } = await import("./plugin.js");
 
-    await engine.addPlugin(new Plugin(engine));
+    await engine.addPlugin(new Plugin(/*engine*/));
 }
