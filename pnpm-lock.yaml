@@ -13,7 +13,7 @@ importers:
         version: 3.0.6(eslint@9.39.2)
       '@tsparticles/prettier-config':
         specifier: ^3.0.6
-        version: 3.0.6
+        version: 3.0.7
       '@tsparticles/tsconfig':
         specifier: ^3.0.6
         version: 3.0.6
@@ -150,8 +150,16 @@ packages:
     resolution: {integrity: sha512-nUZZ2hYAFrBVWxcL0fSEY1jdKrXztwm2hswC5bGkGZz7vfhnYMiag19CApkSWjRB3RlZnlrjElWNjYOoy7gFYw==}
     engines: {node: '>=22'}
 
+  '@augment-vir/assert@31.57.3':
+    resolution: {integrity: sha512-BPOYGupVpSxVvCYgUb1dkK9W6Z5q6Bdh2HBMy670AKGRp2W4gDllVgUz8TsvNOETdefRXx7AUt1CDuHACz5CYw==}
+    engines: {node: '>=22'}
+
   '@augment-vir/common@31.54.4':
     resolution: {integrity: sha512-+vRgNyZpZvbwoXe6boJA/etOKcZbPo1JgHzKMIpW/yXqym/6MLB5eVSOMYWympcj7oCE8Nz6ScqXEEKxsMKYzw==}
+    engines: {node: '>=22'}
+
+  '@augment-vir/common@31.57.3':
+    resolution: {integrity: sha512-fQLFkCAenq6rITmnSPT7kR5fCcFxWUioiIfGkfC2r6hYz1wGztuahsD9rG++25LZbvKCy4zb44E1aHM4I4ptVA==}
     engines: {node: '>=22'}
 
   '@augment-vir/core@31.33.0':
@@ -160,6 +168,10 @@ packages:
 
   '@augment-vir/core@31.54.4':
     resolution: {integrity: sha512-QN2Cts8MoNYKTWQMPZDFaJavRCTisa054UxVGJAhjfXp3XuGo9uauIt5TAPUuDSy8zwSPVnCjO0wAnvmU8m1Yw==}
+    engines: {node: '>=22'}
+
+  '@augment-vir/core@31.57.3':
+    resolution: {integrity: sha512-dCUmu26nlvVf6T5vH+Ck3UVsNFuP5e8u8n1Rotfwi625xSfJjmcQ16w2XwXU7WLQB+kn2HgqQuVifY3Oaze9iQ==}
     engines: {node: '>=22'}
 
   '@babel/code-frame@7.27.1':
@@ -1152,8 +1164,8 @@ packages:
     peerDependencies:
       eslint: ^9.0.0
 
-  '@tsparticles/prettier-config@3.0.6':
-    resolution: {integrity: sha512-56zZYdjprY6ShpULS0oUFPRoQG5YPndcEB9NvM6jRUhOh8CfzuW6TdJZWpiqmnIGhdy+dJ5ONSsO8xMMAQ4uHw==}
+  '@tsparticles/prettier-config@3.0.7':
+    resolution: {integrity: sha512-JtNv1fL0sHqRw5iBGf1UP1A1VppwYWy55uN+an73kPbz+Mqhe8wgI5fJCVQJ4qCucL14Kv1ZNJZmS2hTLxcuRA==}
 
   '@tsparticles/tsconfig@3.0.6':
     resolution: {integrity: sha512-y/YCAgqvVDKrBKFSRy4ElTTy/ZQhX9CWvwn3HfhL6ULneWTOd64lEr1k8zweHX3Rrdk01iPFdHQ8466vYYbZfA==}
@@ -2225,6 +2237,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
@@ -2308,6 +2321,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -2859,6 +2873,12 @@ packages:
 
   prettier-plugin-multiline-arrays@4.1.1:
     resolution: {integrity: sha512-fISpetMzBxTcrImHt9hBFbG12EapoLDiQIe2jaPdQQCAyEYvgbfixdYeisE/bxYQvNZA4N0dtDoOQ5zkp9hJCA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      prettier: '>=3.0.0 <4.0.0'
+
+  prettier-plugin-multiline-arrays@4.1.3:
+    resolution: {integrity: sha512-V1U2EtLCvaoid1lDPReN4Gxw888dGmedJsz61Wfw36z/oG4NIcm3i13gdiUAKRvFKbf+iPsYO1a076tlksD/Tw==}
     engines: {node: '>=20'}
     peerDependencies:
       prettier: '>=3.0.0 <4.0.0'
@@ -3605,10 +3625,29 @@ snapshots:
       expect-type: 1.3.0
       type-fest: 5.3.1
 
+  '@augment-vir/assert@31.57.3':
+    dependencies:
+      '@augment-vir/core': 31.57.3
+      '@date-vir/duration': 8.1.0
+      deep-eql: 5.0.2
+      expect-type: 1.3.0
+      type-fest: 5.3.1
+
   '@augment-vir/common@31.54.4':
     dependencies:
       '@augment-vir/assert': 31.54.4
       '@augment-vir/core': 31.54.4
+      '@date-vir/duration': 8.1.0
+      ansi-styles: 6.2.3
+      deepcopy-esm: 2.1.1
+      json5: 2.2.3
+      type-fest: 5.3.1
+      typed-event-target: 4.1.0
+
+  '@augment-vir/common@31.57.3':
+    dependencies:
+      '@augment-vir/assert': 31.57.3
+      '@augment-vir/core': 31.57.3
       '@date-vir/duration': 8.1.0
       ansi-styles: 6.2.3
       deepcopy-esm: 2.1.1
@@ -3624,6 +3663,14 @@ snapshots:
       type-fest: 4.41.0
 
   '@augment-vir/core@31.54.4':
+    dependencies:
+      '@date-vir/duration': 8.1.0
+      browser-or-node: 3.0.0
+      diff: 8.0.2
+      json5: 2.2.3
+      type-fest: 5.3.1
+
+  '@augment-vir/core@31.57.3':
     dependencies:
       '@date-vir/duration': 8.1.0
       browser-or-node: 3.0.0
@@ -4662,7 +4709,7 @@ snapshots:
   '@tsparticles/cli@3.0.11(@types/eslint@9.6.1)(webpack-cli@6.0.1)':
     dependencies:
       '@tsparticles/eslint-config': 3.0.6(eslint@9.39.2)
-      '@tsparticles/prettier-config': 3.0.6
+      '@tsparticles/prettier-config': 3.0.7
       '@tsparticles/tsconfig': 3.0.6
       '@tsparticles/webpack-plugin': 3.0.6
       commander: 14.0.2
@@ -4703,10 +4750,10 @@ snapshots:
     dependencies:
       eslint: 9.39.2
 
-  '@tsparticles/prettier-config@3.0.6':
+  '@tsparticles/prettier-config@3.0.7':
     dependencies:
       prettier: 3.7.4
-      prettier-plugin-multiline-arrays: 4.1.1(prettier@3.7.4)
+      prettier-plugin-multiline-arrays: 4.1.3(prettier@3.7.4)
 
   '@tsparticles/tsconfig@3.0.6':
     dependencies:
@@ -4718,7 +4765,7 @@ snapshots:
       '@babel/preset-env': 7.28.5(@babel/core@7.28.5)
       '@stylistic/eslint-plugin': 5.6.1(eslint@9.39.2)
       '@tsparticles/eslint-config': 3.0.6(eslint@9.39.2)
-      '@tsparticles/prettier-config': 3.0.6
+      '@tsparticles/prettier-config': 3.0.7
       '@types/node': 25.0.3
       '@types/webpack-bundle-analyzer': 4.7.0(webpack-cli@6.0.1)
       '@types/webpack-env': 1.18.8
@@ -6660,6 +6707,12 @@ snapshots:
   prettier-plugin-multiline-arrays@4.1.1(prettier@3.7.4):
     dependencies:
       '@augment-vir/common': 31.54.4
+      prettier: 3.7.4
+      proxy-vir: 2.0.1
+
+  prettier-plugin-multiline-arrays@4.1.3(prettier@3.7.4):
+    dependencies:
+      '@augment-vir/common': 31.57.3
       prettier: 3.7.4
       proxy-vir: 2.0.1
 
