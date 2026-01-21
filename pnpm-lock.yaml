@@ -34,7 +34,7 @@ importers:
         version: 61.5.0(eslint@9.39.2)
       eslint-plugin-prettier:
         specifier: ^5.5.4
-        version: 5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.2))(eslint@9.39.2)(prettier@3.7.4)
+        version: 5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.2))(eslint@9.39.2)(prettier@3.8.1)
       eslint-plugin-tsdoc:
         specifier: ^0.5.0
         version: 0.5.0(eslint@9.39.2)(typescript@5.9.3)
@@ -55,10 +55,10 @@ importers:
         version: 2.0.1
       prettier:
         specifier: ^3.7.4
-        version: 3.7.4
+        version: 3.8.1
       prettier-plugin-multiline-arrays:
         specifier: ^4.1.3
-        version: 4.1.3(prettier@3.7.4)
+        version: 4.1.3(prettier@3.8.1)
       prompts:
         specifier: ^2.4.2
         version: 2.4.2
@@ -2839,8 +2839,8 @@ packages:
     peerDependencies:
       prettier: '>=3.0.0 <4.0.0'
 
-  prettier@3.7.4:
-    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
+  prettier@3.8.1:
+    resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -4619,15 +4619,15 @@ snapshots:
       eslint: 9.39.2
       eslint-config-prettier: 10.1.8(eslint@9.39.2)
       eslint-plugin-jsdoc: 61.5.0(eslint@9.39.2)
-      eslint-plugin-prettier: 5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.2))(eslint@9.39.2)(prettier@3.7.4)
+      eslint-plugin-prettier: 5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.2))(eslint@9.39.2)(prettier@3.8.1)
       eslint-plugin-tsdoc: 0.5.0(eslint@9.39.2)(typescript@5.9.3)
       fs-extra: 11.3.3
       klaw: 4.1.0
       lookpath: 1.2.3
       madge: 8.0.0(typescript@5.9.3)
       path-scurry: 2.0.1
-      prettier: 3.7.4
-      prettier-plugin-multiline-arrays: 4.1.3(prettier@3.7.4)
+      prettier: 3.8.1
+      prettier-plugin-multiline-arrays: 4.1.3(prettier@3.8.1)
       prompts: 2.4.2
       rimraf: 6.1.2
       typescript: 5.9.3
@@ -4656,8 +4656,8 @@ snapshots:
 
   '@tsparticles/prettier-config@3.0.7':
     dependencies:
-      prettier: 3.7.4
-      prettier-plugin-multiline-arrays: 4.1.3(prettier@3.7.4)
+      prettier: 3.8.1
+      prettier-plugin-multiline-arrays: 4.1.3(prettier@3.8.1)
 
   '@tsparticles/tsconfig@3.0.9':
     dependencies:
@@ -4681,8 +4681,8 @@ snapshots:
       eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)
       eslint-plugin-jsdoc: 61.5.0(eslint@9.39.2)
       eslint-plugin-tsdoc: 0.5.0(eslint@9.39.2)(typescript@5.9.3)
-      prettier: 3.7.4
-      prettier-plugin-multiline-arrays: 4.1.3(prettier@3.7.4)
+      prettier: 3.8.1
+      prettier-plugin-multiline-arrays: 4.1.3(prettier@3.8.1)
       rimraf: 6.1.2
       terser-webpack-plugin: 5.3.16(webpack@5.104.1)
       typescript: 5.9.3
@@ -5730,10 +5730,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-prettier@5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.2))(eslint@9.39.2)(prettier@3.7.4):
+  eslint-plugin-prettier@5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.2))(eslint@9.39.2)(prettier@3.8.1):
     dependencies:
       eslint: 9.39.2
-      prettier: 3.7.4
+      prettier: 3.8.1
       prettier-linter-helpers: 1.0.0
       synckit: 0.11.11
     optionalDependencies:
@@ -6574,13 +6574,13 @@ snapshots:
     dependencies:
       fast-diff: 1.3.0
 
-  prettier-plugin-multiline-arrays@4.1.3(prettier@3.7.4):
+  prettier-plugin-multiline-arrays@4.1.3(prettier@3.8.1):
     dependencies:
       '@augment-vir/common': 31.54.4
-      prettier: 3.7.4
+      prettier: 3.8.1
       proxy-vir: 2.0.1
 
-  prettier@3.7.4: {}
+  prettier@3.8.1: {}
 
   pretty-ms@7.0.1:
     dependencies:
