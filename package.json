@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/cli",
-  "version": "3.0.14",
+  "version": "3.0.15",
   "license": "MIT",
   "type": "module",
   "bin": {
