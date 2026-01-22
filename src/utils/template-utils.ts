@@ -13,41 +13,41 @@ import { replaceTokensInFile } from "./file-utils.js";
  * @param repoUrl - The repository URL
  */
 export async function updatePackageFile(
-    destPath: string,
-    packageName: string,
-    description: string,
-    fileName: string,
-    repoUrl: string,
+  destPath: string,
+  packageName: string,
+  description: string,
+  fileName: string,
+  repoUrl: string,
 ): Promise<void> {
-    await replaceTokensInFile({
-        path: path.join(destPath, "package.json"),
-        tokens: [
-            {
-                from: /"tsParticles empty template"/g,
-                to: `"${description}"`,
-            },
-            {
-                from: /"tsparticles.empty.template.min.js"/g,
-                to: `"${fileName}"`,
-            },
-            {
-                from: /\s{4}"private": true,\r?\n?/g,
-                to: "",
-            },
-            {
-                from: /"@tsparticles\/empty-template"/g,
-                to: `"${packageName}"`,
-            },
-            {
-                from: /"url": "git\+https:\/\/github\.com\/tsparticles\/empty-template\.git"/g,
-                to: `"url": "git+${repoUrl}"`,
-            },
-            {
-                from: /"url": "https:\/\/github\.com\/tsparticles\/empty-template\/issues"/g,
-                to: `"url": "${repoUrl.replace(".git", "/issues")}"`,
-            },
-        ],
-    });
+  await replaceTokensInFile({
+    path: path.join(destPath, "package.json"),
+    tokens: [
+      {
+        from: /"tsParticles empty template"/g,
+        to: `"${description}"`,
+      },
+      {
+        from: /"tsparticles.empty.template.min.js"/g,
+        to: `"${fileName}"`,
+      },
+      {
+        from: /\s{4}"private": true,\r?\n?/g,
+        to: "",
+      },
+      {
+        from: /"@tsparticles\/empty-template"/g,
+        to: `"${packageName}"`,
+      },
+      {
+        from: /"url": "git\+https:\/\/github\.com\/tsparticles\/empty-template\.git"/g,
+        to: `"url": "git+${repoUrl}"`,
+      },
+      {
+        from: /"url": "https:\/\/github\.com\/tsparticles\/empty-template\/issues"/g,
+        to: `"url": "${repoUrl.replace(".git", "/issues")}"`,
+      },
+    ],
+  });
 }
 
 /**
@@ -59,41 +59,41 @@ export async function updatePackageFile(
  * @param repoUrl - The url of the repository
  */
 export async function updatePackageDistFile(
-    destPath: string,
-    packageName: string,
-    description: string,
-    fileName: string,
-    repoUrl: string,
+  destPath: string,
+  packageName: string,
+  description: string,
+  fileName: string,
+  repoUrl: string,
 ): Promise<void> {
-    await replaceTokensInFile({
-        path: path.join(destPath, "package.dist.json"),
-        tokens: [
-            {
-                from: /"tsParticles empty template"/g,
-                to: `"${description}"`,
-            },
-            {
-                from: /"tsparticles.empty.template.min.js"/g,
-                to: `"${fileName}"`,
-            },
-            {
-                from: /\s{4}"private": true,\r?\n?/g,
-                to: "",
-            },
-            {
-                from: /"@tsparticles\/empty-template"/g,
-                to: `"${packageName}"`,
-            },
-            {
-                from: /"url": "git\+https:\/\/github\.com\/tsparticles\/empty-template\.git"/g,
-                to: `"url": "git+${repoUrl}"`,
-            },
-            {
-                from: /"url": "https:\/\/github\.com\/tsparticles\/empty-template\/issues"/g,
-                to: `"url": "${repoUrl.replace(".git", "/issues")}"`,
-            },
-        ],
-    });
+  await replaceTokensInFile({
+    path: path.join(destPath, "package.dist.json"),
+    tokens: [
+      {
+        from: /"tsParticles empty template"/g,
+        to: `"${description}"`,
+      },
+      {
+        from: /"tsparticles.empty.template.min.js"/g,
+        to: `"${fileName}"`,
+      },
+      {
+        from: /\s{4}"private": true,\r?\n?/g,
+        to: "",
+      },
+      {
+        from: /"@tsparticles\/empty-template"/g,
+        to: `"${packageName}"`,
+      },
+      {
+        from: /"url": "git\+https:\/\/github\.com\/tsparticles\/empty-template\.git"/g,
+        to: `"url": "git+${repoUrl}"`,
+      },
+      {
+        from: /"url": "https:\/\/github\.com\/tsparticles\/empty-template\/issues"/g,
+        to: `"url": "${repoUrl.replace(".git", "/issues")}"`,
+      },
+    ],
+  });
 }
 
 /**
@@ -104,28 +104,28 @@ export async function updatePackageDistFile(
  * @param fnName - The name of the function to load the template
  */
 export async function updateWebpackFile(
-    destPath: string,
-    name: string,
-    description: string,
-    fnName: string,
+  destPath: string,
+  name: string,
+  description: string,
+  fnName: string,
 ): Promise<void> {
-    await replaceTokensInFile({
-        path: path.join(destPath, "webpack.config.js"),
-        tokens: [
-            {
-                from: /"Empty"/g,
-                to: `"${description}"`,
-            },
-            {
-                from: /"empty"/g,
-                to: `"${name}"`,
-            },
-            {
-                from: /loadParticlesTemplate/g,
-                to: fnName,
-            },
-        ],
-    });
+  await replaceTokensInFile({
+    path: path.join(destPath, "webpack.config.js"),
+    tokens: [
+      {
+        from: /"Empty"/g,
+        to: `"${description}"`,
+      },
+      {
+        from: /"empty"/g,
+        to: `"${name}"`,
+      },
+      {
+        from: /loadParticlesTemplate/g,
+        to: fnName,
+      },
+    ],
+  });
 }
 
 /**
@@ -133,10 +133,10 @@ export async function updateWebpackFile(
  * @param destPath - The path where the project will be created
  */
 export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
-    await fs.copy(path.join(__dirname, "..", "..", "files", "empty-project"), destPath, {
-        overwrite: true,
-        filter: copyFilter,
-    });
+  await fs.copy(path.join(__dirname, "..", "..", "files", "empty-project"), destPath, {
+    overwrite: true,
+    filter: copyFilter,
+  });
 }
 
 /**
@@ -145,7 +145,7 @@ export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
  * @returns true if the file should be copied
  */
 export function copyFilter(src: string): boolean {
-    return !(src.endsWith("node_modules") || src.endsWith("dist"));
+  return !(src.endsWith("node_modules") || src.endsWith("dist"));
 }
 
 /**
@@ -153,27 +153,27 @@ export function copyFilter(src: string): boolean {
  * @param destPath - The path where the project will be created
  */
 export async function runInstall(destPath: string): Promise<void> {
-    if (!(await lookpath("npm"))) {
-        return;
-    }
+  if (!(await lookpath("npm"))) {
+    return;
+  }
 
-    return new Promise((resolve, reject) => {
-        exec(
-            "npm install",
-            {
-                cwd: destPath,
-            },
-            error => {
-                if (error) {
-                    reject(error);
+  return new Promise((resolve, reject) => {
+    exec(
+      "npm install",
+      {
+        cwd: destPath,
+      },
+      error => {
+        if (error) {
+          reject(error);
 
-                    return;
-                }
+          return;
+        }
 
-                resolve();
-            },
-        );
-    });
+        resolve();
+      },
+    );
+  });
 }
 
 /**
@@ -181,25 +181,25 @@ export async function runInstall(destPath: string): Promise<void> {
  * @param destPath - The path where the project will be build
  */
 export async function runBuild(destPath: string): Promise<void> {
-    if (!(await lookpath("npm"))) {
-        return;
-    }
+  if (!(await lookpath("npm"))) {
+    return;
+  }
 
-    return new Promise((resolve, reject) => {
-        exec(
-            "npm run build",
-            {
-                cwd: destPath,
-            },
-            error => {
-                if (error) {
-                    reject(error);
+  return new Promise((resolve, reject) => {
+    exec(
+      "npm run build",
+      {
+        cwd: destPath,
+      },
+      error => {
+        if (error) {
+          reject(error);
 
-                    return;
-                }
+          return;
+        }
 
-                resolve();
-            },
-        );
-    });
+        resolve();
+      },
+    );
+  });
 }

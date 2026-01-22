@@ -6,55 +6,55 @@ import webpack from "webpack";
  * @returns true if the bundle was created
  */
 export async function bundle(basePath: string): Promise<boolean> {
-    console.log("Bundling started");
+  console.log("Bundling started");
 
-    let res = false;
+  let res = false;
 
-    try {
-        const options = (await import(path.join(basePath, "webpack.config.js"))) as { default: webpack.Configuration };
+  try {
+    const options = (await import(path.join(basePath, "webpack.config.js"))) as { default: webpack.Configuration };
 
-        res = await new Promise<boolean>((resolve, reject) => {
-            webpack(options.default, (err, stats) => {
-                if (err) {
-                    console.error(err.stack ?? err);
+    res = await new Promise<boolean>((resolve, reject) => {
+      webpack(options.default, (err, stats) => {
+        if (err) {
+          console.error(err.stack ?? err);
 
-                    reject(err);
+          reject(err);
 
-                    return;
-                }
+          return;
+        }
 
-                if (!stats) {
-                    const err = new Error("No stats returned from webpack");
+        if (!stats) {
+          const err = new Error("No stats returned from webpack");
 
-                    console.error(err);
+          console.error(err);
 
-                    reject(err);
+          reject(err);
 
-                    return;
-                }
+          return;
+        }
 
-                const info = stats.toJson();
+        const info = stats.toJson();
 
-                if (stats.hasErrors()) {
-                    console.error(info.errors);
+        if (stats.hasErrors()) {
+          console.error(info.errors);
 
-                    reject(new Error(info.errors?.map(error => error.message).join("\n")));
-                }
+          reject(new Error(info.errors?.map(error => error.message).join("\n")));
+        }
 
-                if (stats.hasWarnings()) {
-                    console.warn(info.warnings);
-                }
+        if (stats.hasWarnings()) {
+          console.warn(info.warnings);
+        }
 
-                resolve(true);
-            });
-        });
-    } catch (e) {
-        console.error(e);
+        resolve(true);
+      });
+    });
+  } catch (e) {
+    console.error(e);
 
-        res = false;
-    }
+    res = false;
+  }
 
-    console.log("Bundling done");
+  console.log("Bundling done");
 
-    return res;
+  return res;
 }

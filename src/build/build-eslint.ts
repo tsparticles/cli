@@ -5,44 +5,42 @@ import { ESLint } from "eslint";
  * @returns true if the linting was successful
  */
 export async function lint(ci: boolean): Promise<boolean> {
-    console.log("ESLint - started on src");
+  console.log("ESLint - started on src");
 
-    let res: boolean;
+  let res: boolean;
 
-    try {
-        const eslint = new ESLint({
-            fix: !ci,
-        });
+  try {
+    const eslint = new ESLint({
+      fix: !ci,
+    });
 
-        const results = await eslint.lintFiles(["src"]),
-            errors = ESLint.getErrorResults(results);
+    const results = await eslint.lintFiles(["src"]),
+      errors = ESLint.getErrorResults(results);
 
-        await ESLint.outputFixes(results);
+    await ESLint.outputFixes(results);
 
-        const formatter = await eslint.loadFormatter("stylish"),
-            resultText = formatter.format(results),
-            minimumLength = 0;
+    const formatter = await eslint.loadFormatter("stylish"),
+      resultText = formatter.format(results),
+      minimumLength = 0;
 
-        if (errors.length > minimumLength) {
-            const messages = errors.map(t =>
-                t.messages
-                    .map(m => `${t.filePath} (${m.line.toString()},${m.column.toString()}): ${m.message}`)
-                    .join("\n"),
-            );
+    if (errors.length > minimumLength) {
+      const messages = errors.map(t =>
+        t.messages.map(m => `${t.filePath} (${m.line.toString()},${m.column.toString()}): ${m.message}`).join("\n"),
+      );
 
-            throw new Error(messages.join("\n"));
-        }
-
-        console.log(resultText);
-
-        res = true;
-    } catch (e) {
-        console.error(e);
-
-        res = false;
+      throw new Error(messages.join("\n"));
     }
 
-    console.log("ESLint - done on src");
+    console.log(resultText);
 
-    return res;
+    res = true;
+  } catch (e) {
+    console.error(e);
+
+    res = false;
+  }
+
+  console.log("ESLint - done on src");
+
+  return res;
 }
