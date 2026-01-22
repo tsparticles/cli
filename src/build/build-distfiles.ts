@@ -19,9 +19,8 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
                 version: string;
             },
             libPackage = path.join(basePath, "package.dist.json"),
-            distPath = path.join(basePath, pkgInfo.publishConfig?.directory ?? "dist");
-
-        const data = await fs.readFile(libPackage),
+            distPath = path.join(basePath, pkgInfo.publishConfig?.directory ?? "dist"),
+            data = await fs.readFile(libPackage),
             text = data.toString(),
             libObj = JSON.parse(text) as Record<string, unknown>;
 
