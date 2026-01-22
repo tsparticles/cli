@@ -26,7 +26,7 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
       options.printWidth = 120;
       options.endOfLine = "lf";
       options.parser = "typescript";
-      options.tabWidth = 4;
+      options.tabWidth = 2;
       options.arrowParens = "avoid" as const;
 
       if (ci) {
