@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import klaw from "klaw";
-import path from "path";
+import path from "node:path";
 import prettier from "prettier";
 
 /**

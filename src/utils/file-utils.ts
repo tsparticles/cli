@@ -1,7 +1,7 @@
-import { exec } from "child_process";
+import { exec } from "node:child_process";
 import fs from "fs-extra";
 import { lookpath } from "lookpath";
-import path from "path";
+import path from "node:path";
 
 export interface ReplaceTokensOptions {
   path: string;

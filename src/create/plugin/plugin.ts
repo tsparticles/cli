@@ -3,7 +3,7 @@ import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
 import { capitalize } from "../../utils/string-utils.js";
 import { createPluginTemplate } from "./create-plugin.js";
-import path from "path";
+import path from "node:path";
 
 const pluginCommand = new Command("plugin");
 

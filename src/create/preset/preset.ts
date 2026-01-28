@@ -3,7 +3,7 @@ import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
 import { capitalize } from "../../utils/string-utils.js";
 import { createPresetTemplate } from "./create-preset.js";
-import path from "path";
+import path from "node:path";
 
 const presetCommand = new Command("preset");
 

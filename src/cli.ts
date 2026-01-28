@@ -3,7 +3,7 @@ import { buildCommand } from "./build/build.js";
 import { createCommand } from "./create/create.js";
 import { fileURLToPath } from "url";
 import fs from "fs-extra";
-import path from "path";
+import path from "node:path";
 import { program } from "commander";
 
 const __filename = fileURLToPath(import.meta.url),

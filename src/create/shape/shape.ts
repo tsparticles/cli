@@ -3,7 +3,7 @@ import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
 import { capitalize } from "../../utils/string-utils.js";
 import { createShapeTemplate } from "./create-shape.js";
-import path from "path";
+import path from "node:path";
 
 const shapeCommand = new Command("shape");
 
