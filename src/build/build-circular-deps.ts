@@ -24,7 +24,7 @@ export async function buildCircularDeps(basePath: string): Promise<boolean> {
   let cruiseOptions: ICruiseOptions = {
     tsPreCompilationDeps: false,
     tsConfig: {
-      fileName: path.join(srcPath, "tsconfig.json"),
+      fileName: path.join(basePath, "tsconfig.json"),
     },
   };
 
@@ -77,8 +77,8 @@ export async function buildCircularDeps(basePath: string): Promise<boolean> {
     }
 
     const result: unknown = await cruise([srcPath], cruiseOptions),
-      cruiseResult = result as ICruiseResult,
-      violations: IViolation[] = cruiseResult.summary.violations,
+      cruiseResult = result as Partial<ICruiseResult>,
+      violations: IViolation[] = cruiseResult.summary?.violations ?? [],
       circularViolations = violations.filter((violation: IViolation) => violation.rule.name === "no-circular");
 
     if (circularViolations.length > ZERO_VIOLATIONS) {
