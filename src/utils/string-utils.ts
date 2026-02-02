@@ -5,16 +5,16 @@
  * @returns the capitalized string
  */
 export function capitalize(str: string, ...splits: string[]): string {
-    let res = str.replace(/./, c => c.toUpperCase());
+  let res = str.replace(/./, c => c.toUpperCase());
 
-    for (const split of splits) {
-        res = res
-            .split(split)
-            .map(w => w.replace(/./, c => c.toUpperCase()))
-            .join("");
-    }
+  for (const split of splits) {
+    res = res
+      .split(split)
+      .map(w => w.replace(/./, c => c.toUpperCase()))
+      .join("");
+  }
 
-    return res;
+  return res;
 }
 
 /**
@@ -24,7 +24,7 @@ export function capitalize(str: string, ...splits: string[]): string {
  * @returns the camelized string
  */
 export function camelize(str: string, ...splits: string[]): string {
-    return capitalize(str, ...splits).replace(/./, c => c.toLowerCase());
+  return capitalize(str, ...splits).replace(/./, c => c.toLowerCase());
 }
 
 /**
@@ -33,9 +33,9 @@ export function camelize(str: string, ...splits: string[]): string {
  * @returns the dashed string
  */
 export function dash(str: string): string {
-    const index = 0,
-        dashed = str.replace(/([A-Z])/g, g => `-${g[index]?.toLowerCase() ?? ""}`),
-        startPos = 1;
+  const index = 0,
+    dashed = str.replace(/([A-Z])/g, g => `-${g[index]?.toLowerCase() ?? ""}`),
+    startPos = 1;
 
-    return dashed.startsWith("-") ? dashed.substring(startPos) : dashed;
+  return dashed.startsWith("-") ? dashed.substring(startPos) : dashed;
 }

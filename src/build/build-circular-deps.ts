@@ -1,39 +1,107 @@
-import madge from "madge";
-import path from "path";
+import {
+  type ICruiseOptions,
+  type ICruiseResult,
+  type IForbiddenRuleType,
+  type IViolation,
+  cruise,
+} from "dependency-cruiser";
+import fs from "fs-extra";
+import path from "node:path";
+
+const ZERO_VIOLATIONS = 0;
 
 /**
- *
- * @param basePath -
+ * Checks for circular dependencies using dependency-cruiser
+ * @param basePath - The project root path
  * @returns true if no circular dependencies are found, false otherwise
  */
 export async function buildCircularDeps(basePath: string): Promise<boolean> {
-    let res = false;
+  const srcPath = path.join(basePath, "src"),
+    configPath = path.join(basePath, ".dependency-cruiser.js"),
+    configPathCjs = path.join(basePath, ".dependency-cruiser.cjs");
 
-    try {
-        const madgeRes = await madge(path.join(basePath, "src"), {
-                fileExtensions: ["ts"],
-                detectiveOptions: {
-                    ts: {
-                        skipTypeImports: true,
-                    },
-                },
-            }),
-            circularDeps = madgeRes.circular();
+  // Base options with explicit type
+  let cruiseOptions: ICruiseOptions = {
+    tsPreCompilationDeps: false,
+    tsConfig: {
+      fileName: path.join(basePath, "tsconfig.json"),
+    },
+  };
 
-        if (circularDeps.length) {
-            console.error("Circular dependencies found!");
+  try {
+    if (await fs.pathExists(configPath)) {
+      const configModule = (await import(configPath)) as {
+          default: {
+            forbidden?: IForbiddenRuleType[];
+            options?: ICruiseOptions;
+          };
+        },
+        extendedConfig = configModule.default;
 
-            for (const dep of circularDeps) {
-                console.error(dep.join(" > "));
-            }
-        } else {
-            res = true;
-        }
-    } catch (e) {
-        console.error(e);
+      cruiseOptions = {
+        ...cruiseOptions,
+        ...extendedConfig.options,
+        ruleSet: {
+          forbidden: extendedConfig.forbidden ?? [],
+        },
+      };
+    } else if (await fs.pathExists(configPathCjs)) {
+      const configModule = (await import(configPathCjs)) as {
+          default: {
+            forbidden?: IForbiddenRuleType[];
+            options?: ICruiseOptions;
+          };
+        },
+        extendedConfig = configModule.default;
+
+      cruiseOptions = {
+        ...cruiseOptions,
+        ...extendedConfig.options,
+        ruleSet: {
+          forbidden: extendedConfig.forbidden ?? [],
+        },
+      };
+    } else {
+      console.log("No .dependency-cruiser.js found, applying default circular check.");
+
+      cruiseOptions.ruleSet = {
+        forbidden: [
+          {
+            name: "no-circular",
+            severity: "error",
+            from: {},
+            to: { circular: true },
+          },
+        ],
+      };
     }
 
-    console.log("Finished checking circular dependencies.");
+    const result: unknown = await cruise([srcPath], cruiseOptions),
+      cruiseResult = result as Partial<ICruiseResult>,
+      violations: IViolation[] = cruiseResult.summary?.violations ?? [],
+      circularViolations = violations.filter((violation: IViolation) => violation.rule.name === "no-circular");
 
-    return res;
+    if (circularViolations.length > ZERO_VIOLATIONS) {
+      console.error("⚠️ Circular dependencies found!");
+
+      for (const violation of circularViolations) {
+        const cyclePath = (violation.cycle ?? []).map(step => {
+          return (step as { name: string }).name;
+        });
+
+        console.error(`Cycle detected: ${cyclePath.join(" -> ")}`);
+      }
+      return false;
+    }
+
+    console.log("✅ No circular dependencies found.");
+
+    return true;
+  } catch (e) {
+    console.error("❌ Error while checking dependencies:", e);
+
+    return false;
+  } finally {
+    console.log("Finished checking circular dependencies.");
+  }
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { createShapeTemplate } from "../src/create/shape/create-shape.js";
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 
 describe("create-shape", () => {

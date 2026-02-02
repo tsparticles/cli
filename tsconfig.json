@@ -24,7 +24,6 @@
             "node",
             "fs-extra",
             "klaw",
-            "madge",
             "prompts",
             "eslint",
             "vitest"

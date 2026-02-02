@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { createPresetTemplate } from "../src/create/preset/create-preset.js";
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 
 describe("create-preset", () => {
