@@ -13,7 +13,7 @@ importers:
         version: 1.15.11
       '@tsparticles/eslint-config':
         specifier: ^3.1.0
-        version: 3.1.0(eslint@9.39.2)
+        version: 3.1.1(eslint@9.39.2)
       '@tsparticles/prettier-config':
         specifier: ^3.0.11
         version: 3.0.11
@@ -712,8 +712,8 @@ packages:
   '@tsparticles/engine@3.9.1':
     resolution: {integrity: sha512-DpdgAhWMZ3Eh2gyxik8FXS6BKZ8vyea+Eu5BC4epsahqTGY9V3JGGJcXC6lRJx6cPMAx1A0FaQAojPF3v6rkmQ==}
 
-  '@tsparticles/eslint-config@3.1.0':
-    resolution: {integrity: sha512-IVxobO7on6L5Gh4H7KWVBTVc4bKT/hsVVfkYcrZGZLnxlqaymK6Uo7LKzihSodUgOdgjEkKxRNEGYDkAOfodXA==}
+  '@tsparticles/eslint-config@3.1.1':
+    resolution: {integrity: sha512-1WIX4O/GFcKUff2Dq9KGyz6Hmm/5X2vY7gyHmiJaPaQBSZ60gr9R4Ap79bbQmvXtoPJ1J+cQyCcBqdHWXUhl5g==}
     peerDependencies:
       eslint: ^9.0.0
 
@@ -3221,7 +3221,7 @@ snapshots:
   '@tsparticles/cli@3.1.1(@types/eslint@9.6.1)(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))(webpack-cli@6.0.1)':
     dependencies:
       '@swc/core': 1.15.11
-      '@tsparticles/eslint-config': 3.1.0(eslint@9.39.2)
+      '@tsparticles/eslint-config': 3.1.1(eslint@9.39.2)
       '@tsparticles/prettier-config': 3.0.11
       '@tsparticles/tsconfig': 3.1.0
       '@tsparticles/webpack-plugin': 3.1.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))
@@ -3261,7 +3261,7 @@ snapshots:
 
   '@tsparticles/engine@3.9.1': {}
 
-  '@tsparticles/eslint-config@3.1.0(eslint@9.39.2)':
+  '@tsparticles/eslint-config@3.1.1(eslint@9.39.2)':
     dependencies:
       eslint: 9.39.2
 
@@ -3278,7 +3278,7 @@ snapshots:
     dependencies:
       '@stylistic/eslint-plugin': 5.7.1(eslint@9.39.2)
       '@swc/core': 1.15.11
-      '@tsparticles/eslint-config': 3.1.0(eslint@9.39.2)
+      '@tsparticles/eslint-config': 3.1.1(eslint@9.39.2)
       '@tsparticles/prettier-config': 3.0.11
       '@types/node': 25.2.0
       '@types/webpack-bundle-analyzer': 4.7.0(@swc/core@1.15.11)(webpack-cli@6.0.1)
