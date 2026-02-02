@@ -12,8 +12,8 @@ importers:
         specifier: ^1.15.11
         version: 1.15.11
       '@tsparticles/eslint-config':
-        specifier: ^3.1.0
-        version: 3.1.0(eslint@9.39.2)
+        specifier: ^3.1.1
+        version: 3.1.1(eslint@9.39.2)
       '@tsparticles/prettier-config':
         specifier: ^3.0.11
         version: 3.0.11
@@ -21,8 +21,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       '@tsparticles/webpack-plugin':
-        specifier: ^3.1.0
-        version: 3.1.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))
+        specifier: ^3.1.1
+        version: 3.1.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))
       commander:
         specifier: ^14.0.3
         version: 14.0.3
@@ -82,7 +82,7 @@ importers:
         version: 5.104.1(@swc/core@1.15.11)(webpack-cli@6.0.1)
     devDependencies:
       '@tsparticles/cli':
-        specifier: ^3.1.1
+        specifier: latest
         version: 3.1.1(@types/eslint@9.6.1)(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))(webpack-cli@6.0.1)
       '@tsparticles/engine':
         specifier: ^3.9.1
@@ -712,8 +712,8 @@ packages:
   '@tsparticles/engine@3.9.1':
     resolution: {integrity: sha512-DpdgAhWMZ3Eh2gyxik8FXS6BKZ8vyea+Eu5BC4epsahqTGY9V3JGGJcXC6lRJx6cPMAx1A0FaQAojPF3v6rkmQ==}
 
-  '@tsparticles/eslint-config@3.1.0':
-    resolution: {integrity: sha512-IVxobO7on6L5Gh4H7KWVBTVc4bKT/hsVVfkYcrZGZLnxlqaymK6Uo7LKzihSodUgOdgjEkKxRNEGYDkAOfodXA==}
+  '@tsparticles/eslint-config@3.1.1':
+    resolution: {integrity: sha512-1WIX4O/GFcKUff2Dq9KGyz6Hmm/5X2vY7gyHmiJaPaQBSZ60gr9R4Ap79bbQmvXtoPJ1J+cQyCcBqdHWXUhl5g==}
     peerDependencies:
       eslint: ^9.0.0
 
@@ -723,8 +723,8 @@ packages:
   '@tsparticles/tsconfig@3.1.0':
     resolution: {integrity: sha512-yA2djV8JZ/SuWCtl1M5nQrK9K101wHONtRrcosgn8pvgOkbrWmegF/nd10/mPx2EyWEqKLudicSsHaoAUoQ8Iw==}
 
-  '@tsparticles/webpack-plugin@3.1.0':
-    resolution: {integrity: sha512-zd3dZRcm0XcYo6YiXqD7kZzBIyR4XcOEx8g22YFJAEr3tRqfnOrX+5Ped5YRDP4ONJP+w2QptEg1Qm9J58YLVQ==}
+  '@tsparticles/webpack-plugin@3.1.1':
+    resolution: {integrity: sha512-hBniUlr+ZzdCBgprWETtY8WUyDT4apguW6Wj0tqqriwMaRvbCPJRgwpRq05VvEt2DdYNG617vSvFbpczghGAiw==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -3221,10 +3221,10 @@ snapshots:
   '@tsparticles/cli@3.1.1(@types/eslint@9.6.1)(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))(webpack-cli@6.0.1)':
     dependencies:
       '@swc/core': 1.15.11
-      '@tsparticles/eslint-config': 3.1.0(eslint@9.39.2)
+      '@tsparticles/eslint-config': 3.1.1(eslint@9.39.2)
       '@tsparticles/prettier-config': 3.0.11
       '@tsparticles/tsconfig': 3.1.0
-      '@tsparticles/webpack-plugin': 3.1.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))
+      '@tsparticles/webpack-plugin': 3.1.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))
       commander: 14.0.3
       dependency-cruiser: 17.3.7
       eslint: 9.39.2
@@ -3261,7 +3261,7 @@ snapshots:
 
   '@tsparticles/engine@3.9.1': {}
 
-  '@tsparticles/eslint-config@3.1.0(eslint@9.39.2)':
+  '@tsparticles/eslint-config@3.1.1(eslint@9.39.2)':
     dependencies:
       eslint: 9.39.2
 
@@ -3274,11 +3274,11 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  '@tsparticles/webpack-plugin@3.1.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))':
+  '@tsparticles/webpack-plugin@3.1.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2)(typescript@5.9.3))':
     dependencies:
       '@stylistic/eslint-plugin': 5.7.1(eslint@9.39.2)
       '@swc/core': 1.15.11
-      '@tsparticles/eslint-config': 3.1.0(eslint@9.39.2)
+      '@tsparticles/eslint-config': 3.1.1(eslint@9.39.2)
       '@tsparticles/prettier-config': 3.0.11
       '@types/node': 25.2.0
       '@types/webpack-bundle-analyzer': 4.7.0(@swc/core@1.15.11)(webpack-cli@6.0.1)
