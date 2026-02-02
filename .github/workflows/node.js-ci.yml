@@ -45,7 +45,7 @@ jobs:
       - name: Clean tmp-files directory
         run: rm -rf tests/tmp-files
         if: always()
-      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm install
       - run: pnpm run build:ci
       - run: pnpm test
   pr:
@@ -86,6 +86,6 @@ jobs:
       - name: Clean tmp-files directory
         run: rm -rf tests/tmp-files
         if: always()
-      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm install
       - run: pnpm run build:ci
       - run: pnpm test
