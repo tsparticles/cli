@@ -40,7 +40,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
 
       if (!data) {
         options = {
-          extends: "@tsparticles/tsconfig/tsconfig.browser.json",
+          extends: "@tsparticles/tsconfig/dist/tsconfig.browser.json",
           compilerOptions: {
             rootDir: "./src",
             outDir: "./dist/browser",
@@ -55,7 +55,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
 
       if (!data) {
         options = {
-          extends: "@tsparticles/tsconfig/tsconfig.json",
+          extends: "@tsparticles/tsconfig/dist/tsconfig.json",
           compilerOptions: {
             rootDir: "./src",
             outDir: "./dist/cjs",
@@ -70,7 +70,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
 
       if (!data) {
         options = {
-          extends: "@tsparticles/tsconfig/tsconfig.module.json",
+          extends: "@tsparticles/tsconfig/dist/tsconfig.module.json",
           compilerOptions: {
             rootDir: "./src",
             outDir: "./dist/esm",
@@ -85,7 +85,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
 
       if (!data) {
         options = {
-          extends: "@tsparticles/tsconfig/tsconfig.types.json",
+          extends: "@tsparticles/tsconfig/dist/tsconfig.types.json",
           compilerOptions: {
             rootDir: "./src",
             outDir: "./dist/types",
@@ -100,7 +100,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
 
       if (!data) {
         options = {
-          extends: "@tsparticles/tsconfig/tsconfig.umd.json",
+          extends: "@tsparticles/tsconfig/dist/tsconfig.umd.json",
           compilerOptions: {
             rootDir: "./src",
             outDir: "./dist/umd",
