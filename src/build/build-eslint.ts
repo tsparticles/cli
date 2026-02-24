@@ -11,10 +11,9 @@ export async function lint(ci: boolean): Promise<boolean> {
 
   try {
     const eslint = new ESLint({
-      fix: !ci,
-    });
-
-    const results = await eslint.lintFiles(["src"]),
+        fix: !ci,
+      }),
+      results = await eslint.lintFiles(["src"]),
       errors = ESLint.getErrorResults(results);
 
     await ESLint.outputFixes(results);

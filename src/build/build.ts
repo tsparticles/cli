@@ -34,9 +34,8 @@ buildCommand.action(async (argPath: string) => {
     distfiles = all || !!opts["dist"],
     doLint = all || !!opts["lint"],
     prettier = all || !!opts["prettify"],
-    tsc = all || !!opts["tsc"];
-
-  const basePath = process.cwd(),
+    tsc = all || !!opts["tsc"],
+    basePath = process.cwd(),
     { getDistStats } = await import("./build-diststats.js"),
     oldStats = await getDistStats(basePath);
 

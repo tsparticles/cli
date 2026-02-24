@@ -23,7 +23,6 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 10
           run_install: false
       - name: Get pnpm version
         id: pnpm-version
@@ -45,7 +44,7 @@ jobs:
       - name: Clean tmp-files directory
         run: rm -rf tests/tmp-files
         if: always()
-      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm install
       - run: pnpm run build:ci
       - run: pnpm test
   pr:
@@ -64,7 +63,6 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 10
           run_install: false
       - name: Get pnpm version
         id: pnpm-version
@@ -86,6 +84,6 @@ jobs:
       - name: Clean tmp-files directory
         run: rm -rf tests/tmp-files
         if: always()
-      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm install
       - run: pnpm run build:ci
       - run: pnpm test

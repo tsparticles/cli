@@ -1,11 +1,5 @@
-import {
-  type ICruiseOptions,
-  type ICruiseResult,
-  type IForbiddenRuleType,
-  type IViolation,
-  cruise,
-} from "dependency-cruiser";
-import fs from "fs-extra";
+import { type ICruiseResult, type IViolation, cruise } from "dependency-cruiser";
+import { loadDependencyCruiserConfig } from "@tsparticles/depcruise-config";
 import path from "node:path";
 
 const ZERO_VIOLATIONS = 0;
@@ -17,77 +11,24 @@ const ZERO_VIOLATIONS = 0;
  */
 export async function buildCircularDeps(basePath: string): Promise<boolean> {
   const srcPath = path.join(basePath, "src"),
-    configPath = path.join(basePath, ".dependency-cruiser.js"),
-    configPathCjs = path.join(basePath, ".dependency-cruiser.cjs");
-
-  // Base options with explicit type
-  let cruiseOptions: ICruiseOptions = {
-    tsPreCompilationDeps: false,
-    tsConfig: {
-      fileName: path.join(basePath, "tsconfig.json"),
-    },
-  };
+    cruiseOptions = await loadDependencyCruiserConfig(basePath);
 
   try {
-    if (await fs.pathExists(configPath)) {
-      const configModule = (await import(configPath)) as {
-          default: {
-            forbidden?: IForbiddenRuleType[];
-            options?: ICruiseOptions;
-          };
-        },
-        extendedConfig = configModule.default;
-
-      cruiseOptions = {
-        ...cruiseOptions,
-        ...extendedConfig.options,
+    const result = await cruise([srcPath], {
+        ...cruiseOptions.options,
         ruleSet: {
-          forbidden: extendedConfig.forbidden ?? [],
+          forbidden: cruiseOptions.forbidden ?? [],
         },
-      };
-    } else if (await fs.pathExists(configPathCjs)) {
-      const configModule = (await import(configPathCjs)) as {
-          default: {
-            forbidden?: IForbiddenRuleType[];
-            options?: ICruiseOptions;
-          };
-        },
-        extendedConfig = configModule.default;
-
-      cruiseOptions = {
-        ...cruiseOptions,
-        ...extendedConfig.options,
-        ruleSet: {
-          forbidden: extendedConfig.forbidden ?? [],
-        },
-      };
-    } else {
-      console.log("No .dependency-cruiser.js found, applying default circular check.");
-
-      cruiseOptions.ruleSet = {
-        forbidden: [
-          {
-            name: "no-circular",
-            severity: "error",
-            from: {},
-            to: { circular: true },
-          },
-        ],
-      };
-    }
-
-    const result: unknown = await cruise([srcPath], cruiseOptions),
+      }),
       cruiseResult = result as Partial<ICruiseResult>,
       violations: IViolation[] = cruiseResult.summary?.violations ?? [],
-      circularViolations = violations.filter((violation: IViolation) => violation.rule.name === "no-circular");
+      circularViolations = violations.filter(violation => violation.rule.name === "no-circular");
 
     if (circularViolations.length > ZERO_VIOLATIONS) {
       console.error("⚠️ Circular dependencies found!");
 
       for (const violation of circularViolations) {
-        const cyclePath = (violation.cycle ?? []).map(step => {
-          return (step as { name: string }).name;
-        });
+        const cyclePath = (violation.cycle ?? []).map(step => (step as { name: string }).name);
 
         console.error(`Cycle detected: ${cyclePath.join(" -> ")}`);
       }
