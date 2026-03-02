@@ -7,10 +7,13 @@ import prettier from "prettier";
  * @param basePath -
  * @param srcPath -
  * @param ci -
+ * @param silent -
  * @returns true if the prettify src process was successful
  */
-export async function prettifySrc(basePath: string, srcPath: string, ci: boolean): Promise<boolean> {
-  console.log("Prettier - started on src");
+export async function prettifySrc(basePath: string, srcPath: string, ci: boolean, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("Prettier - started on src");
+  }
 
   let res: boolean;
 
@@ -47,7 +50,9 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
     res = false;
   }
 
-  console.log("Prettier - done on src");
+  if (!silent) {
+    console.log("Prettier - done on src");
+  }
 
   return res;
 }
@@ -55,10 +60,13 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
 /**
  * @param basePath -
  * @param ci -
+ * @param silent -
  * @returns true if the prettify package.json process was successful
  */
-export async function prettifyPackageJson(basePath: string, ci: boolean): Promise<boolean> {
-  console.log("Prettier - started on package.json");
+export async function prettifyPackageJson(basePath: string, ci: boolean, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("Prettier - started on package.json");
+  }
 
   let res: boolean;
 
@@ -88,7 +96,9 @@ export async function prettifyPackageJson(basePath: string, ci: boolean): Promis
     res = false;
   }
 
-  console.log("Prettier - done on package.json");
+  if (!silent) {
+    console.log("Prettier - done on package.json");
+  }
 
   return res;
 }
@@ -96,10 +106,13 @@ export async function prettifyPackageJson(basePath: string, ci: boolean): Promis
 /**
  * @param basePath -
  * @param _ci -
+ * @param silent -
  * @returns true if the prettify package.dist.json process was successful
  */
-export async function prettifyPackageDistJson(basePath: string, _ci: boolean): Promise<boolean> {
-  console.log("Prettier - started on package.dist.json");
+export async function prettifyPackageDistJson(basePath: string, _ci: boolean, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("Prettier - started on package.dist.json");
+  }
 
   let res: boolean;
 
@@ -131,7 +144,9 @@ export async function prettifyPackageDistJson(basePath: string, _ci: boolean): P
     res = false;
   }
 
-  console.log("Prettier - done on package.dist.json");
+  if (!silent) {
+    console.log("Prettier - done on package.dist.json");
+  }
 
   return res;
 }
@@ -139,10 +154,13 @@ export async function prettifyPackageDistJson(basePath: string, _ci: boolean): P
 /**
  * @param basePath -
  * @param ci -
+ * @param silent -
  * @returns true if the prettify readme process was successful
  */
-export async function prettifyReadme(basePath: string, ci: boolean): Promise<boolean> {
-  console.log("Prettier - started on README.md");
+export async function prettifyReadme(basePath: string, ci: boolean, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("Prettier - started on README.md");
+  }
 
   let res: boolean;
 
@@ -164,14 +182,17 @@ export async function prettifyReadme(basePath: string, ci: boolean): Promise<boo
       await fs.writeFile("README.md", formatted, "utf8");
     }
 
-    res = (await prettifyTraductions(basePath, ci)) && (await prettifyMarkdownTypeDocFiles(basePath, ci));
+    res =
+      (await prettifyTraductions(basePath, ci, silent)) && (await prettifyMarkdownTypeDocFiles(basePath, ci, silent));
   } catch (e) {
     console.error(e);
 
     res = false;
   }
 
-  console.log("Prettier - done on README.md");
+  if (!silent) {
+    console.log("Prettier - done on README.md");
+  }
 
   return res;
 }
@@ -179,10 +200,13 @@ export async function prettifyReadme(basePath: string, ci: boolean): Promise<boo
 /**
  * @param basePath -
  * @param ci -
+ * @param silent -
  * @returns true if the prettify traductions process was successful
  */
-async function prettifyTraductions(basePath: string, ci: boolean): Promise<boolean> {
-  console.log("Prettier - started on traductions");
+async function prettifyTraductions(basePath: string, ci: boolean, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("Prettier - started on traductions");
+  }
 
   let res = false;
 
@@ -226,7 +250,9 @@ async function prettifyTraductions(basePath: string, ci: boolean): Promise<boole
     res = false;
   }
 
-  console.log("Prettier - done on traductions");
+  if (!silent) {
+    console.log("Prettier - done on traductions");
+  }
 
   return res;
 }
@@ -234,10 +260,13 @@ async function prettifyTraductions(basePath: string, ci: boolean): Promise<boole
 /**
  * @param basePath -
  * @param ci -
+ * @param silent -
  * @returns true if the prettify markdown typedoc files process was successful
  */
-async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean): Promise<boolean> {
-  console.log("Prettier - started on markdown");
+async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("Prettier - started on markdown");
+  }
 
   let res = false;
 
@@ -281,7 +310,9 @@ async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean): Prom
     res = false;
   }
 
-  console.log("Prettier - done on markdown");
+  if (!silent) {
+    console.log("Prettier - done on markdown");
+  }
 
   return res;
 }

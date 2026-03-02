@@ -29,9 +29,14 @@ async function readConfig(basePath: string, file: string): Promise<string | unde
 /**
  * @param basePath -
  * @param type -
+ * @param silent -
  * @returns the exit code
  */
-async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "types" | "umd"): Promise<number> {
+async function compile(
+  basePath: string,
+  type: "browser" | "cjs" | "esm" | "types" | "umd",
+  silent: boolean,
+): Promise<number> {
   let options: unknown, data: string | undefined;
 
   switch (type) {
@@ -156,26 +161,33 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
 
   const exitCode = emitResult.emitSkipped || failed ? ExitCodes.EmitErrors : ExitCodes.OK;
 
-  console.log(`TSC for ${type} done with exit code: '${exitCode.toLocaleString()}'.`);
+  if (!silent || exitCode) {
+    console.log(`TSC for ${type} done with exit code: '${exitCode.toLocaleString()}'.`);
+  }
 
   return exitCode;
 }
 
 /**
  * @param basePath -
+ * @param silent -
  * @returns true if the build was successful
  */
-export async function buildTS(basePath: string): Promise<boolean> {
-  console.log("Building TS files");
+export async function buildTS(basePath: string, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("Building TS files");
+  }
 
   let res = true;
 
   const types: ("browser" | "cjs" | "esm" | "types" | "umd")[] = ["browser", "cjs", "esm", "types", "umd"];
 
   for (const type of types) {
-    console.log(`Building TS files for ${type} configuration`);
+    if (!silent) {
+      console.log(`Building TS files for ${type} configuration`);
+    }
 
-    const exitCode = await compile(basePath, type);
+    const exitCode = await compile(basePath, type, silent);
 
     if (exitCode) {
       res = false;
@@ -184,7 +196,9 @@ export async function buildTS(basePath: string): Promise<boolean> {
     }
   }
 
-  console.log("Building TS files done");
+  if (!silent) {
+    console.log("Building TS files done");
+  }
 
   return res;
 }
