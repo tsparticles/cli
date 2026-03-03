@@ -2,10 +2,13 @@ import { ESLint } from "eslint";
 
 /**
  * @param ci -
+ * @param silent -
  * @returns true if the linting was successful
  */
-export async function lint(ci: boolean): Promise<boolean> {
-  console.log("ESLint - started on src");
+export async function lint(ci: boolean, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("ESLint - started on src");
+  }
 
   let res: boolean;
 
@@ -39,7 +42,9 @@ export async function lint(ci: boolean): Promise<boolean> {
     res = false;
   }
 
-  console.log("ESLint - done on src");
+  if (!silent) {
+    console.log("ESLint - done on src");
+  }
 
   return res;
 }

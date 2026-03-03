@@ -3,10 +3,13 @@ import webpack from "webpack";
 
 /**
  * @param basePath -
+ * @param silent -
  * @returns true if the bundle was created
  */
-export async function bundle(basePath: string): Promise<boolean> {
-  console.log("Bundling started");
+export async function bundle(basePath: string, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("Bundling started");
+  }
 
   let res = false;
 
@@ -54,7 +57,9 @@ export async function bundle(basePath: string): Promise<boolean> {
     res = false;
   }
 
-  console.log("Bundling done");
+  if (!silent) {
+    console.log("Bundling done");
+  }
 
   return res;
 }

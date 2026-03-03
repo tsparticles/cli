@@ -4,10 +4,13 @@ import path from "node:path";
 
 /**
  * @param basePath -
+ * @param silent -
  * @returns true if the dist files process was successful
  */
-export async function buildDistFiles(basePath: string): Promise<boolean> {
-  console.log("Build - started on dist files");
+export async function buildDistFiles(basePath: string, silent: boolean): Promise<boolean> {
+  if (!silent) {
+    console.log("Build - started on dist files");
+  }
 
   let res: boolean;
 
@@ -36,7 +39,9 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
 
     await fs.writeFile(libPackage, `${JSON.stringify(libObj, undefined, jsonIndent)}\n`, "utf8");
 
-    console.log(`package.dist.json updated successfully to version ${pkgInfo.version}`);
+    if (!silent) {
+      console.log(`package.dist.json updated successfully to version ${pkgInfo.version}`);
+    }
 
     const rootFilesToCopy = [
       "LICENSE",
@@ -96,7 +101,9 @@ export async function buildDistFiles(basePath: string): Promise<boolean> {
     res = false;
   }
 
-  console.log("Build - done on dist files");
+  if (!silent) {
+    console.log("Build - done on dist files");
+  }
 
   return res;
 }

@@ -7,9 +7,10 @@ const ZERO_VIOLATIONS = 0;
 /**
  * Checks for circular dependencies using dependency-cruiser
  * @param basePath - The project root path
+ * @param silent - If true, reduces the amount of output during the check
  * @returns true if no circular dependencies are found, false otherwise
  */
-export async function buildCircularDeps(basePath: string): Promise<boolean> {
+export async function buildCircularDeps(basePath: string, silent: boolean): Promise<boolean> {
   const srcPath = path.join(basePath, "src"),
     cruiseOptions = await loadDependencyCruiserConfig(basePath);
 
@@ -35,7 +36,9 @@ export async function buildCircularDeps(basePath: string): Promise<boolean> {
       return false;
     }
 
-    console.log("✅ No circular dependencies found.");
+    if (!silent) {
+      console.log("✅ No circular dependencies found.");
+    }
 
     return true;
   } catch (e) {
@@ -43,6 +46,8 @@ export async function buildCircularDeps(basePath: string): Promise<boolean> {
 
     return false;
   } finally {
-    console.log("Finished checking circular dependencies.");
+    if (!silent) {
+      console.log("Finished checking circular dependencies.");
+    }
   }
 }
