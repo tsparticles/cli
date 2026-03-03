@@ -40,7 +40,8 @@ buildCommand.action(async (argPath: string) => {
     doLint = all || !!opts["lint"],
     prettier = all || !!opts["prettify"],
     tsc = all || !!opts["tsc"],
-    silent = !!opts["silent"] || ci,
+    silentOpt = opts["silent"] as string | boolean,
+    silent = silentOpt === "false" ? false : !!silentOpt || ci,
     basePath = process.cwd(),
     { getDistStats } = await import("./build-diststats.js"),
     oldStats = await getDistStats(basePath);
