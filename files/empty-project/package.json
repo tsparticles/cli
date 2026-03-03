@@ -84,7 +84,7 @@
   "prettier": "@tsparticles/prettier-config",
   "devDependencies": {
     "@swc/core": "^1.15.18",
-    "@tsparticles/cli": "^3.2.1",
+    "@tsparticles/cli": "^3.2.2",
     "@tsparticles/depcruise-config": "^3.2.0",
     "@tsparticles/eslint-config": "^3.2.0",
     "@tsparticles/prettier-config": "^3.2.0",
