@@ -11,7 +11,7 @@ export async function bundle(basePath: string, silent: boolean): Promise<boolean
     console.log("Bundling started");
   }
 
-  let res = false;
+  let res: boolean;
 
   try {
     const options = (await import(path.join(basePath, "webpack.config.js"))) as { default: webpack.Configuration };
