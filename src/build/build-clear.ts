@@ -11,7 +11,7 @@ export async function clearDist(basePath: string, silent: boolean): Promise<bool
     console.log("Clearing dist folder");
   }
 
-  let res = false;
+  let res: boolean;
 
   try {
     await rimraf(path.join(basePath, "dist"));
