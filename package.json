@@ -31,8 +31,7 @@
     "build": "pnpm run clear:dist && pnpm run prettify:src && pnpm run lint && pnpm run compile && pnpm run circular-deps && pnpm run prettify:readme && chmod +x dist/cli.js && chmod +x dist/build/build.js && chmod +x dist/create/create.js && chmod +x dist/create/preset/preset.js",
     "build:ci": "pnpm run clear:dist && pnpm run prettify:ci:src && pnpm run lint:ci && pnpm run compile:ci && pnpm run prettify:ci:readme",
     "clear:dist": "rimraf ./dist",
-    "prepack": "pnpm run build",
-    "version": "node scripts/postversion.js && git add files/empty-project/package.json"
+    "prepack": "pnpm run build"
   },
   "dependencies": {
     "@swc/core": "^1.15.18",
@@ -64,7 +63,6 @@
   "devDependencies": {
     "@tsparticles/cli": "latest",
     "@tsparticles/engine": "^3.9.1",
-    "@types/eslint": "^9.6.1",
     "@types/estree": "^1.0.8",
     "@types/fs-extra": "^11.0.4",
     "@types/klaw": "^3.0.7",

@@ -90,9 +90,6 @@ importers:
       '@tsparticles/engine':
         specifier: ^3.9.1
         version: 3.9.1
-      '@types/eslint':
-        specifier: ^9.6.1
-        version: 9.6.1
       '@types/estree':
         specifier: ^1.0.8
         version: 1.0.8
@@ -146,22 +143,22 @@ importers:
         specifier: ^1.15.18
         version: 1.15.18
       '@tsparticles/cli':
-        specifier: ^3.2.2
+        specifier: latest
         version: 3.2.2(@types/eslint@9.6.1)(jiti@2.6.1)(webpack-cli@6.0.1)
       '@tsparticles/depcruise-config':
-        specifier: ^3.2.0
+        specifier: ^3.3.0
         version: 3.3.0(dependency-cruiser@17.3.8)
       '@tsparticles/eslint-config':
-        specifier: ^3.2.0
-        version: 3.3.0(@types/eslint@9.6.1)(eslint@9.39.3(jiti@2.6.1))
+        specifier: ^3.3.0
+        version: 3.3.0(@types/eslint@9.6.1)(eslint@10.0.3(jiti@2.6.1))
       '@tsparticles/prettier-config':
-        specifier: ^3.2.0
+        specifier: ^3.3.0
         version: 3.3.0(prettier@3.8.1)
       '@tsparticles/tsconfig':
-        specifier: ^3.2.0
+        specifier: ^3.3.0
         version: 3.3.0(typescript@5.9.3)
       '@tsparticles/webpack-plugin':
-        specifier: ^3.2.0
+        specifier: ^3.3.0
         version: 3.3.0(@types/eslint@9.6.1)(jiti@2.6.1)
       '@types/webpack-env':
         specifier: ^1.18.8
@@ -173,11 +170,11 @@ importers:
         specifier: ^2.4.1
         version: 2.4.1
       eslint:
-        specifier: ^9.39.3
-        version: 9.39.3(jiti@2.6.1)
+        specifier: ^10.0.3
+        version: 10.0.3(jiti@2.6.1)
       eslint-config-prettier:
         specifier: ^10.1.8
-        version: 10.1.8(eslint@9.39.3(jiti@2.6.1))
+        version: 10.1.8(eslint@10.0.3(jiti@2.6.1))
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -188,16 +185,16 @@ importers:
         specifier: ^0.2.7
         version: 0.2.7(@swc/core@1.15.18)(webpack@5.105.4)
       terser-webpack-plugin:
-        specifier: ^5.3.16
+        specifier: ^5.3.17
         version: 5.3.17(@swc/core@1.15.18)(webpack@5.105.4)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       typescript-eslint:
         specifier: ^8.56.1
-        version: 8.56.1(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3)
+        version: 8.56.1(eslint@10.0.3(jiti@2.6.1))(typescript@5.9.3)
       webpack:
-        specifier: ^5.105.3
+        specifier: ^5.105.4
         version: 5.105.4(@swc/core@1.15.18)(webpack-cli@6.0.1)
       webpack-bundle-analyzer:
         specifier: ^5.2.0
@@ -2806,7 +2803,7 @@ snapshots:
       eslint: 9.39.3(jiti@2.6.1)
       eslint-config-prettier: 10.1.8(eslint@9.39.3(jiti@2.6.1))
       eslint-plugin-jsdoc: 62.7.1(eslint@9.39.3(jiti@2.6.1))
-      eslint-plugin-prettier: 5.5.5(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.3(jiti@2.6.1)))(eslint@9.39.3(jiti@2.6.1))(prettier@3.8.1)
+      eslint-plugin-prettier: 5.5.5(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@10.0.3(jiti@2.6.1)))(eslint@9.39.3(jiti@2.6.1))(prettier@3.8.1)
       eslint-plugin-tsdoc: 0.5.2(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3)
       fs-extra: 11.3.4
       klaw: 4.1.0
@@ -3579,16 +3576,6 @@ snapshots:
     optionalDependencies:
       '@types/eslint': 9.6.1
       eslint-config-prettier: 10.1.8(eslint@10.0.3(jiti@2.6.1))
-
-  eslint-plugin-prettier@5.5.5(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.3(jiti@2.6.1)))(eslint@9.39.3(jiti@2.6.1))(prettier@3.8.1):
-    dependencies:
-      eslint: 9.39.3(jiti@2.6.1)
-      prettier: 3.8.1
-      prettier-linter-helpers: 1.0.1
-      synckit: 0.11.12
-    optionalDependencies:
-      '@types/eslint': 9.6.1
-      eslint-config-prettier: 10.1.8(eslint@9.39.3(jiti@2.6.1))
 
   eslint-plugin-tsdoc@0.5.2(eslint@10.0.3(jiti@2.6.1))(typescript@5.9.3):
     dependencies:
