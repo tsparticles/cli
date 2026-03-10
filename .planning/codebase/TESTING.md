@@ -1,138 +1,156 @@
 # Testing Patterns
 
-**Analysis Date:** 2026-03-08
+**Analysis Date:** 2026-03-10
 
 ## Test Framework
 
-**Runner:**
+Runner:
 
-- Vitest (`vitest`) - configured in `vitest.config.ts` with `environment: "node"` and `include: ["tests/**/*.test.ts"]`.
-
-Config: `vitest.config.ts`
+- Vitest (see `package.json` devDependencies `vitest` and `vitest.config.ts`).
+- Config file: `vitest.config.ts` (sets `globals: true`, `environment: "node"`, `include: ["tests/**/*.test.ts"]`).
 
 Run Commands:
 
 ```bash
-pnpm test              # Run all tests (runs `vitest run` as defined in package.json)
-pnpm test --watch      # Run in watch mode (Vitest supports --watch)
-pnpm test --coverage   # Coverage if configured via vitest options (not explicitly configured here)
+pnpm test              # Runs: `vitest run` (non-watch)
+pnpm run test          # Alias to the same command
 ```
 
 ## Test File Organization
 
 Location:
 
-- Tests live under `tests/` at the repo root: `tests/*.test.ts` (e.g., `tests/create-shape.test.ts`, `tests/file-utils.test.ts`).
+- Tests live in the `tests/` directory at project root.
+  - Files: `tests/create-shape.test.ts`, `tests/create-preset.test.ts`, `tests/create-plugin.test.ts`, `tests/file-utils.test.ts`, `tests/string-utils.test.ts`.
+- Pattern: tests are colocated under a top-level `tests/` folder rather than next to source files.
 
 Naming:
 
-- Test files use the pattern `<feature>.test.ts` (Vitest `include` config picks `tests/**/*.test.ts`).
+- Pattern: `*.test.ts` suffix for test files (see `vitest.config.ts` include pattern).
 
 Structure:
 
 ```
 tests/
-├── create-shape.test.ts
-├── create-preset.test.ts
-├── create-plugin.test.ts
-├── file-utils.test.ts
-└── string-utils.test.ts
+├── <feature>.test.ts   # top-level test file for a single module/feature
 ```
 
-## Test Structure
+## Test Structure and Patterns
 
-Suite Organization (example from `tests/create-shape.test.ts`):
+Suite Organization:
 
-```ts
-import { describe, it, expect } from "vitest";
-import { createShapeTemplate } from "../src/create/shape/create-shape.js";
+- Tests use `describe` blocks to group scenarios and `it` for assertions (Vitest globals enabled). Example: `tests/file-utils.test.ts`.
 
-describe("create-shape", () => {
-  it("should have created the shape project", async () => {
-    // arrange: compute destDir
-    // act: call createShapeTemplate
-    // assert: read package.json and assert properties using fs-extra
-  });
+Setup / Teardown:
+
+- Tests frequently perform async setup at the top-level of `describe` by awaiting operations before `it` blocks. Example: in `tests/file-utils.test.ts` the `baseDir` is created with `await fs.ensureDir(baseDir)` before assertions.
+- Teardown uses `afterAll` to remove temporary test artifacts. Example: `afterAll(async () => { await fs.remove(baseDir); });` in `tests/file-utils.test.ts`.
+
+Assertions:
+
+- Vitest's `expect` is used with matchers like `toBe`.
+
+Async Tests:
+
+- Most IO-heavy tests are `async` and use `await`. Pattern:
+
+```typescript
+it("does something async", async () => {
+  const result = await someAsyncFunction();
+  expect(result).toBe(...);
 });
 ```
 
-Patterns:
+Error Testing Pattern:
 
-- Tests create temporary directories under `tests/tmp-files` and remove them after assertions (`fs-extra` used to clean up).
-- Tests use actual file system operations to verify template creation (integration-style unit tests).
+- When verifying exceptions, tests use try/catch with a boolean flag and assert the flag at the end. Example in `tests/file-utils.test.ts`:
 
-Setup/Teardown:
+```typescript
+let ex = false;
+try {
+  await getDestinationDir(path.join("tmp-files", "baz"));
+} catch {
+  ex = true;
+}
+expect(ex).toBe(true);
+```
 
-- Tests manually create and remove directories within each test case (no global setup file detected).
+Prefer using `await expect(...).rejects.toThrow()` for clearer intent when adding tests.
 
 ## Mocking
 
-Framework: Vitest built-in mocking utilities are available but not heavily used in current tests.
+Framework:
+
+- No mocking libraries observed; tests perform filesystem operations against a temporary directory (`tests/tmp-files`) and rely on actual `fs-extra` operations.
 
 Patterns:
 
-- Tests primarily exercise filesystem operations without mocking `fs-extra` or child processes. When external commands are invoked, the code checks for the presence of `npm` using `lookpath` before running `exec` which avoids executing if not present.
+- Tests use real file operations (create files, write content, call functions under test, assert file contents). Example: `tests/file-utils.test.ts` writes files into `tmp-files` and later reads them.
 
-What to Mock:
+What to mock / not to mock:
 
-- When adding unit tests for functions that call `exec` or modify the environment, mock `child_process.exec` or `lookpath` to avoid running external processes.
-
-What NOT to Mock:
-
-- For integration-style tests that verify file scaffolding, prefer real `fs` operations in a temporary directory to validate end-to-end behavior.
+- Current tests intentionally avoid mocking to validate filesystem interactions. Continue to avoid mocking for these utilities unless external network/long-running processes are involved (e.g., `exec` calls in `template-utils.ts` could be mocked if tests should not run `npm install` or `npm run build`).
 
 ## Fixtures and Factories
 
 Test Data:
 
-- Tests programmatically generate temporary directories under `tests/tmp-files` and use template functions to create artifacts. No centralized fixtures directory is present.
+- Tests create temporary files under `tests/tmp-files` using `fs-extra`. Example: `tests/create-shape.test.ts` writes to `tests/tmp-files/foo-shape` and later removes it.
 
 Location:
 
-- Temporary test artifacts are created in `tests/tmp-files` during tests and cleaned up by tests (see `tests/create-shape.test.ts`).
+- Temporary test artifacts are written under `tests/tmp-files/` and removed by test code or CI before/after runs (CI workflow runs `rm -rf tests/tmp-files`). See `.github/workflows/node.js-ci.yml`.
 
 ## Coverage
 
-Requirements: None enforced in repo. CI runs `pnpm test` but coverage thresholds are not configured.
+Coverage tool: Not enforced in repo (no explicit coverage script), but `.nyc_output` directory exists suggesting past use of NYC. No CI step collects coverage.
 
-View Coverage:
-
-```bash
-
-```
+To run coverage (suggested): add a script using `vitest run --coverage` and configure thresholds in `package.json` if required.
 
 ## Test Types
 
 Unit Tests:
 
-- Small utilities tested (e.g., `tests/file-utils.test.ts`, `tests/string-utils.test.ts`).
+- Scope: small, deterministic units that interact with filesystem helpers and template generation functions. Examples: `tests/string-utils.test.ts`, `tests/file-utils.test.ts`.
 
-Integration Tests:
+Integration-ish Tests:
 
-- Template creation tests behave like integration tests, performing file operations and validating outputs (`tests/create-*.test.ts`).
+- Scope: template creation tests (`tests/create-*.test.ts`) copy files and run `runInstall`/`runBuild` indirectly; these can execute `npm` commands if present (templating functions call `runInstall` and `runBuild` which execute `npm` if `lookpath('npm')` returns true). These tests currently run in CI where `pnpm install` is executed and `npm` may be present.
 
 E2E Tests:
 
 - Not used.
 
-## Common Patterns
+## Common Patterns and Recommendations
 
-Async Testing:
+1. Use `afterAll` to clean up filesystem artifacts (example: `tests/file-utils.test.ts` removes `baseDir`).
+2. Prefer `await expect(promise).rejects.toThrow()` for negative tests instead of boolean-flag try/catch pattern.
+3. Keep filesystem-based tests under `tests/tmp-files` and ensure CI cleans them before runs (CI step already removes `tests/tmp-files`). See `.github/workflows/node.js-ci.yml` lines 44-46 and 84-86.
+4. If tests should avoid running `npm install`/`npm run build` during template creation, add a test flag or mock `lookpath`/`exec` in `src/utils/template-utils.ts` to bypass `runInstall`/`runBuild` during tests.
 
-```ts
-it("does async work", async () => {
-  await expect(someAsyncFn()).resolves.toBeTruthy();
-});
-```
+## Example Test Template (observed pattern)
 
-Error Testing:
+```typescript
+import { describe, it, expect } from "vitest";
+import fs from "fs-extra";
+import path from "node:path";
+import { someFunction } from "../src/utils/some.ts";
 
-```ts
-it("throws on bad input", async () => {
-  await expect(badAsync()).rejects.toThrow();
+describe("someFunction", () => {
+  it("behaves correctly", async () => {
+    const dest = path.join(__dirname, "tmp-files", "some");
+    await fs.ensureDir(dest);
+
+    await someFunction(dest);
+
+    const data = await fs.readFile(path.join(dest, "file.txt"), "utf8");
+    expect(data).toBe("expected");
+
+    await fs.remove(dest);
+  });
 });
 ```
 
 ---
 
-_Testing analysis: 2026-03-08_
+_Testing analysis: 2026-03-10_

@@ -1,102 +1,105 @@
 # Codebase Concerns
 
-**Analysis Date:** 2026-03-08
+**Analysis Date:** 2026-03-10
 
 ## Tech Debt
 
-1. Minimal input validation and transactional safety when writing files
+**Regex-based token replacement (critical):**
 
-- Issue: `replaceTokensInFiles` and other template-updating functions perform read/replace/write in-place without atomic writes or rollback. A failed intermediate step can leave partially updated files.
-- Files: `src/utils/file-utils.ts`, `src/utils/template-utils.ts`, `src/create/shape/create-shape.ts`
-- Impact: Corrupted template output when an operation fails mid-flow; harder to recover from errors.
-- Fix approach: Write to temporary files and rename atomically (use `fs-extra` `outputFile` + `move`), or create the target in a staging directory and move into destination once all transformations succeed.
+- Issue: `src/utils/file-utils.ts` implements `replaceTokensInFiles` and constructs a RegExp with `new RegExp(token.from, "g")` regardless of whether `token.from` is a `string` or a `RegExp`.
+- Files: `src/utils/file-utils.ts`, callers in `src/utils/template-utils.ts`, `src/create/preset/create-preset.ts` (many tokens are passed as `RegExp` literals).
+- Impact: When `token.from` is already a `RegExp` and flags are passed as the second argument to `RegExp` constructor, Node throws a TypeError. This makes token replacement fragile and causes runtime exceptions in template updates. Tests and callers may swallow the error (see `tests/create-preset.test.ts`) so the issue can be silent in CI but still indicate a bug.
+- Fix approach: Update `replaceTokensInFiles` to detect `RegExp` values and use them directly, or construct a `RegExp` only when `token.from` is a string. Example change in `src/utils/file-utils.ts`:
 
-2. Running external commands directly in template flow (`npm install`, `npm run build`)
+```ts
+const regex = token.from instanceof RegExp ? token.from : new RegExp(String(token.from), "g");
+data = data.replace(regex, token.to);
+```
 
-- Issue: `runInstall` and `runBuild` call `exec("npm install")` and `exec("npm run build")` without timeouts or stdout/stderr piping; they rely on `lookpath` only.
-- Files: `src/utils/template-utils.ts` (functions `runInstall`, `runBuild`)
-- Impact: Tests or CI running on environments lacking `npm` may silently skip or hang if `lookpath` returns true but command misbehaves; poor control over failure modes.
-- Fix approach: Use spawned child process with streaming logs and a configurable timeout, or provide a dry-run flag. In tests, mock these exec calls to avoid long-running operations.
+Applying this fix ensures RegExp arguments are respected and avoids TypeErrors.
 
-3. Prettier plugin compatibility workaround
+**Template JSON changes performed with regex (moderate):**
 
-- Issue: `src/build/build-prettier.ts` contains a TODO disabling Prettier check for `prettier-plugin-multiline-arrays` compatibility with Prettier 3.0.0.
-- Files: `src/build/build-prettier.ts` (line with TODO)
-- Impact: Formatting checks may be inconsistent across CI and local dev environments.
-- Fix approach: Update dependencies to versions compatible with Prettier 3.x or pin Prettier to a compatible 2.x in CI until plugins are updated. Add a CI check that fails early with a clear error message.
+- Issue: `src/utils/template-utils.ts` updates `package.json` and `package.dist.json` using regex replacements (`replaceTokensInFile`) instead of reading and writing JSON.
+- Files: `src/utils/template-utils.ts`, `src/create/preset/create-preset.ts`.
+- Impact: Regex-based edits are brittle: formatting differences, comments, CRLF vs LF, or unexpected matches can break JSON structure or fail to update fields correctly.
+- Fix approach: Parse the JSON files with `fs.readJSON` / `fs.writeJSON` and modify the relevant fields (name, description, repository, files). This is more robust and easier to test. Example target: update `updatePackageFile` to `const pkg = await fs.readJSON(pkgPath); pkg.name = packageName; await fs.writeJSON(pkgPath, pkg, { spaces: 2 });`
 
 ## Known Bugs
 
-None detected by static analysis in the repository. Tests pass in CI (workflow present) but no failing patterns discovered in code scan.
+**RegExp constructor TypeError during replacements:**
+
+- Symptoms: Token replacement throws TypeError when token pattern is a `RegExp` and code calls `new RegExp(token.from, "g")`.
+- Files: `src/utils/file-utils.ts` (replacement implementation).
+- Trigger: Calling any create/template flow that passes `RegExp` literals into tokens (e.g., `src/create/preset/create-preset.ts`).
+- Workaround: Tests and callers often wrap calls in try/catch (see `tests/create-preset.test.ts`) so tests still assert package.json existence, masking the problem. Do not rely on that; fix the replacement implementation.
 
 ## Security Considerations
 
-1. Running external commands with user-provided template inputs
+**Arbitrary script execution via `npm install` / `npm run build`:**
 
-- Risk: If destination paths or template tokens contain malicious content, shell commands executed via `exec` could be abused.
-- Files: `src/utils/template-utils.ts` (`runInstall`, `runBuild`), `src/utils/file-utils.ts` (token replacement using regex from code, not user input directly).
-- Current mitigation: `exec` is invoked with static commands (`npm install`) and not interpolated with user-supplied strings. `replaceTokensInFile` uses regex replacements defined in code.
-- Recommendation: Avoid invoking shell with interpolated user input. If needed, sanitize inputs and prefer `spawn` with argument arrays.
-
-2. Reading git remote URL via `exec` in `getRepositoryUrl`
-
-- Risk: `exec` result is returned directly; if git not present it rejects.
-- Files: `src/utils/file-utils.ts` (`getRepositoryUrl`)
-- Recommendation: Wrap with timeout and sanitize output before using it in template substitution.
+- Area: `src/utils/template-utils.ts` functions `runInstall` and `runBuild` execute `npm install` and `npm run build` in generated projects.
+- Files: `src/utils/template-utils.ts`, `src/create/*` where `runInstall` and `runBuild` are invoked (e.g., `src/create/preset/create-preset.ts`).
+- Risk: Running `npm install` in a directory containing an attacker-controlled `package.json` can execute lifecycle scripts (postinstall, preinstall). The CLI currently runs installs automatically during template creation, which can execute arbitrary code on the user's machine.
+- Current mitigation: `lookpath("npm")` is used to avoid running when `npm` is not available, but this does not mitigate script execution risks.
+- Recommendation: Do not run `npm install` / `npm run build` automatically. Instead:
+  - Require an explicit flag (e.g., `--install`) to run automatic installs, or
+  - Use `npm ci --ignore-scripts` or `npm install --ignore-scripts` as a safer default, and clearly warn users before running scripts, or
+  - Prompt for confirmation before running `npm` and print the exact command being run.
 
 ## Performance Bottlenecks
 
-1. Synchronous/serial file traversal in prettify
+**Use of `child_process.exec` for long-running, high-output commands (moderate):**
 
-- Problem: `prettier` formatting in `prettifySrc` iterates files sequentially (`for await (const file of klaw(srcPath))`), performing `prettier.resolveConfig` per file which may be expensive.
-- Files: `src/build/build-prettier.ts`
-- Cause: Recomputing config and formatting each file sequentially.
-- Improvement path: Resolve config once outside the loop, run formatting in parallel batches, and avoid repeated IO for options.
+- Area: `src/utils/template-utils.ts` and `src/utils/file-utils.ts` (the latter uses `exec` in `getRepositoryUrl`).
+- Files: `src/utils/template-utils.ts` (`runInstall`, `runBuild`), `src/utils/file-utils.ts` (`getRepositoryUrl`).
+- Problem: `exec` buffers the full stdout/stderr and has a default buffer size; heavy outputs (e.g., `npm install`) can overflow the buffer and cause the subprocess to fail. Also, using `exec` hides streaming logs from the user.
+- Improvement path: Use `child_process.spawn` with streaming of stdout/stderr and proper error/exit-code handling. Stream logs to the console or into a logger so users see progress.
 
 ## Fragile Areas
 
-1. Regex-based token replacement
+**Broad regex replacements over multiple file types (fragile):**
 
-- Files: `src/utils/file-utils.ts`, `src/utils/template-utils.ts`, `src/create/*` token replacement usage
-- Why fragile: Regexes operate on file contents and can unintentionally match similar substrings; no schema validation after replacement.
-- Safe modification: Add tests for each token replacement case, and perform replacements against structured JSON (for `package.json`) using AST parsing where possible.
-- Test coverage: Token replacement used heavily but tests exercise many flows; add more unit tests for edge cases.
+- Files: `src/utils/file-utils.ts`, call sites in `src/utils/template-utils.ts` and `src/create/*`.
+- Why fragile: Replacing text with global regexes across files risks accidental substitution (e.g., replacing occurrences in unrelated files). It also makes reasoning about what changed difficult.
+- Safe modification: Limit replacements to specific files and, where possible, use structured transforms (JSON AST edits for `package.json`, templating tools for code files) rather than blind regex.
 
-## Scaling Limits
+**No centralized logging or structured errors (minor):**
 
-Not applicable: CLI scaffolding and local build tool; not intended for high-concurrency server workloads.
+- Files: `src/cli.ts`, `src/build/*.ts`, `src/create/*` — modules log via `console` or propagate exceptions.
+- Why fragile: Lack of a central logger and consistent error formatting makes debugging and user-facing error messages inconsistent. Adding a simple logging utility (e.g., `src/utils/logger.ts`) and top-level error handling in `src/cli.ts` would improve UX.
 
 ## Dependencies at Risk
 
-1. Prettier plugin `prettier-plugin-multiline-arrays`
+**Self-referential devDependency:**
 
-- Risk: Incompatibility with Prettier 3.x noted in `src/build/build-prettier.ts` TODO.
-- Impact: Formatting and CI checks could be disrupted.
-- Migration plan: Upgrade plugin or pin Prettier; monitor plugin releases.
+- Files: `package.json` lists `"@tsparticles/cli": "latest"` in `devDependencies`.
+- Risk: This can lead to confusing local development semantics. It is common for monorepo setups but should be intentional.
+- Migration plan: If not required, remove the self-reference. If needed for local testing, ensure a documented developer workflow.
 
 ## Missing Critical Features
 
-1. No centralized logging or telemetry
+**Safe-by-default template creation (missing):**
 
-- Problem: Uses `console.*` directly; no centralized structured logs for debugging CI or for library consumers.
-- Blocks: Advanced observability and consistent log levels.
+- Problem: Template creation runs `npm install`/`npm run build` by default. There is no opt-in flag to skip these actions for safer, faster creation in CI or sandboxed environments.
+- Blocks: CI runs, offline usage, and security-conscious users.
+- Recommendation: Add a `--no-install` / `--skip-install` option to `create` commands or a top-level config, and ensure `runInstall`/`runBuild` respect that option.
 
 ## Test Coverage Gaps
 
-1. Lack of mocks for external process execution
+**Replacement function tests (high priority):**
 
-- What's not tested: Behavior of `runInstall`/`runBuild` when `npm` present and when the commands fail.
-- Files: `src/utils/template-utils.ts` and tests in `tests/` currently avoid actually running `npm` by relying on environment; but there are no unit tests mocking `exec`.
-- Risk: Breakage during publish/cmd execution might not be caught in unit tests.
-- Priority: Medium — add tests that stub `child_process.exec` and `lookpath` to verify behavior on success and failure.
+- What's not tested: `replaceTokensInFiles` behavior when `token.from` is a `RegExp` object vs a `string` (no explicit unit tests for this edge case).
+- Files: `src/utils/file-utils.ts`, tests should be added under `tests/file-utils.test.ts` or similar.
+- Risk: Future regressions and silent failures in template flows.
+- Priority: High — add targeted unit tests that exercise both `string` and `RegExp` token inputs and verify no exceptions are thrown and replacements occur as expected.
 
-2. Token replacement edge cases
+**Integration tests should avoid running real npm:**
 
-- What's not tested: Regex collisions and JSON-encoded fields in `package.json` and `package.dist.json` replacements.
-- Files: `src/utils/file-utils.ts`, `src/utils/template-utils.ts`
-- Risk: Incorrect package metadata produced for scaffolds.
-- Priority: High — add unit tests that run replacements on fixture files with edge-case tokens.
+- What's not tested safely: `createPresetTemplate` currently calls `runInstall` and `runBuild` which invoke `npm` and may perform network operations in CI.
+- Files: `tests/create-preset.test.ts`, `src/utils/template-utils.ts`.
+- Recommendation: Mock `lookpath` and `child_process.exec` in tests, or refactor `runInstall`/`runBuild` to accept an injectable runner (dependency injection) so tests can inject a no-op runner.
 
 ---
 
-_Concerns audit: 2026-03-08_
+_Concerns audit: 2026-03-10_

@@ -1,85 +1,91 @@
 # Technology Stack
 
-**Analysis Date:** 2026-03-08
+**Analysis Date:** 2026-03-10
 
 ## Languages
 
 **Primary:**
 
-- TypeScript (>=5.x) - used across the entire codebase in `src/` (e.g. `src/cli.ts`, `src/create/*`, `src/build/*`)
+- TypeScript 5.x (project uses `typescript` ^5.9.3) - used across CLI source under `src/` (`src/**/*.ts`). See `package.json` and `tsconfig.json` (`package.json`: `dependencies`/`devDependencies`, `tsconfig.json`: `compilerOptions`).
 
 **Secondary:**
 
-- JavaScript (Node) - runtime JS emitted to `dist/` (package `type` set to `module` in `package.json`)
+- JavaScript (Node ESM runtime output in `dist/` / CLI entry `dist/cli.js`) - `package.json` `type: "module"` and `bin` field (`package.json`).
 
 ## Runtime
 
 **Environment:**
 
-- Node.js 24 (CI uses `actions/setup-node` with `node-version: "24"` in `.github/workflows/node.js-ci.yml`)
+- Node.js (ES module, NodeNext resolution). CI workflows use Node 24 (`.github/workflows/node.js-ci.yml`). `tsconfig.json` `module: "NodeNext"`, `target: "ESNext"`.
 
 **Package Manager:**
 
-- pnpm (declared in `package.json` via `packageManager`: `pnpm@10.31.0`)
-- Lockfile present: `pnpm-lock.yaml`
+- pnpm (project declares `packageManager: "pnpm@10.32.0"` in `package.json`, lock file `pnpm-lock.yaml` present).
+- Lockfile: `pnpm-lock.yaml` (present).
 
 ## Frameworks
 
 **Core:**
 
-- None web-framework specific. This is a CLI application built with Node and TypeScript. Entry point: `src/cli.ts`.
-
-**CLI/Command parsing:**
-
-- `commander` (`src/cli.ts`, `src/create/create.ts`, `src/build/*`) - used to declare commands and subcommands.
+- None web-framework-specific. This is a CLI application built with Node and TypeScript. CLI command framework: `commander` (`package.json` -> `dependencies`), commands live in `src/cli.ts`, `src/build/*`, `src/create/*`.
 
 **Testing:**
 
-- `vitest` (configured in `vitest.config.ts`, tests in `tests/*.test.ts`)
+- Vitest (`vitest` ^4.x) - config file: `vitest.config.ts`, tests located in `tests/*.test.ts`.
 
 **Build/Dev:**
 
-- `typescript` for compilation (`tsc -p src`, see `package.json` scripts)
-- `webpack` used by some build tasks (see `src/build/build-bundle.ts` importing `webpack`)
-- `swc` (`@swc/core`) is listed as dependency (used by some tooling or downstream tasks)
+- TypeScript compiler (`tsc`) is used for building (`scripts.build:ts*` in `package.json`, `tsconfig.json` and `src/tsconfig.json`).
+- Prettier for formatting (configured via dependency `@tsparticles/prettier-config` referenced in `package.json`). Prettier is run by `src/build/build-prettier.ts` and scripts in `package.json`.
+- ESLint (`eslint`) with `@tsparticles/eslint-config` - linting run in `src/build/build-eslint.ts` and via `package.json` scripts.
+- Webpack used for bundling (dependency `webpack`, `swc-loader`, `@swc/core`) - bundling logic in `src/build/build-bundle.ts`.
+- dependency-cruiser used for circular dependency checks - config `.dependency-cruiser.cjs` and script `circular-deps` in `package.json`.
 
 ## Key Dependencies
 
 **Critical:**
 
-- `commander` - command-line parsing (`src/cli.ts`)
-- `fs-extra` - filesystem utilities used widely (`src/utils/*`, `src/create/*`, `src/build/*`)
-- `prettier` - formatting (`src/build/build-prettier.ts`)
-- `typescript` - language (dev dependency and build target)
+- `typescript` ^5.9.3 - primary language toolchain (`package.json`).
+- `commander` ^14.x - CLI command framework (`src/cli.ts`, `package.json`).
+- `fs-extra` ^11.x - filesystem utilities used widely (`src/utils/file-utils.ts`, `package.json`).
+- `prettier` ^3.8.x - formatting; project references `@tsparticles/prettier-config` (`package.json`).
+- `eslint` ^10.x and TypeScript ESLint tooling (`package.json`, `src/build/build-eslint.ts`).
 
-**Infrastructure / Tooling:**
+**Infrastructure / Build:**
 
-- `prompts` - interactive prompts for the `create` subcommands (`src/create/*`)
-- `lookpath` - used to detect external commands (`src/utils/template-utils.ts`, `src/utils/file-utils.ts`)
-- `webpack` - bundling (`src/build/build-bundle.ts`)
-- `vitest` - testing runner (`tests/*.test.ts`, `vitest.config.ts`)
+- `webpack` ^5.x, `swc-loader`, `@swc/core` - bundling and fast transpilation (`package.json`, `src/build/build-bundle.ts`).
+- `vitest` ^4.x - test runner (`vitest.config.ts`, `package.json`).
+- `klaw` - used by prettier tooling to walk folders (`src/build/build-prettier.ts`).
+
+**Utilities:**
+
+- `prompts` - interactive prompts used in templates/generator code (`package.json`, `src/create/*`).
+- `lookpath` - used to detect `git` presence in `src/utils/file-utils.ts`.
 
 ## Configuration
 
 **Environment:**
 
-- No `.env` usage detected. CI sets Node version and runs pnpm in GitHub workflows (`.github/workflows/*.yml`).
+- No project-level `.env` files detected. The CLI uses the local environment (executes `git` where available). See `src/utils/file-utils.ts` (calls `lookpath("git")` and runs `git config --get remote.origin.url`).
 
 **Build:**
 
-- TypeScript config: `tsconfig.json` (root) and `src/tsconfig.json` included via `eslint.config.js` (parserOptions.project).
-- Build scripts are defined in `package.json` (e.g. `pnpm run build`, `pnpm run build:ci`, `pnpm run build:ts:cjs`)
+- TypeScript config: `tsconfig.json` (root) and `src/tsconfig.json` (per-source) - `module: NodeNext`, `target: ESNext`, strict compiler options.
+- Linting config is provided by `@tsparticles/eslint-config` (referenced in `package.json`). A dependency-cruiser configuration is present at `.dependency-cruiser.cjs`.
+- Prettier config is supplied via `@tsparticles/prettier-config` and `package.json` scripts rely on `src/build/build-prettier.ts`.
 
 ## Platform Requirements
 
 **Development:**
 
-- Node.js 24+, pnpm (v10+), git - used by scripts and utilities (`src/utils/file-utils.ts` uses `git` if available)
+- Node.js >= 24 recommended (CI uses Node 24 in `.github/workflows/node.js-ci.yml`).
+- pnpm >= 10.x (project `packageManager` sets `pnpm@10.32.0`).
+- Git CLI for repository URL resolution used by templates (`src/utils/file-utils.ts`).
 
-**Production / Distribution:**
+**Production / Publishing:**
 
-- Packaged as npm package (`publishConfig` in `package.json` and `npm-publish` workflow). Outputs are placed under `dist/` and CLI binary `dist/cli.js` (`bin` in `package.json`).
+- Packages are published to npm registry (see `.github/workflows/npm-publish.yml`). The CI uses GitHub Actions and OIDC for auth when publishing (`.github/workflows/npm-publish.yml`).
 
 ---
 
-_Stack analysis: 2026-03-08_
+_Stack analysis: 2026-03-10_
