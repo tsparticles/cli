@@ -104,6 +104,6 @@ describe("file-utils", async () => {
   });
 
   afterAll(async () => {
-    await rm(baseDir, { recursive: true });
+    await rm(baseDir, { recursive: true, force: true });
   });
 });

@@ -18,7 +18,7 @@ describe("create-shape", () => {
 
     expect(pkgInfo.name).toBe("tsparticles-shape-foo");
 
-    await rm(destDir, { recursive: true });
+    await rm(destDir, { recursive: true, force: true });
   });
 
   it("should have created the shape project, w/ repo", async () => {
@@ -35,6 +35,6 @@ describe("create-shape", () => {
 
     expect(pkgInfo.name).toBe("tsparticles-shape-bar");
 
-    await rm(destDir, { recursive: true });
+    await rm(destDir, { recursive: true, force: true });
   });
 });

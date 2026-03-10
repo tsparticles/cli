@@ -18,7 +18,7 @@ describe("create-plugin", () => {
 
     expect(pkgInfo.name).toBe("tsparticles-plugin-foo");
 
-    await rm(destDir, { recursive: true });
+    await rm(destDir, { recursive: true, force: true });
   });
 
   it("should have created the plugin project, w/ repo", async () => {
@@ -35,6 +35,6 @@ describe("create-plugin", () => {
 
     expect(pkgInfo.name).toBe("tsparticles-plugin-bar");
 
-    await rm(destDir, { recursive: true });
+    await rm(destDir, { recursive: true, force: true });
   });
 });

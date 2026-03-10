@@ -18,7 +18,7 @@ describe("create-preset", () => {
 
     expect(pkgInfo.name).toBe("tsparticles-preset-foo");
 
-    await rm(destDir, { recursive: true });
+    await rm(destDir, { recursive: true, force: true });
   });
 
   it("should have created the preset project, w/ repo", async () => {
@@ -35,6 +35,6 @@ describe("create-preset", () => {
 
     expect(pkgInfo.name).toBe("tsparticles-preset-bar");
 
-    await rm(destDir, { recursive: true });
+    await rm(destDir, { recursive: true, force: true });
   });
 });
