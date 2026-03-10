@@ -11,7 +11,7 @@ import path from "node:path";
 describe("file-utils", async () => {
   const baseDir = path.resolve("tmp-files");
 
-  await mkdir(baseDir);
+  await mkdir(baseDir, { recursive: true });
 
   describe("replace tokens in files", async () => {
     await writeFile(path.join(baseDir, "files1.txt"), "test");
