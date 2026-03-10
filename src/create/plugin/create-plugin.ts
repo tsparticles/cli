@@ -8,7 +8,7 @@ import {
   updatePackageFile,
   updateWebpackFile,
 } from "../../utils/template-utils.js";
-import fs from "fs-extra";
+import { cp } from "node:fs/promises";
 import path from "node:path";
 import { replaceTokensInFile } from "../../utils/file-utils.js";
 
@@ -166,8 +166,9 @@ export async function createPluginTemplate(
 
   await copyEmptyTemplateFiles(destPath);
 
-  await fs.copy(sourcePath, destPath, {
-    overwrite: true,
+  await cp(sourcePath, destPath, {
+    recursive: true,
+    force: true,
     filter: copyFilter,
   });
 

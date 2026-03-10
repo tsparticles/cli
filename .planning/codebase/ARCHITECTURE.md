@@ -1,100 +1,132 @@
 # Architecture
 
-**Analysis Date:** 2026-03-08
+**Analysis Date:** 2026-03-10
 
 ## Pattern Overview
 
-**Overall:** Modular CLI application structured as command modules (command-per-file) with utility layers for filesystem and template operations.
+Overall: Small modular CLI application organized as command modules with utility libraries and build tooling.
 
-**Key Characteristics:**
+Key Characteristics:
 
-- Command-oriented boundaries implemented with `commander` (commands registered in `src/cli.ts` and `src/create/*`, `src/build/*`).
-- Utilities are centralized under `src/utils/` for file operations, templating, and string manipulation.
-- Build-related logic is under `src/build/` and creation/template generation logic under `src/create/`.
+- Single-process Node.js CLI built in TypeScript (compiled to ESM JavaScript).
+- Commands are organized as independent modules and registered with a central `commander`-based entrypoint.
+- Clear separation between "command" code (user-facing CLI actions) and utilities (I/O, template manipulation, subprocess execution).
+- Build scripts live under `src/build` and are implemented as programmatic build tasks callable from `build` command.
 
 ## Layers
 
-**CLI / Entry Layer:**
+Command Layer:
 
-- Purpose: Expose CLI commands and wiring.
-- Location: `src/cli.ts`
-- Contains: Program initialization, command registration (`build`, `create`).
-- Depends on: `src/build/*`, `src/create/*`.
-- Used by: End users invoking the installed binary.
+- Purpose: Exposes CLI commands and their behaviors to end users.
+- Location: `src/cli.ts`, `src/create/*`, `src/build/*`
+- Contains: `commander` Command instances, argument parsing, user prompts.
+- Depends on: `src/utils/*` for filesystem and template operations, `prompts` for interactive input.
+- Used by: CLI entrypoint `src/cli.ts` registers commands for runtime.
 
-**Command Implementations:**
+Core/Template Layer:
 
-- Purpose: Implement individual subcommands for build and create flows.
-- Location: `src/create/*` (e.g. `src/create/create.ts`, `src/create/preset/*`, `src/create/plugin/*`, `src/create/shape/*`) and `src/build/*` (e.g. `src/build/build.ts`, `src/build/build-*.ts`).
-- Contains: Command definitions, argument parsing (uses `commander`), orchestration of utilities.
-- Depends on: `src/utils/*` for filesystem and templating, `fs-extra`, `prettier`, `webpack` where needed.
+- Purpose: Implement the core operations that create projects and manipulate templates.
+- Location: `src/create/preset/create-preset.ts`, `src/create/shape/create-shape.ts`, `src/create/plugin/create-plugin.ts`, `src/utils/template-utils.ts`, `src/utils/file-utils.ts`
+- Contains: file copy, token replacement, package.json updates, npm execution, webpack/package dist adjustments.
+- Depends on: `fs-extra`, `lookpath`, child_process `exec`.
+- Used by: Command actions in `src/create/*`.
 
-**Utilities / Core Logic:**
+Build Tooling Layer:
 
-- Purpose: Reusable helpers for file operations, token replacement, template manipulation, and string utilities.
-- Location: `src/utils/` (`file-utils.ts`, `template-utils.ts`, `string-utils.ts`).
-- Contains: `replaceTokensInFile`, `runInstall`, `runBuild`, copy filter helpers, string transforms.
-- Depends on: `fs-extra`, `lookpath`, `child_process` (`exec`).
+- Purpose: Project build and CI helpers exposed as `build` command.
+- Location: `src/build/*.ts` (`src/build/build.ts`, `src/build/build-tsc.ts`, `src/build/build-bundle.ts`, etc.)
+- Contains: tasks to run prettier, eslint, tsc, bundling and other project checks.
+- Depends on: dev tooling in `package.json` and runtime tools (SWC, Webpack, etc.).
 
-**Files & Templates:**
+Utilities Layer:
 
-- Purpose: Template resources used to scaffold projects.
-- Location: `files/` (e.g., `files/create-shape`, `files/create-preset`, `files/create-plugin`, `files/empty-project`).
+- Purpose: Shared helpers for string manipulation, file operations and token replacement.
+- Location: `src/utils/string-utils.ts`, `src/utils/file-utils.ts`, `src/utils/template-utils.ts`
+- Contains: helper functions with small focused responsibilities (e.g., `replaceTokensInFile`, `getDestinationDir`, `getRepositoryUrl`).
+
+Test Layer:
+
+- Purpose: Unit tests for templates and generator functions.
+- Location: `tests/*.test.ts`, `vitest.config.ts`
 
 ## Data Flow
 
-Create flow (example `create shape`):
+Create command flow (example `preset`):
 
-1. User runs CLI: `tsparticles-cli create shape <dest>` (`src/cli.ts` -> `src/create/create.ts` -> `src/create/shape/*`).
-2. Command handler calls `createShapeTemplate` in `src/create/shape/create-shape.ts`.
-3. `createShapeTemplate` copies template files from `files/create-shape` to destination using `fs-extra` and `template-utils.copyEmptyTemplateFiles`.
-4. Token replacement and file updates are performed using `src/utils/file-utils.ts` functions like `replaceTokensInFile` and helpers in `src/utils/template-utils.ts`.
-5. Optional lifecycle commands `runInstall` and `runBuild` invoke external commands (`npm install`, `npm run build`) via `child_process.exec` if `npm` is present (checked via `lookpath`).
+1. User invokes CLI: `tsparticles-cli create preset <destination>` -> `src/cli.ts` boots and routes to `src/create/create.ts` -> `src/create/preset/preset.ts`.
+2. `preset.ts` gathers interactive input via `prompts` and computes `destPath` using `src/utils/file-utils.ts:getDestinationDir`.
+3. `createPresetTemplate` in `src/create/preset/create-preset.ts` runs sequence:
+   - copy empty template files (`src/utils/template-utils.ts:copyEmptyTemplateFiles`) -> uses `files` templates under repo
+   - copy project-specific files via `fs.copy`
+   - run a series of `replaceTokensInFile` operations (`src/utils/file-utils.ts`) to customize bundle/index/readme/package files
+   - run `runInstall` and `runBuild` (`src/utils/template-utils.ts`) which spawn subprocesses (`npm install`, `npm run build`) if `npm` found
 
 State Management:
 
-- Stateless CLI; state is the filesystem and created project files. No in-memory long-lived state across runs.
+- Stateless CLI operations. Functions operate on input parameters and filesystem state. There is no in-memory application-wide state beyond individual command execution.
 
 ## Key Abstractions
 
-**Template Updater:**
+Command Module:
 
-- Purpose: Replace tokens and update produced scaffold files.
-- Examples: `src/utils/file-utils.ts` (`replaceTokensInFile`), `src/utils/template-utils.ts` (`updatePackageFile`, `updateWebpackFile`, `updatePackageDistFile`).
-- Pattern: Imperative token-replacement using regexes and file writes.
+- Purpose: Encapsulate a single CLI command and its action handler.
+- Examples: `src/create/preset/preset.ts`, `src/create/shape/shape.ts`, `src/create/plugin/plugin.ts`, `src/create/create.ts`.
+- Pattern: Each command is a `commander.Command` with `argument` declarations and an `action` async function.
 
-**Command Modules:**
+Template Manipulation Utility:
 
-- Purpose: Each subcommand is an isolated module exposing a `Command` (from `commander`).
-- Examples: `src/create/create.ts`, `src/build/build.ts`, `src/create/shape/create-shape.ts`.
+- Purpose: Replace tokens and patch files in a project template.
+- Examples: `src/utils/file-utils.ts` (`replaceTokensInFile`, `replaceTokensInFiles`), `src/utils/template-utils.ts` (`updatePackageFile`, `updateWebpackFile`).
+
+Build Task Modules:
+
+- Purpose: Implement discrete build subtasks called from `src/build/build.ts`.
+- Examples: `src/build/build-tsc.ts`, `src/build/build-bundle.ts`, `src/build/build-eslint.ts`.
 
 ## Entry Points
 
-**CLI Entrypoint:**
+CLI Entrypoint:
 
 - Location: `src/cli.ts`
-- Triggers: Node process when user runs `tsparticles-cli` or package `bin` mapping.
-- Responsibilities: Read package version (`package.json`), register commands and parse args.
+- Triggers: Executed when package binary `dist/cli.js` is run (shebang present); `npm run build` ensures `dist/cli.js` is executable.
+- Responsibilities: Read package version (`package.json`), register `build` and `create` commands and parse `process.argv`.
+
+Create Command Aggregator:
+
+- Location: `src/create/create.ts`
+- Triggers: Registered by `src/cli.ts` as `create` command
+- Responsibilities: Add subcommands `plugin`, `preset`, `shape` from their respective modules.
+
+Build Aggregator:
+
+- Location: `src/build/build.ts`
+- Triggers: Registered by `src/cli.ts` as `build` command
+- Responsibilities: Compose and run smaller build tasks (prettier, lint, tsc, circular deps, dist packaging).
 
 ## Error Handling
 
-Strategy:
-
-- Try/catch around file operations and external command execution; errors logged to console with `console.error` and boolean success values returned (e.g., `src/build/*` functions return `Promise<boolean>`). Examples: `src/build/build-prettier.ts`, `src/build/build-bundle.ts`.
+Strategy: Throw and bubble errors from async functions; top-level command handlers are async and do not wrap all exceptions. Some tests and callers catch errors for logging.
 
 Patterns:
 
-- Propagate failures by throwing or returning `false` and logging details.
-- `replaceTokensInFiles` performs read/replace/write with no specialized rollback.
+- Synchronous validation: `getDestinationDir` checks destination existence and throws an Error if folder not empty (`src/utils/file-utils.ts:getDestinationDir`).
+- Subprocess execution: `exec` wrappers (`runInstall`, `runBuild`) return Promises and reject on `exec` error; calling code awaits and therefore receives the rejection (`src/utils/template-utils.ts`).
+- Tests catch and log errors selectively (`tests/*.test.ts`), but many command entrypoints do not add global try/catch.
 
 ## Cross-Cutting Concerns
 
-Logging: `console.log`, `console.warn`, `console.error` used across `src/build/*` and `src/utils/*`.
+Logging:
 
-Validation: Input validation is minimal — `commander` performs CLI argument parsing; `getDestinationDir` validates destination directory emptiness in `src/utils/file-utils.ts`.
+- Approach: Minimal; code uses `console.error` in tests. No centralized logger present. Files: `tests/*`, most modules do not log.
 
-Authentication: Not applicable; tool is local and does not call external authenticated services.
+Validation:
+
+- Approach: Input validation is enforced by `prompts` validators and `getDestinationDir` pre-checks. See `src/create/*` for validators on required fields.
+
+Authentication:
+
+- Approach: Not applicable to this CLI: no remote APIs or credential storage.
 
 ---
 
-_Architecture analysis: 2026-03-08_
+_Architecture analysis: 2026-03-10_

@@ -1,96 +1,91 @@
 # Coding Conventions
 
-**Analysis Date:** 2026-03-08
+**Analysis Date:** 2026-03-10
 
 ## Naming Patterns
 
 Files:
 
-- Source files are placed under feature directories (e.g., `src/create/shape/create-shape.ts`). Use descriptive names matching the feature.
+- Pattern: kebab-case for source filenames and CLI commands
+  - Examples: `src/create/create.ts`, `src/create/preset/create-preset.ts`, `src/build/build-tsc.ts`
 
 Functions:
 
-- Use camelCase for function names (e.g., `createShapeTemplate` in `src/create/shape/create-shape.ts`, `replaceTokensInFile` in `src/utils/file-utils.ts`).
+- Pattern: camelCase for free functions and helpers
+  - Examples: `replaceTokensInFile` in `src/utils/file-utils.ts`, `createPresetTemplate` in `src/create/preset/create-preset.ts`
 
 Variables:
 
-- Use camelCase for variables and constants. TypeScript types use PascalCase.
+- Pattern: camelCase for local variables and constants; use `const` when value is not reassigned
+  - Examples: `destPath`, `camelizedName` in `src/create/shape/create-shape.ts`
 
-Types:
+Types / Interfaces:
 
-- Interfaces and types use PascalCase (e.g., `ReplaceTokensOptions`, `ReplaceTokensData` in `src/utils/file-utils.ts`).
+- Pattern: PascalCase for interfaces and type names
+  - Examples: `ReplaceTokensOptions`, `ReplaceTokensData` in `src/utils/file-utils.ts`
+
+Exports:
+
+- Pattern: named exports from modules (no default exports observed)
+  - Examples: `export async function replaceTokensInFiles` in `src/utils/file-utils.ts`
 
 ## Code Style
 
 Formatting:
 
-- Prettier is the formatting tool; root `package.json` sets `prettier` to `@tsparticles/prettier-config`. Formatting settings are applied in `src/build/build-prettier.ts` (printWidth 120, tabWidth 2, endOfLine lf).
+- Prettier is used via the package `prettier` and project config referenced in `package.json` (`prettier": "@tsparticles/prettier-config"`).
+  - Scripts: `prettify:src`, `prettify:readme`, `prettify:ci:src` in `package.json`
 
 Linting:
 
-- ESLint config in `eslint.config.js` extends `@tsparticles/eslint-config`. Linting is enforced in `package.json` scripts (`lint`, `lint:ci`) and CI runs `pnpm run lint:ci` in `node.js-ci.yml`.
+- ESLint is configured in `eslint.config.js` and reuses `@tsparticles/eslint-config` (see `eslint.config.js`).
+  - Scripts: `lint` (auto-fix) and `lint:ci` in `package.json`
+  - Rule note: `no-console` is disabled in `eslint.config.js` to allow `console` usage in CLI code and tests.
+
+TypeScript:
+
+- Strict TypeScript settings are enabled in `tsconfig.json` (many `strict` flags set: `strict`, `noImplicitAny`, `noUnusedLocals`, etc.).
+
+Doc comments:
+
+- Use JSDoc/TSDoc style comments on exported functions and complex helpers.
+  - Examples: function headers in `src/utils/string-utils.ts`, `src/utils/template-utils.ts`.
 
 ## Import Organization
 
-Order:
+- Pattern observed: third-party packages first, then Node built-ins, then local relative imports.
+  - Example from `src/create/preset/create-preset.ts`:
+    - `import { camelize, capitalize, dash } from "../../utils/string-utils.js";`
+    - `import fs from "fs-extra"`; `import path from "node:path"`;
 
-1. Node built-ins (e.g., `path`, `fs-extra` import as `fs`)
-2. External dependencies (e.g., `commander`, `prompts`)
-3. Internal modules (relative imports under `src/`)
+Path aliases:
 
-Examples: `src/cli.ts` imports `buildCommand` and `createCommand` from local modules after Node imports.
-
-Path Aliases:
-
-- None detected. Imports use relative paths and package names. Keep using relative imports within `src/`.
+- Not detected. Imports use relative paths (e.g., `../../utils/*`) and explicit `.js` extension when imported from tests or other ESM contexts.
 
 ## Error Handling
 
-Patterns:
-
-- Use try/catch around file system operations and external command execution; log errors with `console.error` (see `src/build/*.ts`, `src/utils/*`).
-- Functions that perform operations return boolean success flags (`Promise<boolean>`) where appropriate (e.g., `src/build/build-prettier.ts`, `src/build/build-bundle.ts`).
+- Pattern: functions either throw synchronous errors (`throw new Error(...)`) for validation or reject Promises when asynchronous operations fail.
+  - Example: `getDestinationDir` throws `new Error("Destination folder already exists and is not empty")` in `src/utils/file-utils.ts`.
+  - Example: `runInstall`/`runBuild` use the `exec` callback to `reject(error)` in `src/utils/template-utils.ts`.
 
 ## Logging
 
-Framework: console
+- Pattern: CLI code and tests use `console` for informational output and debugging. ESLint `no-console` is turned off to permit this.
+  - Files: `src/cli.ts`, tests in `tests/*.test.ts` (see `tests/file-utils.test.ts` where `console.log`/`console.error` is used).
 
-Patterns:
+## Comments and Documentation
 
-- Use `console.log` for informational messages, `console.warn` for warnings, `console.error` for errors. Follow existing use in `src/build/*` and `src/utils/*`.
+- Public helpers include JSDoc comments (examples in `src/utils/*`). Maintain comments for exported functions to describe parameters and return values.
 
-## Comments
+## Function & Module Design
 
-When to Comment:
+- Small single-responsibility functions are the norm (examples: `replaceTokensInFiles`, `updatePackageFile`, `copyEmptyTemplateFiles`).
+- Modules export multiple named helpers rather than a default export (see `src/utils/template-utils.ts`).
 
-- Use JSDoc/TSDoc comments for exported functions and modules. Code contains JSDoc-style function headers (e.g., `src/build/build-prettier.ts`).
+## Barrel files
 
-JSDoc/TSDoc:
-
-- Use TSDoc/JSDoc annotations for function parameters and return values on public utilities.
-
-## Function Design
-
-Size:
-
-- Functions typically remain under ~200 lines and perform a single responsibility (e.g., `createShapeTemplate` orchestrates template copying and updates but delegates to small helpers).
-
-Parameters:
-
-- Prefer explicit parameters and typed signatures. Existing functions are strongly typed (see `tsconfig.json` with `strict: true`).
-
-Return Values:
-
-- Use typed return values (`Promise<void>`, `Promise<boolean>`) and avoid implicit `any`.
-
-## Module Design
-
-Exports:
-
-- Modules export named functions (e.g., `export async function createShapeTemplate ...` in `src/create/shape/create-shape.ts`). Prefer named exports.
-  Barrel Files:
-- Not used. Add explicit exports per-file instead of index barrel files unless a clear grouping is required.
+- Not used. Individual modules are imported with relative paths.
 
 ---
 
-_Convention analysis: 2026-03-08_
+_Convention analysis: 2026-03-10_

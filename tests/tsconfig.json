@@ -1,13 +1,14 @@
 {
-    "extends": "../tsconfig.json",
-    "compilerOptions": {
-        "rootDir": ".",
-        "target": "ES2021",
-        "allowJs": true,
-        "declaration": false,
-        "removeComments": true,
-        "importHelpers": false
-    },
-    "references": [{ "path": "../src" }],
-    "include": ["**/*.ts"]
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "target": "ES2021",
+    "allowJs": true,
+    "declaration": false,
+    "removeComments": true,
+    "importHelpers": false,
+    "esModuleInterop": true
+  },
+  "references": [{ "path": "../src" }],
+  "include": ["**/*.ts"]
 }

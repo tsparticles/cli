@@ -1,104 +1,138 @@
 # Codebase Structure
 
-**Analysis Date:** 2026-03-08
+**Analysis Date:** 2026-03-10
 
 ## Directory Layout
 
 ```
 [project-root]/
-├── src/                 # TypeScript source for the CLI
-│   ├── build/           # Build command implementations and helpers
-│   ├── create/          # Create command implementations (preset, plugin, shape)
-│   └── utils/           # Shared utilities (file, template, string helpers)
-├── files/               # Template files used by create commands
-├── tests/               # Vitest unit tests for utilities and create flows
-├── dist/                # Build output (generated, should be ignored)
-├── package.json         # NPM package config and scripts
-├── pnpm-lock.yaml       # Lockfile for pnpm
-├── tsconfig.json        # TypeScript compiler options
-└── .github/workflows/   # CI and publish workflows
+├── src/                 # TypeScript source for CLI and build tasks
+│   ├── cli.ts           # CLI entrypoint (registers commands)
+│   ├── create/          # "create" command and subcommands
+│   │   ├── create.ts
+│   │   ├── plugin/
+│   │   │   ├── plugin.ts
+│   │   │   └── create-plugin.ts
+│   │   ├── preset/
+│   │   │   ├── preset.ts
+│   │   │   └── create-preset.ts
+│   │   └── shape/
+│   │       ├── shape.ts
+│   │       └── create-shape.ts
+│   ├── build/           # Build helper commands/tasks
+│   │   ├── build.ts
+│   │   ├── build-tsc.ts
+│   │   ├── build-bundle.ts
+│   │   └── ...
+│   └── utils/           # Shared utilities
+│       ├── file-utils.ts
+│       ├── template-utils.ts
+│       └── string-utils.ts
+├── files/               # Template files used by generators (not under src/ but referenced)
+├── tests/               # Vitest unit tests
+├── dist/                # Compiled ESM output (generated)
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig.json
+└── .planning/           # Mapping and planning docs
 ```
 
 ## Directory Purposes
 
-**`src/`**:
+**src/**:
 
-- Purpose: Primary implementation in TypeScript.
-- Contains: `src/cli.ts`, `src/build/*`, `src/create/*`, `src/utils/*`.
-- Key files: `src/cli.ts` (entry), `src/create/create.ts`, `src/build/build.ts`, `src/utils/file-utils.ts`.
+- Purpose: Source code for the CLI tool and internal build tasks.
+- Contains: Command modules (`src/create/*`), build tasks (`src/build/*`), utilities (`src/utils/*`).
+- Key files: `src/cli.ts`, `src/create/create.ts`, `src/create/preset/create-preset.ts`.
 
-**`files/`**:
+**src/create/**:
 
-- Purpose: Scaffolding templates used by the create commands.
-- Contains: `files/create-shape`, `files/create-preset`, `files/create-plugin`, `files/empty-project`.
+- Purpose: Implements the `create` command and its subcommands.
+- Contains: `plugin`, `preset`, `shape` subfolders each exposing a `Command` instance and a template-creation implementation (`create-*.ts`).
+- Key files: `src/create/preset/preset.ts`, `src/create/preset/create-preset.ts`.
 
-**`tests/`**:
+**src/build/**:
 
-- Purpose: Unit tests executed by `vitest`.
-- Contains: tests validating template creation and utility behavior (e.g., `tests/create-shape.test.ts`, `tests/file-utils.test.ts`).
+- Purpose: Build and CI helper tasks used by `pnpm run build` and `build` CLI command.
+- Contains: modular build steps: `build-prettier.ts`, `build-eslint.ts`, `build-tsc.ts`, bundling helpers.
+- Key files: `src/build/build.ts` (aggregator), `src/build/build-tsc.ts`.
 
-**`dist/`**:
+**src/utils/**:
 
-- Purpose: Output of compilation/build process. Generated; not committed.
+- Purpose: Shared helpers for filesystem operations, string handling, and template updates.
+- Contains: `file-utils.ts` (`replaceTokensInFile`, `getDestinationDir`), `template-utils.ts` (`runInstall`, `runBuild`, `updatePackageFile`).
+
+**files/**:
+
+- Purpose: Template projects that are copied into new destinations by `create` commands.
+- Note: Referenced by `src/create/*` code via relative paths (e.g., `path.join(__dirname, "..", "..", "files", "create-preset")` in `src/create/preset/create-preset.ts`).
+
+**tests/**:
+
+- Purpose: Unit tests using Vitest for template creation behavior.
+- Contains: `tests/create-shape.test.ts`, `tests/create-preset.test.ts`.
 
 ## Key File Locations
 
-**Entry Points:**
+Entry Points:
 
-- `src/cli.ts`: CLI program creation and command registration.
+- `src/cli.ts`: boots the program, reads package version from `package.json`, registers `build` and `create` commands.
 
-**Configuration:**
+Create commands:
 
-- `package.json`: scripts, dependencies, package metadata.
-- `tsconfig.json`: TypeScript configuration.
-- `vitest.config.ts`: Test runner configuration.
+- `src/create/create.ts`: aggregates subcommands.
+- `src/create/preset/preset.ts`: CLI surface for `preset` command.
+- `src/create/preset/create-preset.ts`: implementation that writes files and runs install/build.
 
-**Core Logic:**
+Utilities:
 
-- `src/utils/file-utils.ts`: token replacement, destination directory checks, git repository lookup.
-- `src/utils/template-utils.ts`: template transformers, copy helpers, npm build/install invocations.
+- `src/utils/file-utils.ts`: token replacement helpers and repository detection.
+- `src/utils/template-utils.ts`: file copying, package updates and running `npm` commands.
 
-**Commands:**
+Build tasks:
 
-- `src/create/*`: `src/create/create.ts`, `src/create/preset/*`, `src/create/plugin/*`, `src/create/shape/*`.
-- `src/build/*`: `build.ts`, `build-prettier.ts`, `build-bundle.ts`, `build-tsc.ts`, `build-eslint.ts`, `build-distfiles.ts`, `build-diststats.ts`.
+- `src/build/build.ts`: orchestration of build steps called both in CI and local `pnpm run build`.
 
 ## Naming Conventions
 
 Files:
 
-- Kebab-case for templates/files under `files/`.
-- Source files in `src/` use `camelCase` or `kebab-case` depending on purpose; commands grouped into directories named by feature.
+- Pattern: kebab-case for file names that represent commands or grouped concerns (e.g., `create-preset.ts`, `build-tsc.ts`).
+- Source modules are TypeScript (`.ts`) compiled to ESM JS in `dist/`.
 
 Directories:
 
-- Feature directories under `src/` (e.g., `create`, `build`, `utils`).
+- Pattern: singular, descriptive names (`create`, `build`, `utils`, `files`).
 
 ## Where to Add New Code
 
-New Feature (command):
-New Component/Module:
+New Feature (CLI command):
 
-- Implementation: `src/utils/` for shared helpers, or `src/<feature>/` if feature-specific.
-- Export public helpers from their files; avoid adding global side-effects.
+- Primary code: add a new command module under `src/<feature>/` or create a subcommand under `src/create/`.
+- Registration: register the new `Command` in `src/cli.ts` or in `src/create/create.ts` for `create`-subcommands.
+- Tests: add unit tests under `tests/` following existing patterns (`tests/<feature>.test.ts`).
 
-Utilities:
+New Utility:
 
-- Shared helpers: `src/utils/`.
-- If utility is generic, add tests in `tests/` and export clearly-typed interfaces.
+- Implementation: add new helper in `src/utils/` and export named functions; reuse in command modules.
+- Examples: `src/utils/new-util.ts` and update `src/utils/index.ts` (if created) to re-export it.
+
+Templates and Files:
+
+- Add new templates under `files/` and reference them from create implementations using `path.join(__dirname, "..", "..", "files", "<template>")`.
 
 ## Special Directories
 
-`files/`:
+dist/:
 
-- Purpose: Template assets for project scaffolding.
-- Generated: No
-- Committed: Yes
+- Purpose: Compiled ESM output for packaging and the `bin` entry (`dist/cli.js`).
+- Generated: Yes
+- Committed: No (should be generated during build)
 
-`tests/`:
+tests/tmp-files/:
 
-- Purpose: Contains unit tests. Committed: Yes
+- Purpose: Tests write temporary projects into `tests/tmp-files/*` during execution and remove them afterwards (see `tests/*.test.ts`).
 
 ---
 
-_Structure analysis: 2026-03-08_
+_Structure analysis: 2026-03-10_

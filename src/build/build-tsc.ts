@@ -1,5 +1,6 @@
-import fs from "fs-extra";
+import { existsSync } from "node:fs";
 import path from "node:path";
+import { readFile } from "node:fs/promises";
 
 enum ExitCodes {
   OK = 0,
@@ -17,8 +18,8 @@ enum ExitCodes {
 async function readConfig(basePath: string, file: string): Promise<string | undefined> {
   const tsconfigPath = path.join(basePath, file);
 
-  if (await fs.pathExists(tsconfigPath)) {
-    const data = await fs.readFile(path.join(basePath, file));
+  if (existsSync(tsconfigPath)) {
+    const data = await readFile(path.join(basePath, file));
 
     return data.toString();
   }
