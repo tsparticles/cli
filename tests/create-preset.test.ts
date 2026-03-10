@@ -1,40 +1,40 @@
 import { describe, it, expect } from "vitest";
+import { readFile, rm } from "node:fs/promises";
 import { createPresetTemplate } from "../src/create/preset/create-preset.js";
 import path from "node:path";
-import fs from "fs-extra";
 
 describe("create-preset", () => {
-    it("should have created the preset project", async () => {
-        const destDir = path.join(__dirname, "tmp-files", "foo-preset");
+  it("should have created the preset project", async () => {
+    const destDir = path.join(__dirname, "tmp-files", "foo-preset");
 
-        try {
-            await createPresetTemplate("foo", "Foo", "", destDir);
-        } catch (e) {
-            console.error(e);
-        }
+    try {
+      await createPresetTemplate("foo", "Foo", "", destDir);
+    } catch (e) {
+      console.error(e);
+    }
 
-        const pkgPath = path.join(destDir, "package.json"),
-            pkgInfo = await fs.readJSON(pkgPath);
+    const pkgPath = path.join(destDir, "package.json"),
+      pkgInfo = JSON.parse(await readFile(pkgPath, "utf-8"));
 
-        expect(pkgInfo.name).toBe("tsparticles-preset-foo");
+    expect(pkgInfo.name).toBe("tsparticles-preset-foo");
 
-        await fs.remove(destDir);
-    });
+    await rm(destDir, { recursive: true });
+  });
 
-    it("should have created the preset project, w/ repo", async () => {
-        const destDir = path.join(__dirname, "tmp-files", "bar-preset");
+  it("should have created the preset project, w/ repo", async () => {
+    const destDir = path.join(__dirname, "tmp-files", "bar-preset");
 
-        try {
-            await createPresetTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
-        } catch (e) {
-            console.error(e);
-        }
+    try {
+      await createPresetTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
+    } catch (e) {
+      console.error(e);
+    }
 
-        const pkgPath = path.join(destDir, "package.json"),
-            pkgInfo = await fs.readJSON(pkgPath);
+    const pkgPath = path.join(destDir, "package.json"),
+      pkgInfo = JSON.parse(await readFile(pkgPath, "utf-8"));
 
-        expect(pkgInfo.name).toBe("tsparticles-preset-bar");
+    expect(pkgInfo.name).toBe("tsparticles-preset-bar");
 
-        await fs.remove(destDir);
-    });
+    await rm(destDir, { recursive: true });
+  });
 });

@@ -1,40 +1,40 @@
 import { describe, it, expect } from "vitest";
 import { createPluginTemplate } from "../src/create/plugin/create-plugin.js";
+import { readFile, rm } from "node:fs/promises";
 import path from "node:path";
-import fs from "fs-extra";
 
 describe("create-plugin", () => {
-    it("should have created the plugin project", async () => {
-        const destDir = path.join(__dirname, "tmp-files", "foo-plugin"),
-            pkgPath = path.join(destDir, "package.json");
+  it("should have created the plugin project", async () => {
+    const destDir = path.join(__dirname, "tmp-files", "foo-plugin"),
+      pkgPath = path.join(destDir, "package.json");
 
-        try {
-            await createPluginTemplate("foo", "Foo", "", destDir);
-        } catch (e) {
-            console.error(e);
-        }
+    try {
+      await createPluginTemplate("foo", "Foo", "", destDir);
+    } catch (e) {
+      console.error(e);
+    }
 
-        const pkgInfo = await fs.readJSON(pkgPath);
+    const pkgInfo = JSON.parse(await readFile(pkgPath, "utf-8"));
 
-        expect(pkgInfo.name).toBe("tsparticles-plugin-foo");
+    expect(pkgInfo.name).toBe("tsparticles-plugin-foo");
 
-        await fs.remove(destDir);
-    });
+    await rm(destDir, { recursive: true });
+  });
 
-    it("should have created the plugin project, w/ repo", async () => {
-        const destDir = path.join(__dirname, "tmp-files", "bar-plugin");
+  it("should have created the plugin project, w/ repo", async () => {
+    const destDir = path.join(__dirname, "tmp-files", "bar-plugin");
 
-        try {
-            await createPluginTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
-        } catch (e) {
-            console.error(e);
-        }
+    try {
+      await createPluginTemplate("bar", "Bar", "https://github.com/matteobruni/tsparticles", destDir);
+    } catch (e) {
+      console.error(e);
+    }
 
-        const pkgPath = path.join(destDir, "package.json"),
-            pkgInfo = await fs.readJSON(pkgPath);
+    const pkgPath = path.join(destDir, "package.json"),
+      pkgInfo = JSON.parse(await readFile(pkgPath, "utf-8"));
 
-        expect(pkgInfo.name).toBe("tsparticles-plugin-bar");
+    expect(pkgInfo.name).toBe("tsparticles-plugin-bar");
 
-        await fs.remove(destDir);
-    });
+    await rm(destDir, { recursive: true });
+  });
 });

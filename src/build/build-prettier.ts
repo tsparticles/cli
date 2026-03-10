@@ -1,4 +1,5 @@
-import fs from "fs-extra";
+import { readFile, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import klaw from "klaw";
 import path from "node:path";
 import prettier from "prettier";
@@ -23,7 +24,7 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
         continue;
       }
 
-      const contents = await fs.readFile(file.path, "utf8"),
+      const contents = await readFile(file.path, "utf8"),
         options = (await prettier.resolveConfig(basePath)) ?? {};
 
       options.printWidth = 120;
@@ -39,7 +40,7 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
       } else {
         const formatted = await prettier.format(contents, options);
 
-        await fs.writeFile(file.path, formatted, "utf8");
+        await writeFile(file.path, formatted, "utf8");
       }
     }
 
@@ -71,7 +72,7 @@ export async function prettifyPackageJson(basePath: string, ci: boolean, silent:
   let res: boolean;
 
   try {
-    const contents = await fs.readFile("package.json", "utf8"),
+    const contents = await readFile("package.json", "utf8"),
       options = (await prettier.resolveConfig(basePath)) ?? {};
 
     options.tabWidth = 2;
@@ -86,7 +87,7 @@ export async function prettifyPackageJson(basePath: string, ci: boolean, silent:
     } else {
       const formatted = await prettier.format(contents, options);
 
-      await fs.writeFile("package.json", formatted, "utf8");
+      await writeFile("package.json", formatted, "utf8");
     }
 
     res = true;
@@ -117,7 +118,7 @@ export async function prettifyPackageDistJson(basePath: string, ci: boolean, sil
   let res: boolean;
 
   try {
-    const contents = await fs.readFile("package.dist.json", "utf8"),
+    const contents = await readFile("package.dist.json", "utf8"),
       options = (await prettier.resolveConfig(basePath)) ?? {};
 
     options.tabWidth = 2;
@@ -132,7 +133,7 @@ export async function prettifyPackageDistJson(basePath: string, ci: boolean, sil
     } else {
       const formatted = await prettier.format(contents, options);
 
-      await fs.writeFile("package.dist.json", formatted, "utf8");
+      await writeFile("package.dist.json", formatted, "utf8");
     }
 
     res = true;
@@ -163,7 +164,7 @@ export async function prettifyReadme(basePath: string, ci: boolean, silent: bool
   let res: boolean;
 
   try {
-    const contents = await fs.readFile("README.md", "utf8"),
+    const contents = await readFile("README.md", "utf8"),
       options = (await prettier.resolveConfig(basePath)) ?? {};
 
     options.printWidth = 120;
@@ -177,7 +178,7 @@ export async function prettifyReadme(basePath: string, ci: boolean, silent: bool
     } else {
       const formatted = await prettier.format(contents, options);
 
-      await fs.writeFile("README.md", formatted, "utf8");
+      await writeFile("README.md", formatted, "utf8");
     }
 
     res =
@@ -212,7 +213,7 @@ async function prettifyTraductions(basePath: string, ci: boolean, silent: boolea
     const folder = "traduction",
       folderPath = path.join(basePath, folder);
 
-    if (!fs.existsSync(folderPath)) {
+    if (!existsSync(folderPath)) {
       res = true;
     }
 
@@ -222,7 +223,7 @@ async function prettifyTraductions(basePath: string, ci: boolean, silent: boolea
           continue;
         }
 
-        const contents = await fs.readFile(file.path, "utf8"),
+        const contents = await readFile(file.path, "utf8"),
           options = (await prettier.resolveConfig(basePath)) ?? {};
 
         options.printWidth = 120;
@@ -236,7 +237,7 @@ async function prettifyTraductions(basePath: string, ci: boolean, silent: boolea
         } else {
           const formatted = await prettier.format(contents, options);
 
-          await fs.writeFile(file.path, formatted, "utf8");
+          await writeFile(file.path, formatted, "utf8");
         }
       }
 
@@ -272,7 +273,7 @@ async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean, silen
     const folder = "markdown",
       folderPath = path.join(basePath, folder);
 
-    if (!fs.existsSync(folderPath)) {
+    if (!existsSync(folderPath)) {
       res = true;
     }
 
@@ -282,7 +283,7 @@ async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean, silen
           continue;
         }
 
-        const contents = await fs.readFile(file.path, "utf8"),
+        const contents = await readFile(file.path, "utf8"),
           options = (await prettier.resolveConfig(basePath)) ?? {};
 
         options.printWidth = 120;
@@ -296,7 +297,7 @@ async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean, silen
         } else {
           const formatted = await prettier.format(contents, options);
 
-          await fs.writeFile(file.path, formatted, "utf8");
+          await writeFile(file.path, formatted, "utf8");
         }
       }
 

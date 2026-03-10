@@ -1,4 +1,5 @@
-import fs from "fs-extra";
+import { opendir, readFile, stat } from "node:fs/promises";
+import { existsSync } from "node:fs";
 
 export interface IDistStats {
   bundleSize: number;
@@ -20,11 +21,11 @@ async function getFolderStats(folderPath: string, bundlePath?: string): Promise<
     totalSize: 0,
   };
 
-  if (!(await fs.pathExists(folderPath))) {
+  if (!existsSync(folderPath)) {
     return stats;
   }
 
-  const dir = await fs.promises.opendir(folderPath),
+  const dir = await opendir(folderPath),
     path = await import("path");
 
   for await (const dirent of dir) {
@@ -37,7 +38,7 @@ async function getFolderStats(folderPath: string, bundlePath?: string): Promise<
       stats.totalFiles += subDirStats.totalFiles;
       stats.totalSize += subDirStats.totalSize;
     } else {
-      const fileStats = await fs.stat(path.join(folderPath, dirent.name));
+      const fileStats = await stat(path.join(folderPath, dirent.name));
 
       stats.totalFiles++;
       stats.totalSize += fileStats.size;
@@ -59,13 +60,12 @@ async function getFolderStats(folderPath: string, bundlePath?: string): Promise<
 export async function getDistStats(basePath: string): Promise<IDistStats> {
   const path = await import("path"),
     distFolder = path.join(basePath, "dist"),
-    pkgInfo = (await fs.exists(path.join(distFolder, "package.json")))
-      ? (JSON.parse((await fs.readFile(path.join(distFolder, "package.json"))).toString()) as {
+    pkgInfo = existsSync(path.join(distFolder, "package.json"))
+      ? (JSON.parse((await readFile(path.join(distFolder, "package.json"))).toString()) as {
           jsdelivr?: string;
         })
       : {},
-    bundlePath =
-      (await fs.exists(distFolder)) && pkgInfo.jsdelivr ? path.join(distFolder, pkgInfo.jsdelivr) : undefined;
+    bundlePath = existsSync(distFolder) && pkgInfo.jsdelivr ? path.join(distFolder, pkgInfo.jsdelivr) : undefined;
 
   return await getFolderStats(distFolder, bundlePath);
 }

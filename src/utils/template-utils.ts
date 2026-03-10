@@ -1,5 +1,5 @@
+import { cp } from "node:fs/promises";
 import { exec } from "node:child_process";
-import fs from "fs-extra";
 import { lookpath } from "lookpath";
 import path from "node:path";
 import { replaceTokensInFile } from "./file-utils.js";
@@ -133,8 +133,9 @@ export async function updateWebpackFile(
  * @param destPath - The path where the project will be created
  */
 export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
-  await fs.copy(path.join(__dirname, "..", "..", "files", "empty-project"), destPath, {
-    overwrite: true,
+  await cp(path.join(__dirname, "..", "..", "files", "empty-project"), destPath, {
+    recursive: true,
+    force: true,
     filter: copyFilter,
   });
 }

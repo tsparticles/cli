@@ -1,4 +1,6 @@
 import { Command } from "commander";
+import { existsSync } from "node:fs";
+import path from "node:path";
 
 const buildCommand = new Command("build");
 
@@ -52,11 +54,9 @@ buildCommand.action(async (argPath: string) => {
     await clearDist(basePath, silent);
   }
 
-  const path = await import("path"),
-    srcPath = path.join(basePath, argPath),
-    fs = await import("fs-extra");
+  const srcPath = path.join(basePath, argPath);
 
-  if (!(await fs.pathExists(srcPath))) {
+  if (!existsSync(srcPath)) {
     throw new Error("Provided path does not exist");
   }
 
@@ -126,12 +126,12 @@ buildCommand.action(async (argPath: string) => {
     outputFunc = bundleSizeIncreased ? console.warn : console.info;
 
     texts = [
-      !bundleDiffSize
-        ? "Bundle size unchanged"
-        : `Bundle size ${bundleSizeIncreasedText} from ${oldStats.bundleSize.toString()} to ${newStats.bundleSize.toString()} (${Math.abs(bundleDiffSize).toString()}B)`,
-      !diffSize
-        ? "Size unchanged"
-        : `Size ${diffSizeIncreasedText} from ${oldStats.totalSize.toString()} to ${newStats.totalSize.toString()} (${Math.abs(diffSize).toString()}B)`,
+      bundleDiffSize
+        ? `Bundle size ${bundleSizeIncreasedText} from ${oldStats.bundleSize.toString()} to ${newStats.bundleSize.toString()} (${Math.abs(bundleDiffSize).toString()}B)`
+        : "Bundle size unchanged",
+      diffSize
+        ? `Size ${diffSizeIncreasedText} from ${oldStats.totalSize.toString()} to ${newStats.totalSize.toString()} (${Math.abs(diffSize).toString()}B)`
+        : "Size unchanged",
       `Files count changed from ${oldStats.totalFiles.toString()} to ${newStats.totalFiles.toString()} (${(
         newStats.totalFiles - oldStats.totalFiles
       ).toString()})`,
