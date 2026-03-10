@@ -25,7 +25,7 @@ export async function replaceTokensInFiles(options: ReplaceTokensOptions[]): Pro
     let data = await readFile(filePath, "utf-8");
 
     for (const token of item.tokens) {
-      const regex = new RegExp(token.from, "g");
+      const regex = token.from instanceof RegExp ? token.from : new RegExp(token.from, "g");
 
       data = data.replace(regex, token.to);
     }
@@ -60,7 +60,7 @@ export async function getDestinationDir(destination: string): Promise<string> {
     }
   }
 
-  await mkdir(destPath);
+  await mkdir(destPath, { recursive: true });
 
   return destPath;
 }

@@ -64,7 +64,7 @@ export async function buildDistFiles(basePath: string, silent: boolean): Promise
       distScriptsPath = path.join(distPath, "scripts");
 
     if (existsSync(scriptsPath) && !existsSync(distScriptsPath)) {
-      await mkdir(distScriptsPath);
+      await mkdir(distScriptsPath, { recursive: true });
 
       const installPath = path.join(scriptsPath, "install.js");
 
