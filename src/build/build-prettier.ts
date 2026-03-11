@@ -4,6 +4,58 @@ import klaw from "klaw";
 import path from "node:path";
 import prettier from "prettier";
 
+type PrettierSupportedParser = "typescript" | "json" | "markdown";
+
+/**
+ * @param basePath -
+ * @param parser -
+ * @returns -
+ */
+async function getPrettierOptions(
+  basePath: string,
+  parser: PrettierSupportedParser,
+): Promise<prettier.Options & { parser: PrettierSupportedParser }> {
+  const baseOptions = (await prettier.resolveConfig(basePath)) ?? {};
+
+  return {
+    ...baseOptions,
+    printWidth: 120,
+    endOfLine: "lf",
+    tabWidth: 2,
+    arrowParens: "avoid",
+    parser,
+  };
+}
+
+/**
+ * @param filePath -
+ * @param options -
+ * @param ci -
+ * @param errorMessage -
+ */
+async function formatOrCheckFile(
+  filePath: string,
+  options: prettier.Options,
+  ci: boolean,
+  errorMessage: string,
+): Promise<void> {
+  const contents = await readFile(filePath, "utf8");
+
+  if (ci) {
+    if (!(await prettier.check(contents, options))) {
+      throw new Error(errorMessage);
+    }
+
+    return;
+  }
+
+  const formatted = await prettier.format(contents, options);
+
+  if (formatted !== contents) {
+    await writeFile(filePath, formatted, "utf8");
+  }
+}
+
 /**
  * @param basePath -
  * @param srcPath -
@@ -19,29 +71,14 @@ export async function prettifySrc(basePath: string, srcPath: string, ci: boolean
   let res: boolean;
 
   try {
+    const options = await getPrettierOptions(basePath, "typescript");
+
     for await (const file of klaw(srcPath)) {
       if (file.stats.isDirectory()) {
         continue;
       }
 
-      const contents = await readFile(file.path, "utf8"),
-        options = (await prettier.resolveConfig(basePath)) ?? {};
-
-      options.printWidth = 120;
-      options.endOfLine = "lf";
-      options.parser = "typescript";
-      options.tabWidth = 2;
-      options.arrowParens = "avoid" as const;
-
-      if (ci) {
-        if (!(await prettier.check(contents, options))) {
-          throw new Error(`${file.path} is not formatted correctly`);
-        }
-      } else {
-        const formatted = await prettier.format(contents, options);
-
-        await writeFile(file.path, formatted, "utf8");
-      }
+      await formatOrCheckFile(file.path, options, ci, `${file.path} is not formatted correctly`);
     }
 
     res = true;
@@ -72,23 +109,9 @@ export async function prettifyPackageJson(basePath: string, ci: boolean, silent:
   let res: boolean;
 
   try {
-    const contents = await readFile("package.json", "utf8"),
-      options = (await prettier.resolveConfig(basePath)) ?? {};
+    const options = await getPrettierOptions(basePath, "json");
 
-    options.tabWidth = 2;
-    options.printWidth = 120;
-    options.endOfLine = "lf";
-    options.parser = "json";
-
-    if (ci) {
-      if (!(await prettier.check(contents, options))) {
-        throw new Error(`package.json is not formatted correctly`);
-      }
-    } else {
-      const formatted = await prettier.format(contents, options);
-
-      await writeFile("package.json", formatted, "utf8");
-    }
+    await formatOrCheckFile("package.json", options, ci, "package.json is not formatted correctly");
 
     res = true;
   } catch (e) {
@@ -118,23 +141,9 @@ export async function prettifyPackageDistJson(basePath: string, ci: boolean, sil
   let res: boolean;
 
   try {
-    const contents = await readFile("package.dist.json", "utf8"),
-      options = (await prettier.resolveConfig(basePath)) ?? {};
+    const options = await getPrettierOptions(basePath, "json");
 
-    options.tabWidth = 2;
-    options.printWidth = 120;
-    options.endOfLine = "lf";
-    options.parser = "json";
-
-    if (ci) {
-      if (!(await prettier.check(contents, options))) {
-        throw new Error(`package.dist.json is not formatted correctly`);
-      }
-    } else {
-      const formatted = await prettier.format(contents, options);
-
-      await writeFile("package.dist.json", formatted, "utf8");
-    }
+    await formatOrCheckFile("package.dist.json", options, ci, "package.dist.json is not formatted correctly");
 
     res = true;
   } catch (e) {
@@ -164,22 +173,9 @@ export async function prettifyReadme(basePath: string, ci: boolean, silent: bool
   let res: boolean;
 
   try {
-    const contents = await readFile("README.md", "utf8"),
-      options = (await prettier.resolveConfig(basePath)) ?? {};
+    const options = await getPrettierOptions(basePath, "markdown");
 
-    options.printWidth = 120;
-    options.endOfLine = "lf";
-    options.parser = "markdown";
-
-    if (ci) {
-      if (!(await prettier.check(contents, options))) {
-        throw new Error(`README.md is not formatted correctly`);
-      }
-    } else {
-      const formatted = await prettier.format(contents, options);
-
-      await writeFile("README.md", formatted, "utf8");
-    }
+    await formatOrCheckFile("README.md", options, ci, "README.md is not formatted correctly");
 
     res =
       (await prettifyTraductions(basePath, ci, silent)) && (await prettifyMarkdownTypeDocFiles(basePath, ci, silent));
@@ -211,7 +207,8 @@ async function prettifyTraductions(basePath: string, ci: boolean, silent: boolea
 
   try {
     const folder = "traduction",
-      folderPath = path.join(basePath, folder);
+      folderPath = path.join(basePath, folder),
+      options = await getPrettierOptions(basePath, "markdown");
 
     if (!existsSync(folderPath)) {
       res = true;
@@ -223,22 +220,7 @@ async function prettifyTraductions(basePath: string, ci: boolean, silent: boolea
           continue;
         }
 
-        const contents = await readFile(file.path, "utf8"),
-          options = (await prettier.resolveConfig(basePath)) ?? {};
-
-        options.printWidth = 120;
-        options.endOfLine = "lf";
-        options.parser = "markdown";
-
-        if (ci) {
-          if (!(await prettier.check(contents, options))) {
-            throw new Error(`${file.path} is not formatted correctly`);
-          }
-        } else {
-          const formatted = await prettier.format(contents, options);
-
-          await writeFile(file.path, formatted, "utf8");
-        }
+        await formatOrCheckFile(file.path, options, ci, `${file.path} is not formatted correctly`);
       }
 
       res = true;
@@ -271,7 +253,8 @@ async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean, silen
 
   try {
     const folder = "markdown",
-      folderPath = path.join(basePath, folder);
+      folderPath = path.join(basePath, folder),
+      options = await getPrettierOptions(basePath, "markdown");
 
     if (!existsSync(folderPath)) {
       res = true;
@@ -283,22 +266,7 @@ async function prettifyMarkdownTypeDocFiles(basePath: string, ci: boolean, silen
           continue;
         }
 
-        const contents = await readFile(file.path, "utf8"),
-          options = (await prettier.resolveConfig(basePath)) ?? {};
-
-        options.printWidth = 120;
-        options.endOfLine = "lf";
-        options.parser = "markdown";
-
-        if (ci) {
-          if (!(await prettier.check(contents, options))) {
-            throw new Error(`${file.path} is not formatted correctly`);
-          }
-        } else {
-          const formatted = await prettier.format(contents, options);
-
-          await writeFile(file.path, formatted, "utf8");
-        }
+        await formatOrCheckFile(file.path, options, ci, `${file.path} is not formatted correctly`);
       }
 
       res = true;

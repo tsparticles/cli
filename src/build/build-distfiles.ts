@@ -36,9 +36,12 @@ export async function buildDistFiles(basePath: string, silent: boolean): Promise
       libObj["peerDependencies"] = JSON.parse(JSON.stringify(pkgInfo.peerDependencies).replaceAll("workspace:", ""));
     }
 
-    const jsonIndent = 2;
+    const jsonIndent = 2,
+      newLibPackageContents = `${JSON.stringify(libObj, undefined, jsonIndent)}\n`;
 
-    await writeFile(libPackage, `${JSON.stringify(libObj, undefined, jsonIndent)}\n`, "utf8");
+    if (newLibPackageContents !== text) {
+      await writeFile(libPackage, newLibPackageContents, "utf8");
+    }
 
     if (!silent) {
       console.log(`package.dist.json updated successfully to version ${pkgInfo.version}`);
@@ -78,9 +81,12 @@ export async function buildDistFiles(basePath: string, silent: boolean): Promise
         continue;
       }
 
-      const contents = await readFile(file.path, "utf8");
+      const contents = await readFile(file.path, "utf8"),
+        updatedContents = contents.replaceAll("__VERSION__", `"${pkgInfo.version}"`);
 
-      await writeFile(file.path, contents.replaceAll("__VERSION__", `"${pkgInfo.version}"`), "utf8");
+      if (updatedContents !== contents) {
+        await writeFile(file.path, updatedContents, "utf8");
+      }
     }
 
     /* for await (const file of klaw(path.join(distPath, "cjs"))) {

@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/cli",
-  "version": "3.3.3",
+  "version": "3.3.5",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -20,8 +20,8 @@
     "prettify:ci:readme": "prettier --check ./README.md",
     "prettify:src": "prettier --write ./src/*",
     "prettify:readme": "prettier --write ./README.md",
-    "lint": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
-    "lint:ci": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx --cache --cache-location .cache/eslint/.eslintcache --cache-strategy metadata --fix",
+    "lint:ci": "eslint src --ext .js,.jsx,.ts,.tsx --cache --cache-location .cache/eslint/.eslintcache --cache-strategy metadata",
     "circular-deps": "depcruise src --include-only '^src' --validate --output-type err-long",
     "compile": "pnpm run build:ts",
     "compile:ci": "pnpm run build:ts",
@@ -35,11 +35,11 @@
   },
   "dependencies": {
     "@swc/core": "^1.15.18",
-    "@tsparticles/depcruise-config": "^3.3.1",
-    "@tsparticles/eslint-config": "^3.3.1",
-    "@tsparticles/prettier-config": "^3.3.1",
-    "@tsparticles/tsconfig": "^3.3.1",
-    "@tsparticles/webpack-plugin": "^3.3.1",
+    "@tsparticles/depcruise-config": "^3.3.2",
+    "@tsparticles/eslint-config": "^3.3.2",
+    "@tsparticles/prettier-config": "^3.3.2",
+    "@tsparticles/tsconfig": "^3.3.2",
+    "@tsparticles/webpack-plugin": "^3.3.2",
     "commander": "^14.0.3",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
@@ -79,5 +79,5 @@
   "description": "tsParticles CLI",
   "main": "eslint.config.js",
   "author": "Matteo Bruni <matteo.bruni@me.com>",
-  "packageManager": "pnpm@10.32.0"
+  "packageManager": "pnpm@10.32.1"
 }
