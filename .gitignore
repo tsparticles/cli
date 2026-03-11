@@ -4,3 +4,4 @@ node_modules
 test-cli
 .idea
 .nyc_output
+.eslintcache

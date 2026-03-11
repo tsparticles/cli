@@ -15,6 +15,9 @@ export async function lint(ci: boolean, silent: boolean): Promise<boolean> {
   try {
     const eslint = new ESLint({
         fix: !ci,
+        cache: true,
+        cacheLocation: ".cache/eslint/.eslintcache",
+        cacheStrategy: "metadata",
       }),
       results = await eslint.lintFiles(["src"]),
       errors = ESLint.getErrorResults(results);
