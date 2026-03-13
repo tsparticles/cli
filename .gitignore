@@ -5,3 +5,5 @@ test-cli
 .idea
 .nyc_output
 .eslintcache
+*.tsbuildinfo
+**/*.tsbuildinfo
