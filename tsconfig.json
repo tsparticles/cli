@@ -24,8 +24,7 @@
       "node",
       "klaw",
       "prompts",
-      "eslint",
-      "vitest"
+      "eslint"
     ],
     "strict": true,
     "noImplicitAny": true,

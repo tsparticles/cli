@@ -17,7 +17,7 @@ export async function lint(ci: boolean, silent: boolean): Promise<boolean> {
         fix: !ci,
         cache: true,
         cacheLocation: ".cache/eslint/.eslintcache",
-        cacheStrategy: "metadata",
+        cacheStrategy: "content",
       }),
       results = await eslint.lintFiles(["src"]),
       errors = ESLint.getErrorResults(results);
