@@ -40,7 +40,7 @@ importers:
         version: 10.1.8(eslint@10.1.0(jiti@2.6.1))
       eslint-plugin-jsdoc:
         specifier: ^62.8.0
-        version: 62.8.0(eslint@10.1.0(jiti@2.6.1))
+        version: 62.8.1(eslint@10.1.0(jiti@2.6.1))
       eslint-plugin-prettier:
         specifier: ^5.5.5
         version: 5.5.5(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@10.1.0(jiti@2.6.1)))(eslint@10.1.0(jiti@2.6.1))(prettier@3.8.1)
@@ -1179,8 +1179,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-plugin-jsdoc@62.8.0:
-    resolution: {integrity: sha512-hu3r9/6JBmPG6wTcqtYzgZAnjEG2eqRUATfkFscokESg1VDxZM21ZaMire0KjeMwfj+SXvgB4Rvh5LBuesj92w==}
+  eslint-plugin-jsdoc@62.8.1:
+    resolution: {integrity: sha512-e9358PdHgvcMF98foNd3L7hVCw70Lt+YcSL7JzlJebB8eT5oRJtW6bHMQKoAwJtw6q0q0w/fRIr2kwnHdFDI6A==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
@@ -1818,14 +1818,14 @@ packages:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
 
-  spdx-exceptions@2.3.0:
-    resolution: {integrity: sha512-/tTrYOC7PPI1nUAgx34hUpqXuyJG+DTHJTnIULG4rDygi4xu/tfgmq1e1cIRwRzwZgo4NLySi+ricLkZkw4i5A==}
+  spdx-exceptions@2.5.0:
+    resolution: {integrity: sha512-PiU42r+xO4UbUS1buo3LPJkjlO7430Xn5SVAhdpzzsPHsjbYVflnnFdATgabnLude+Cqu25p6N+g2lw/PFsa4w==}
 
   spdx-expression-parse@4.0.0:
     resolution: {integrity: sha512-Clya5JIij/7C6bRR22+tnGXbc4VKlibKSVj2iHvVeX5iMW7s1SIQlqu699JkODJJIhh/pUu8L0/VLh8xflD+LQ==}
 
-  spdx-license-ids@3.0.13:
-    resolution: {integrity: sha512-XkD+zwiqXHikFZm4AX/7JSCXA98U5Db4AFd5XUg/+9UNtnH75+Z9KxtpYiJZx36mUDVOwH83pl7yvCer6ewM3w==}
+  spdx-license-ids@3.0.23:
+    resolution: {integrity: sha512-CWLcCCH7VLu13TgOH+r8p1O/Znwhqv/dbb6lqWy67G+pT1kHmeD/+V36AVb/vq8QMIQwVShJ6Ssl5FPh0fuSdw==}
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -2232,7 +2232,7 @@ snapshots:
   '@es-joy/jsdoccomment@0.84.0':
     dependencies:
       '@types/estree': 1.0.8
-      '@typescript-eslint/types': 8.57.0
+      '@typescript-eslint/types': 8.57.2
       comment-parser: 1.4.5
       esquery: 1.7.0
       jsdoc-type-pratt-parser: 7.1.1
@@ -2570,7 +2570,7 @@ snapshots:
       dependency-cruiser: 17.3.9
       eslint: 10.1.0(jiti@2.6.1)
       eslint-config-prettier: 10.1.8(eslint@10.1.0(jiti@2.6.1))
-      eslint-plugin-jsdoc: 62.8.0(eslint@10.1.0(jiti@2.6.1))
+      eslint-plugin-jsdoc: 62.8.1(eslint@10.1.0(jiti@2.6.1))
       eslint-plugin-prettier: 5.5.5(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@10.1.0(jiti@2.6.1)))(eslint@10.1.0(jiti@2.6.1))(prettier@3.8.1)
       eslint-plugin-tsdoc: 0.5.2(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3)
       klaw: 4.1.0
@@ -2609,7 +2609,7 @@ snapshots:
       '@tsparticles/prettier-config': 3.3.5(prettier@3.8.1)
       eslint: 10.1.0(jiti@2.6.1)
       eslint-config-prettier: 10.1.8(eslint@10.1.0(jiti@2.6.1))
-      eslint-plugin-jsdoc: 62.8.0(eslint@10.1.0(jiti@2.6.1))
+      eslint-plugin-jsdoc: 62.8.1(eslint@10.1.0(jiti@2.6.1))
       eslint-plugin-prettier: 5.5.5(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@10.1.0(jiti@2.6.1)))(eslint@10.1.0(jiti@2.6.1))(prettier@3.8.1)
       eslint-plugin-tsdoc: 0.5.2(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3)
       jiti: 2.6.1
@@ -2639,7 +2639,7 @@ snapshots:
       browserslist: 4.28.1
       eslint: 10.1.0(jiti@2.6.1)
       eslint-config-prettier: 10.1.8(eslint@10.1.0(jiti@2.6.1))
-      eslint-plugin-jsdoc: 62.8.0(eslint@10.1.0(jiti@2.6.1))
+      eslint-plugin-jsdoc: 62.8.1(eslint@10.1.0(jiti@2.6.1))
       eslint-plugin-tsdoc: 0.5.2(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3)
       prettier: 3.8.1
       prettier-plugin-multiline-arrays: 4.1.5(prettier@3.8.1)
@@ -3215,7 +3215,7 @@ snapshots:
     dependencies:
       eslint: 10.1.0(jiti@2.6.1)
 
-  eslint-plugin-jsdoc@62.8.0(eslint@10.1.0(jiti@2.6.1)):
+  eslint-plugin-jsdoc@62.8.1(eslint@10.1.0(jiti@2.6.1)):
     dependencies:
       '@es-joy/jsdoccomment': 0.84.0
       '@es-joy/resolve.exports': 1.2.0
@@ -3824,14 +3824,14 @@ snapshots:
 
   source-map@0.6.1: {}
 
-  spdx-exceptions@2.3.0: {}
+  spdx-exceptions@2.5.0: {}
 
   spdx-expression-parse@4.0.0:
     dependencies:
-      spdx-exceptions: 2.3.0
-      spdx-license-ids: 3.0.13
+      spdx-exceptions: 2.5.0
+      spdx-license-ids: 3.0.23
 
-  spdx-license-ids@3.0.13: {}
+  spdx-license-ids@3.0.23: {}
 
   stackback@0.0.2: {}
 
