@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/cli",
-  "version": "3.3.6",
+  "version": "3.4.0",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -34,29 +34,29 @@
     "prepack": "pnpm run build"
   },
   "dependencies": {
-    "@swc/core": "^1.15.18",
-    "@tsparticles/depcruise-config": "^3.3.3",
-    "@tsparticles/eslint-config": "^3.3.3",
-    "@tsparticles/prettier-config": "^3.3.3",
-    "@tsparticles/tsconfig": "^3.3.3",
-    "@tsparticles/webpack-plugin": "^3.3.3",
+    "@swc/core": "^1.15.21",
+    "@tsparticles/depcruise-config": "^3.4.2",
+    "@tsparticles/eslint-config": "^3.4.2",
+    "@tsparticles/prettier-config": "^3.4.2",
+    "@tsparticles/tsconfig": "^3.4.2",
+    "@tsparticles/webpack-plugin": "^3.4.2",
     "commander": "^14.0.3",
-    "eslint": "^10.0.3",
+    "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jsdoc": "^62.8.0",
+    "eslint-plugin-jsdoc": "^62.8.1",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-tsdoc": "^0.5.2",
     "klaw": "^4.1.0",
     "lookpath": "^1.2.3",
-    "dependency-cruiser": "^17.3.9",
+    "dependency-cruiser": "^17.3.10",
     "path-scurry": "^2.0.2",
     "prettier": "^3.8.1",
-    "prettier-plugin-multiline-arrays": "^4.1.4",
+    "prettier-plugin-multiline-arrays": "^4.1.5",
     "prompts": "^2.4.2",
     "rimraf": "^6.1.3",
     "swc-loader": "^0.2.7",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.57.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.0",
     "webpack": "^5.105.4"
   },
   "devDependencies": {
@@ -67,17 +67,17 @@
     "@types/node": "^25.5.0",
     "@types/prompts": "^2.4.9",
     "@types/webpack-env": "^1.18.8",
-    "browserslist": "^4.28.1",
+    "browserslist": "^4.28.2",
     "copyfiles": "^2.4.1",
     "cross-env": "^10.1.0",
     "terser-webpack-plugin": "^5.4.0",
     "ts-node": "^10.9.2",
-    "vitest": "^4.1.0",
-    "webpack-bundle-analyzer": "^5.2.0",
-    "webpack-cli": "^6.0.1"
+    "vitest": "^4.1.2",
+    "webpack-bundle-analyzer": "^5.3.0",
+    "webpack-cli": "^7.0.2"
   },
   "description": "tsParticles CLI",
   "main": "eslint.config.js",
   "author": "Matteo Bruni <matteo.bruni@me.com>",
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@10.33.0"
 }
