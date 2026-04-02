@@ -32,7 +32,9 @@ export async function buildDistFiles(basePath: string, silent: boolean): Promise
 
     if (pkgInfo.dependencies) {
       libObj["dependencies"] = JSON.parse(JSON.stringify(pkgInfo.dependencies).replaceAll("workspace:", ""));
-    } else if (pkgInfo.peerDependencies) {
+    }
+
+    if (pkgInfo.peerDependencies) {
       libObj["peerDependencies"] = JSON.parse(JSON.stringify(pkgInfo.peerDependencies).replaceAll("workspace:", ""));
     }
 
