@@ -33,11 +33,7 @@ async function readConfig(basePath: string, file: string): Promise<string | unde
  * @param silent -
  * @returns the exit code
  */
-async function compile(
-  basePath: string,
-  type: "browser" | "cjs" | "esm" | "types" | "umd",
-  silent: boolean,
-): Promise<number> {
+async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "types", silent: boolean): Promise<number> {
   let options: unknown, data: string | undefined;
 
   switch (type) {
@@ -95,21 +91,6 @@ async function compile(
           compilerOptions: {
             rootDir: "./src",
             outDir: "./dist/types",
-          },
-          include: ["./src"],
-        };
-      }
-
-      break;
-    case "umd":
-      data = await readConfig(basePath, "tsconfig.umd.json");
-
-      if (!data) {
-        options = {
-          extends: "@tsparticles/tsconfig/dist/tsconfig.umd.json",
-          compilerOptions: {
-            rootDir: "./src",
-            outDir: "./dist/umd",
           },
           include: ["./src"],
         };
@@ -181,7 +162,7 @@ export async function buildTS(basePath: string, silent: boolean): Promise<boolea
 
   let res = true;
 
-  const types: ("browser" | "cjs" | "esm" | "types" | "umd")[] = ["browser", "cjs", "esm", "types", "umd"];
+  const types: ("browser" | "cjs" | "esm" | "types")[] = ["browser", "cjs", "esm", "types"];
 
   for (const type of types) {
     if (!silent) {
