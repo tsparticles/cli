@@ -4,6 +4,43 @@ import klaw from "klaw";
 import path from "node:path";
 
 /**
+ * @param value -
+ * @param version -
+ * @returns -
+ */
+function resolveWorkspaceVersion(value: string, version: string): string {
+  if (!value.startsWith("workspace:")) {
+    return value;
+  }
+
+  const spec = value.slice("workspace:".length);
+
+  if (!spec || spec === "*") {
+    return version;
+  }
+
+  if (spec === "^" || spec === "~") {
+    return `${spec}${version}`;
+  }
+
+  return spec;
+}
+
+/**
+ * @param deps -
+ * @param version -
+ * @returns -
+ */
+function resolveDeps(deps: Record<string, string>, version: string): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(deps).map(([name, value]) => [
+      name,
+      resolveWorkspaceVersion(value, version),
+    ]),
+  );
+}
+
+/**
  * @param basePath -
  * @param silent -
  * @returns true if the dist files process was successful
@@ -31,11 +68,11 @@ export async function buildDistFiles(basePath: string, silent: boolean): Promise
     libObj["version"] = pkgInfo.version;
 
     if (pkgInfo.dependencies) {
-      libObj["dependencies"] = JSON.parse(JSON.stringify(pkgInfo.dependencies).replaceAll("workspace:", ""));
+      libObj["dependencies"] = resolveDeps(pkgInfo.dependencies, pkgInfo.version);
     }
 
     if (pkgInfo.peerDependencies) {
-      libObj["peerDependencies"] = JSON.parse(JSON.stringify(pkgInfo.peerDependencies).replaceAll("workspace:", ""));
+      libObj["peerDependencies"] = resolveDeps(pkgInfo.peerDependencies, pkgInfo.version);
     }
 
     const jsonIndent = 2,

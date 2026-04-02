@@ -86,6 +86,7 @@
     "@swc/core": "^1.15.21",
     "@tsparticles/cli": "latest",
     "@tsparticles/depcruise-config": "^3.4.4",
+    "@tsparticles/engine": "^3.9.1",
     "@tsparticles/eslint-config": "^3.4.4",
     "@tsparticles/prettier-config": "^3.4.4",
     "@tsparticles/tsconfig": "^3.4.4",
@@ -105,7 +106,7 @@
     "webpack-bundle-analyzer": "^5.3.0",
     "webpack-cli": "^7.0.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@tsparticles/engine": "^3.9.1"
   }
 }
