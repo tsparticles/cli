@@ -72,7 +72,7 @@
   "unpkg": "tsparticles.empty.template.min.js",
   "module": "index.js",
   "types": "index.d.ts",
-  "dependencies": {
+  "peerDependencies": {
     "@tsparticles/engine": "^3.9.1"
   }
 }
