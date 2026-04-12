@@ -10,51 +10,58 @@ enum ExitCodes {
   ParseError = 4,
 }
 
-type CompileResult = {
+type CompileType = "browser" | "cjs" | "esm" | "types";
+
+interface CompileResult {
   exitCode: ExitCodes;
   logs: string[];
-  type: "browser" | "cjs" | "esm" | "types";
+  type: CompileType;
+}
+
+interface CompileConfig {
+  configFile: string;
+  extends: string;
+  outDir: string;
+}
+
+const compileConfigs: Record<CompileType, CompileConfig> = {
+  browser: {
+    configFile: "tsconfig.browser.json",
+    extends: "@tsparticles/tsconfig/dist/tsconfig.browser.json",
+    outDir: "./dist/browser",
+  },
+  cjs: {
+    configFile: "tsconfig.json",
+    extends: "@tsparticles/tsconfig/dist/tsconfig.json",
+    outDir: "./dist/cjs",
+  },
+  esm: {
+    configFile: "tsconfig.module.json",
+    extends: "@tsparticles/tsconfig/dist/tsconfig.module.json",
+    outDir: "./dist/esm",
+  },
+  types: {
+    configFile: "tsconfig.types.json",
+    extends: "@tsparticles/tsconfig/dist/tsconfig.types.json",
+    outDir: "./dist/types",
+  },
 };
 
-function getDefaultOptions(type: "browser" | "cjs" | "esm" | "types"): unknown {
-  switch (type) {
-    case "browser":
-      return {
-        extends: "@tsparticles/tsconfig/dist/tsconfig.browser.json",
-        compilerOptions: {
-          rootDir: "./src",
-          outDir: "./dist/browser",
-        },
-        include: ["./src"],
-      };
-    case "cjs":
-      return {
-        extends: "@tsparticles/tsconfig/dist/tsconfig.json",
-        compilerOptions: {
-          rootDir: "./src",
-          outDir: "./dist/cjs",
-        },
-        include: ["./src"],
-      };
-    case "esm":
-      return {
-        extends: "@tsparticles/tsconfig/dist/tsconfig.module.json",
-        compilerOptions: {
-          rootDir: "./src",
-          outDir: "./dist/esm",
-        },
-        include: ["./src"],
-      };
-    case "types":
-      return {
-        extends: "@tsparticles/tsconfig/dist/tsconfig.types.json",
-        compilerOptions: {
-          rootDir: "./src",
-          outDir: "./dist/types",
-        },
-        include: ["./src"],
-      };
-  }
+/**
+ * @param type -
+ * @returns -
+ */
+function getDefaultOptions(type: CompileType): unknown {
+  const config = compileConfigs[type];
+
+  return {
+    extends: config.extends,
+    compilerOptions: {
+      rootDir: "./src",
+      outDir: config.outDir,
+    },
+    include: ["./src"],
+  };
 }
 
 /**
@@ -80,47 +87,14 @@ async function readConfig(basePath: string, file: string): Promise<string | unde
  * @param silent -
  * @returns the exit code
  */
-async function compile(
-  basePath: string,
-  type: "browser" | "cjs" | "esm" | "types",
-  silent: boolean,
-): Promise<CompileResult> {
-  let options: unknown, data: string | undefined;
-  const logs: string[] = [];
+async function compile(basePath: string, type: CompileType, silent: boolean): Promise<CompileResult> {
+  let options: unknown;
 
-  switch (type) {
-    case "browser":
-      data = await readConfig(basePath, "tsconfig.browser.json");
+  const logs: string[] = [],
+    data = await readConfig(basePath, compileConfigs[type].configFile);
 
-      if (!data) {
-        options = getDefaultOptions(type);
-      }
-
-      break;
-    case "cjs":
-      data = await readConfig(basePath, "tsconfig.json");
-
-      if (!data) {
-        options = getDefaultOptions(type);
-      }
-
-      break;
-    case "esm":
-      data = await readConfig(basePath, "tsconfig.module.json");
-
-      if (!data) {
-        options = getDefaultOptions(type);
-      }
-
-      break;
-    case "types":
-      data = await readConfig(basePath, "tsconfig.types.json");
-
-      if (!data) {
-        options = getDefaultOptions(type);
-      }
-
-      break;
+  if (!data) {
+    options = getDefaultOptions(type);
   }
 
   if (!data && !options) {
@@ -148,6 +122,7 @@ async function compile(
   }
 
   const ts = await import("typescript");
+
   let parsed = ts.parseJsonConfigFileContent(options, ts.sys, basePath);
 
   if (parsed.errors.length && type === "cjs" && data) {
@@ -222,9 +197,8 @@ export async function buildTS(basePath: string, silent: boolean): Promise<boolea
     console.log("Building TS files");
   }
 
-  const types: ("browser" | "cjs" | "esm" | "types")[] = ["browser", "cjs", "esm", "types"];
-
-  const results = await Promise.all(types.map(type => compile(basePath, type, silent)));
+  const types: CompileType[] = ["browser", "cjs", "esm", "types"],
+    results = await Promise.all(types.map(type => compile(basePath, type, silent)));
 
   for (const type of types) {
     const result = results.find(r => r.type === type);
