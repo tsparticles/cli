@@ -10,6 +10,53 @@ enum ExitCodes {
   ParseError = 4,
 }
 
+type CompileResult = {
+  exitCode: ExitCodes;
+  logs: string[];
+  type: "browser" | "cjs" | "esm" | "types";
+};
+
+function getDefaultOptions(type: "browser" | "cjs" | "esm" | "types"): unknown {
+  switch (type) {
+    case "browser":
+      return {
+        extends: "@tsparticles/tsconfig/dist/tsconfig.browser.json",
+        compilerOptions: {
+          rootDir: "./src",
+          outDir: "./dist/browser",
+        },
+        include: ["./src"],
+      };
+    case "cjs":
+      return {
+        extends: "@tsparticles/tsconfig/dist/tsconfig.json",
+        compilerOptions: {
+          rootDir: "./src",
+          outDir: "./dist/cjs",
+        },
+        include: ["./src"],
+      };
+    case "esm":
+      return {
+        extends: "@tsparticles/tsconfig/dist/tsconfig.module.json",
+        compilerOptions: {
+          rootDir: "./src",
+          outDir: "./dist/esm",
+        },
+        include: ["./src"],
+      };
+    case "types":
+      return {
+        extends: "@tsparticles/tsconfig/dist/tsconfig.types.json",
+        compilerOptions: {
+          rootDir: "./src",
+          outDir: "./dist/types",
+        },
+        include: ["./src"],
+      };
+  }
+}
+
 /**
  * @param basePath -
  * @param file -
@@ -33,22 +80,20 @@ async function readConfig(basePath: string, file: string): Promise<string | unde
  * @param silent -
  * @returns the exit code
  */
-async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "types", silent: boolean): Promise<number> {
+async function compile(
+  basePath: string,
+  type: "browser" | "cjs" | "esm" | "types",
+  silent: boolean,
+): Promise<CompileResult> {
   let options: unknown, data: string | undefined;
+  const logs: string[] = [];
 
   switch (type) {
     case "browser":
       data = await readConfig(basePath, "tsconfig.browser.json");
 
       if (!data) {
-        options = {
-          extends: "@tsparticles/tsconfig/dist/tsconfig.browser.json",
-          compilerOptions: {
-            rootDir: "./src",
-            outDir: "./dist/browser",
-          },
-          include: ["./src"],
-        };
+        options = getDefaultOptions(type);
       }
 
       break;
@@ -56,14 +101,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
       data = await readConfig(basePath, "tsconfig.json");
 
       if (!data) {
-        options = {
-          extends: "@tsparticles/tsconfig/dist/tsconfig.json",
-          compilerOptions: {
-            rootDir: "./src",
-            outDir: "./dist/cjs",
-          },
-          include: ["./src"],
-        };
+        options = getDefaultOptions(type);
       }
 
       break;
@@ -71,14 +109,7 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
       data = await readConfig(basePath, "tsconfig.module.json");
 
       if (!data) {
-        options = {
-          extends: "@tsparticles/tsconfig/dist/tsconfig.module.json",
-          compilerOptions: {
-            rootDir: "./src",
-            outDir: "./dist/esm",
-          },
-          include: ["./src"],
-        };
+        options = getDefaultOptions(type);
       }
 
       break;
@@ -86,21 +117,20 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
       data = await readConfig(basePath, "tsconfig.types.json");
 
       if (!data) {
-        options = {
-          extends: "@tsparticles/tsconfig/dist/tsconfig.types.json",
-          compilerOptions: {
-            rootDir: "./src",
-            outDir: "./dist/types",
-          },
-          include: ["./src"],
-        };
+        options = getDefaultOptions(type);
       }
 
       break;
   }
 
   if (!data && !options) {
-    return ExitCodes.NoDataOrOptions;
+    logs.push(`No TS config found for ${type} build.`);
+
+    return {
+      type,
+      logs,
+      exitCode: ExitCodes.NoDataOrOptions,
+    };
   }
 
   if (!options && data) {
@@ -108,14 +138,42 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
   }
 
   if (!options) {
-    return ExitCodes.NoOptions;
+    logs.push(`No TS options available for ${type} build.`);
+
+    return {
+      type,
+      logs,
+      exitCode: ExitCodes.NoOptions,
+    };
   }
 
-  const ts = await import("typescript"),
-    parsed = ts.parseJsonConfigFileContent(options, ts.sys, basePath);
+  const ts = await import("typescript");
+  let parsed = ts.parseJsonConfigFileContent(options, ts.sys, basePath);
+
+  if (parsed.errors.length && type === "cjs" && data) {
+    const noInputsCode = 18003,
+      hasNoInputsError = parsed.errors.some(diagnostic => diagnostic.code === noInputsCode);
+
+    if (hasNoInputsError) {
+      options = getDefaultOptions(type);
+      parsed = ts.parseJsonConfigFileContent(options, ts.sys, basePath);
+
+      if (!silent) {
+        logs.push("Using default cjs build options because tsconfig.json has no input files for this build.");
+      }
+    }
+  }
 
   if (parsed.errors.length) {
-    return ExitCodes.ParseError;
+    for (const diagnostic of parsed.errors) {
+      logs.push(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+    }
+
+    return {
+      type,
+      logs,
+      exitCode: ExitCodes.ParseError,
+    };
   }
 
   const program = ts.createProgram(parsed.fileNames, parsed.options),
@@ -133,21 +191,25 @@ async function compile(basePath: string, type: "browser" | "cjs" | "esm" | "type
         message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"),
         increment = 1;
 
-      console.log(
+      logs.push(
         `${diagnostic.file.fileName} (${(line + increment).toString()},${(character + increment).toString()}): ${message}`,
       );
     } else {
-      console.log(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+      logs.push(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
     }
   }
 
   const exitCode = emitResult.emitSkipped || failed ? ExitCodes.EmitErrors : ExitCodes.OK;
 
   if (!silent || exitCode) {
-    console.log(`TSC for ${type} done with exit code: '${exitCode.toLocaleString()}'.`);
+    logs.push(`TSC for ${type} done with exit code: '${exitCode.toLocaleString()}'.`);
   }
 
-  return exitCode;
+  return {
+    type,
+    logs,
+    exitCode,
+  };
 }
 
 /**
@@ -160,23 +222,27 @@ export async function buildTS(basePath: string, silent: boolean): Promise<boolea
     console.log("Building TS files");
   }
 
-  let res = true;
-
   const types: ("browser" | "cjs" | "esm" | "types")[] = ["browser", "cjs", "esm", "types"];
 
+  const results = await Promise.all(types.map(type => compile(basePath, type, silent)));
+
   for (const type of types) {
+    const result = results.find(r => r.type === type);
+
+    if (!result) {
+      continue;
+    }
+
     if (!silent) {
       console.log(`Building TS files for ${type} configuration`);
     }
 
-    const exitCode = await compile(basePath, type, silent);
-
-    if (exitCode) {
-      res = false;
-
-      break;
+    for (const log of result.logs) {
+      console.log(log);
     }
   }
+
+  const res = results.every(result => result.exitCode === ExitCodes.OK);
 
   if (!silent) {
     console.log("Building TS files done");
