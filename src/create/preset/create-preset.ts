@@ -29,6 +29,16 @@ async function updateBundleFile(destPath: string, name: string): Promise<void> {
       },
     ],
   });
+
+  await replaceTokensInFile({
+    path: path.join(destPath, "src", "bundle.lazy.ts"),
+    tokens: [
+      {
+        from: /loadTemplatePreset/g,
+        to: `load${capitalizedName}Preset`,
+      },
+    ],
+  });
 }
 
 /**
@@ -42,6 +52,20 @@ async function updateIndexFile(destPath: string, name: string): Promise<void> {
 
   await replaceTokensInFile({
     path: path.join(destPath, "src", "index.ts"),
+    tokens: [
+      {
+        from: /loadTemplatePreset/g,
+        to: `load${capitalizedName}Preset`,
+      },
+      {
+        from: /"#template#"/g,
+        to: `"${camelizedName}"`,
+      },
+    ],
+  });
+
+  await replaceTokensInFile({
+    path: path.join(destPath, "src", "index.lazy.ts"),
     tokens: [
       {
         from: /loadTemplatePreset/g,

@@ -32,6 +32,16 @@ async function updateIndexFile(destPath: string, name: string): Promise<void> {
   });
 
   await replaceTokensInFile({
+    path: path.join(destPath, "src", "index.lazy.ts"),
+    tokens: [
+      {
+        from: /loadTemplateShape/g,
+        to: `load${capitalizedName}Shape`,
+      },
+    ],
+  });
+
+  await replaceTokensInFile({
     path: path.join(destPath, "src", "ShapeDrawer.ts"),
     tokens: [
       {
