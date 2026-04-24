@@ -34,6 +34,20 @@ async function updateIndexFile(destPath: string, name: string): Promise<void> {
       },
     ],
   });
+
+  await replaceTokensInFile({
+    path: path.join(destPath, "src", "index.lazy.ts"),
+    tokens: [
+      {
+        from: /loadTemplatePlugin/g,
+        to: `load${capitalizedName}Plugin`,
+      },
+      {
+        from: /"#template#"/g,
+        to: `"${camelizedName}"`,
+      },
+    ],
+  });
 }
 
 /**

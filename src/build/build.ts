@@ -34,7 +34,13 @@ buildCommand.action(async (argPath: string) => {
     ci = !!opts["ci"],
     all =
       !!opts["all"] ||
-      (!opts["bundle"] && !opts["clean"] && !opts["dist"] && !opts["lint"] && !opts["prettify"] && !opts["tsc"]),
+      (!opts["bundle"] &&
+        !opts["clean"] &&
+        !opts["circularDeps"] &&
+        !opts["dist"] &&
+        !opts["lint"] &&
+        !opts["prettify"] &&
+        !opts["tsc"]),
     doBundle = all || !!opts["bundle"],
     circularDeps = all || !!opts["circularDeps"],
     clean = all || !!opts["clean"],
@@ -74,16 +80,20 @@ buildCommand.action(async (argPath: string) => {
     canContinue = await lint(ci, silent);
   }
 
-  if (canContinue && tsc) {
-    const { buildTS } = await import("./build-tsc.js");
+  if (canContinue && (tsc || circularDeps)) {
+    const checks: Promise<boolean>[] = [];
 
-    canContinue = await buildTS(basePath, silent);
-  }
+    if (tsc) {
+      checks.push(import("./build-tsc.js").then(({ buildTS }) => buildTS(basePath, silent)));
+    }
 
-  if (canContinue && circularDeps) {
-    const { buildCircularDeps } = await import("./build-circular-deps.js");
+    if (circularDeps) {
+      checks.push(
+        import("./build-circular-deps.js").then(({ buildCircularDeps }) => buildCircularDeps(basePath, silent)),
+      );
+    }
 
-    canContinue = await buildCircularDeps(basePath, silent);
+    canContinue = (await Promise.all(checks)).every(result => result);
   }
 
   if (canContinue && doBundle) {
