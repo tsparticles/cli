@@ -34,12 +34,12 @@
     "prepack": "pnpm run build"
   },
   "dependencies": {
-    "@swc/core": "^1.15.30",
-    "@tsparticles/depcruise-config": "^3.4.11",
-    "@tsparticles/eslint-config": "^3.4.11",
-    "@tsparticles/prettier-config": "^3.4.11",
-    "@tsparticles/tsconfig": "^3.4.11",
-    "@tsparticles/webpack-plugin": "^3.4.11",
+    "@swc/core": "^1.15.32",
+    "@tsparticles/depcruise-config": "^3.4.14",
+    "@tsparticles/eslint-config": "^3.4.14",
+    "@tsparticles/prettier-config": "^3.4.14",
+    "@tsparticles/tsconfig": "^3.4.14",
+    "@tsparticles/webpack-plugin": "^3.4.14",
     "commander": "^14.0.3",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
@@ -56,7 +56,7 @@
     "rimraf": "^6.1.3",
     "swc-loader": "^0.2.7",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.0",
+    "typescript-eslint": "^8.59.1",
     "webpack": "^5.106.2"
   },
   "devDependencies": {
@@ -79,5 +79,5 @@
   "description": "tsParticles CLI",
   "main": "eslint.config.js",
   "author": "Matteo Bruni <matteo.bruni@me.com>",
-  "packageManager": "pnpm@10.33.2"
+  "packageManager": "pnpm@11.0.0"
 }

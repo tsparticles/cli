@@ -1,3 +1,7 @@
+allowBuilds:
+  '@swc/core': true
+  '@tsparticles/engine': true
+  esbuild: true
 onlyBuiltDependencies:
   - '@swc/core'
   - '@tsparticles/engine'
