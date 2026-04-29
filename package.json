@@ -79,5 +79,5 @@
   "description": "tsParticles CLI",
   "main": "eslint.config.js",
   "author": "Matteo Bruni <matteo.bruni@me.com>",
-  "packageManager": "pnpm@11.0.0"
+  "packageManager": "pnpm@11.0.1"
 }
