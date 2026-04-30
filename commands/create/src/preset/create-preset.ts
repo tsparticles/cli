@@ -206,7 +206,7 @@ export async function createPresetTemplate(
   repoUrl: string,
   destPath: string,
 ): Promise<void> {
-  const sourcePath = path.join(__dirname, "..", "..", "..", "files", "create-preset");
+  const sourcePath = path.join(__dirname, "..", "..", "files", "create-preset");
 
   await copyEmptyTemplateFiles(destPath);
 

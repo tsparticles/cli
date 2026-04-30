@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createPluginTemplate } from "../src/create/plugin/create-plugin.js";
+import { createPluginTemplate } from "../src/plugin/create-plugin.js";
 import { readFile, rm } from "node:fs/promises";
 import path from "node:path";
 

@@ -178,7 +178,7 @@ export async function createPluginTemplate(
   repoUrl: string,
   destPath: string,
 ): Promise<void> {
-  const sourcePath = path.join(__dirname, "..", "..", "..", "files", "create-plugin");
+  const sourcePath = path.join(__dirname, "..", "..", "files", "create-plugin");
 
   await copyEmptyTemplateFiles(destPath);
 

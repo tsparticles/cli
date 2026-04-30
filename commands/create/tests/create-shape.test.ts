@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFile, rm } from "node:fs/promises";
-import { createShapeTemplate } from "../src/create/shape/create-shape.js";
+import { createShapeTemplate } from "../src/shape/create-shape.js";
 import path from "node:path";
 
 describe("create-shape", () => {

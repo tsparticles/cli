@@ -133,7 +133,7 @@ export async function updateWebpackFile(
  * @param destPath - The path where the project will be created
  */
 export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
-  await cp(path.join(__dirname, "..", "..", "files", "empty-project"), destPath, {
+  await cp(path.join(__dirname, "..", "files", "empty-project"), destPath, {
     recursive: true,
     force: true,
     filter: copyFilter,

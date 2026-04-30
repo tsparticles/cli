@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFile, rm } from "node:fs/promises";
-import { createPresetTemplate } from "../src/create/preset/create-preset.js";
+import { createPresetTemplate } from "../src/preset/create-preset.js";
 import path from "node:path";
 
 describe("create-preset", () => {

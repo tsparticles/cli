@@ -179,7 +179,7 @@ export async function createShapeTemplate(
   repoUrl: string,
   destPath: string,
 ): Promise<void> {
-  const sourcePath = path.join(__dirname, "..", "..", "..", "files", "create-shape");
+  const sourcePath = path.join(__dirname, "..", "..", "files", "create-shape");
 
   await copyEmptyTemplateFiles(destPath);
 
