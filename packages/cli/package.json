@@ -37,7 +37,6 @@
     "@swc/core": "^1.15.32",
     "@tsparticles/cli-command-build": "workspace:*",
     "@tsparticles/cli-command-create": "workspace:*",
-    "@tsparticles/cli-utils": "workspace:*",
     "@tsparticles/depcruise-config": "^3.4.14",
     "@tsparticles/eslint-config": "^3.4.14",
     "@tsparticles/prettier-config": "^3.4.14",

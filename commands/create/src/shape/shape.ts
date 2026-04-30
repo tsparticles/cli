@@ -1,4 +1,4 @@
-import { capitalize, getDestinationDir, getRepositoryUrl } from "@tsparticles/cli-utils";
+import { capitalize, getDestinationDir, getRepositoryUrl } from "@tsparticles/cli-create-utils";
 import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
 import { createShapeTemplate } from "./create-shape.js";

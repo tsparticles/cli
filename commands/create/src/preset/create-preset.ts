@@ -10,7 +10,7 @@ import {
   updatePackageDistFile,
   updatePackageFile,
   updateWebpackFile,
-} from "@tsparticles/cli-utils";
+} from "@tsparticles/cli-create-utils";
 import { cp } from "node:fs/promises";
 import path from "node:path";
 
