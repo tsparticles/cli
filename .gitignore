@@ -7,3 +7,8 @@ test-cli
 .eslintcache
 *.tsbuildinfo
 **/*.tsbuildinfo
+
+
+
+.nx/cache
+.nx/workspace-data
