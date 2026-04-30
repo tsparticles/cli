@@ -12,5 +12,5 @@
     "nx": "22.7.1",
     "typescript": "^6.0.3"
   },
-  "packageManager": "pnpm@11.0.1"
+  "packageManager": "pnpm@11.0.3"
 }
