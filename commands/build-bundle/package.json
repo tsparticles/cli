@@ -1,5 +1,5 @@
 {
-  "name": "@tsparticles/cli-command-build",
+  "name": "@tsparticles/cli-command-build-bundle",
   "version": "3.4.7",
   "license": "MIT",
   "type": "module",
@@ -34,8 +34,6 @@
   },
   "dependencies": {
     "@swc/core": "^1.15.32",
-    "@tsparticles/cli-command-build-bundle": "workspace:*",
-    "@tsparticles/cli-command-build-circular-deps": "workspace:*",
     "@tsparticles/cli-utils": "workspace:*",
     "@tsparticles/depcruise-config": "^3.4.14",
     "@tsparticles/eslint-config": "^3.4.14",
@@ -77,6 +75,6 @@
     "webpack-cli": "^7.0.2"
   },
   "description": "tsParticles CLI",
-  "main": "dist/build.js",
+  "main": "dist/bundle.js",
   "author": "Matteo Bruni <matteo.bruni@me.com>"
 }

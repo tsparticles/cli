@@ -1,10 +1,14 @@
 import { Command } from "commander";
+import { bundleCommand } from "@tsparticles/cli-command-build-bundle";
+import { circularDepsCommand } from "@tsparticles/cli-command-build-circular-deps";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
 const buildCommand = new Command("build");
 
 buildCommand.description("Build the tsParticles library using TypeScript");
+buildCommand.addCommand(bundleCommand);
+buildCommand.addCommand(circularDepsCommand);
 buildCommand.option(
   "-a, --all",
   "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",
@@ -29,6 +33,7 @@ buildCommand.option(
 buildCommand.option("-t, --tsc", "Build the library using TypeScript", false);
 
 buildCommand.argument("[path]", `Path to the project root folder, default is "src"`, "src");
+
 buildCommand.action(async (argPath: string) => {
   const opts = buildCommand.opts(),
     ci = !!opts["ci"],
@@ -89,7 +94,9 @@ buildCommand.action(async (argPath: string) => {
 
     if (circularDeps) {
       checks.push(
-        import("./build-circular-deps.js").then(({ buildCircularDeps }) => buildCircularDeps(basePath, silent)),
+        import("@tsparticles/cli-command-build-circular-deps").then(({ circularDeps }) =>
+          circularDeps(basePath, silent),
+        ),
       );
     }
 
@@ -97,7 +104,7 @@ buildCommand.action(async (argPath: string) => {
   }
 
   if (canContinue && doBundle) {
-    const { bundle } = await import("./build-bundle.js");
+    const { bundle } = await import("@tsparticles/cli-command-build-bundle");
 
     canContinue = await bundle(basePath, silent);
   }

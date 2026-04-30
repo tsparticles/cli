@@ -10,7 +10,7 @@ const ZERO_VIOLATIONS = 0;
  * @param silent - If true, reduces the amount of output during the check
  * @returns true if no circular dependencies are found, false otherwise
  */
-export async function buildCircularDeps(basePath: string, silent: boolean): Promise<boolean> {
+export async function circularDeps(basePath: string, silent: boolean): Promise<boolean> {
   const srcPath = path.join(basePath, "src"),
     cruiseOptions = await loadDependencyCruiserConfig(basePath);
 
