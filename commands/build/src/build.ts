@@ -2,7 +2,7 @@ import { Command } from "commander";
 import { bundleCommand } from "@tsparticles/cli-command-build-bundle";
 import { circularDepsCommand } from "@tsparticles/cli-command-build-circular-deps";
 import { clearCommand } from "@tsparticles/cli-command-build-clear";
-import { distfilesCommand } from "@tsparticles/cli-command-build-distfiles";
+import { distFilesCommand } from "@tsparticles/cli-command-build-distfiles";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -12,7 +12,7 @@ buildCommand.description("Build the tsParticles library using TypeScript");
 buildCommand.addCommand(bundleCommand);
 buildCommand.addCommand(circularDepsCommand);
 buildCommand.addCommand(clearCommand);
-buildCommand.addCommand(distfilesCommand);
+buildCommand.addCommand(distFilesCommand);
 buildCommand.option(
   "-a, --all",
   "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",
@@ -60,7 +60,7 @@ buildCommand.action(async (argPath: string) => {
     silentOpt = opts["silent"] as string | boolean,
     silent = silentOpt === "false" ? false : !!silentOpt || ci,
     basePath = process.cwd(),
-    { getDistStats } = await import("./build-diststats.js"),
+    { getDistStats } = await import("@tsparticles/cli-command-build-diststats"),
     oldStats = await getDistStats(basePath);
 
   if (clean) {
