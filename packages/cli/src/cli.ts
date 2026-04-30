@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { buildCommand } from "./build/build.js";
-import { createCommand } from "./create/create.js";
+import { buildCommand } from "@tsparticles/cli-command-build";
+import { createCommand } from "@tsparticles/cli-command-create";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { program } from "commander";

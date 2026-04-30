@@ -1,11 +1,8 @@
 {
-  "name": "@tsparticles/cli",
+  "name": "@tsparticles/cli-create-utils",
   "version": "3.4.7",
   "license": "MIT",
   "type": "module",
-  "bin": {
-    "tsparticles-cli": "dist/cli.js"
-  },
   "publishConfig": {
     "access": "public",
     "tagVersionPrefix": "v"
@@ -27,15 +24,14 @@
     "compile:ci": "pnpm run build:ts",
     "build:ts": "pnpm run build:ts:cjs",
     "build:ts:cjs": "tsc -p src",
-    "build": "pnpm run clear:dist && pnpm run prettify:src && pnpm run lint && pnpm run compile && pnpm run circular-deps && pnpm run prettify:readme && chmod +x dist/cli.js",
+    "test": "vitest run",
+    "build": "pnpm run clear:dist && pnpm run prettify:src && pnpm run lint && pnpm run compile && pnpm run circular-deps && pnpm run prettify:readme",
     "build:ci": "pnpm run clear:dist && pnpm run prettify:ci:src && pnpm run lint:ci && pnpm run compile:ci && pnpm run prettify:ci:readme",
     "clear:dist": "rimraf ./dist",
     "prepack": "pnpm run build"
   },
   "dependencies": {
     "@swc/core": "^1.15.32",
-    "@tsparticles/cli-command-build": "workspace:*",
-    "@tsparticles/cli-command-create": "workspace:*",
     "@tsparticles/depcruise-config": "^3.4.14",
     "@tsparticles/eslint-config": "^3.4.14",
     "@tsparticles/prettier-config": "^3.4.14",
@@ -61,7 +57,6 @@
     "webpack": "^5.106.2"
   },
   "devDependencies": {
-    "@tsparticles/cli": "latest",
     "@tsparticles/engine": "^3.9.1",
     "@types/estree": "^1.0.8",
     "@types/klaw": "^3.0.7",
@@ -77,7 +72,7 @@
     "webpack-bundle-analyzer": "^5.3.0",
     "webpack-cli": "^7.0.2"
   },
-  "description": "tsParticles CLI",
-  "main": "dist/cli.js",
+  "description": "tsParticles CLI Utils",
+  "main": "dist/index.js",
   "author": "Matteo Bruni <matteo.bruni@me.com>"
 }

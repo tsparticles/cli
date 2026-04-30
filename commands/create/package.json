@@ -1,11 +1,8 @@
 {
-  "name": "@tsparticles/cli",
+  "name": "@tsparticles/cli-command-create",
   "version": "3.4.7",
   "license": "MIT",
   "type": "module",
-  "bin": {
-    "tsparticles-cli": "dist/cli.js"
-  },
   "publishConfig": {
     "access": "public",
     "tagVersionPrefix": "v"
@@ -27,21 +24,23 @@
     "compile:ci": "pnpm run build:ts",
     "build:ts": "pnpm run build:ts:cjs",
     "build:ts:cjs": "tsc -p src",
-    "build": "pnpm run clear:dist && pnpm run prettify:src && pnpm run lint && pnpm run compile && pnpm run circular-deps && pnpm run prettify:readme && chmod +x dist/cli.js",
+    "test": "vitest run",
+    "build": "pnpm run clear:dist && pnpm run prettify:src && pnpm run lint && pnpm run compile && pnpm run circular-deps && pnpm run prettify:readme",
     "build:ci": "pnpm run clear:dist && pnpm run prettify:ci:src && pnpm run lint:ci && pnpm run compile:ci && pnpm run prettify:ci:readme",
     "clear:dist": "rimraf ./dist",
     "prepack": "pnpm run build"
   },
+  "peerDependencies": {
+    "commander": "^14"
+  },
   "dependencies": {
     "@swc/core": "^1.15.32",
-    "@tsparticles/cli-command-build": "workspace:*",
-    "@tsparticles/cli-command-create": "workspace:*",
+    "@tsparticles/cli-create-utils": "workspace:*",
     "@tsparticles/depcruise-config": "^3.4.14",
     "@tsparticles/eslint-config": "^3.4.14",
     "@tsparticles/prettier-config": "^3.4.14",
     "@tsparticles/tsconfig": "^3.4.14",
     "@tsparticles/webpack-plugin": "^3.4.14",
-    "commander": "^14.0.3",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsdoc": "^62.9.0",
@@ -61,7 +60,6 @@
     "webpack": "^5.106.2"
   },
   "devDependencies": {
-    "@tsparticles/cli": "latest",
     "@tsparticles/engine": "^3.9.1",
     "@types/estree": "^1.0.8",
     "@types/klaw": "^3.0.7",
@@ -69,6 +67,7 @@
     "@types/prompts": "^2.4.9",
     "@types/webpack-env": "^1.18.8",
     "browserslist": "^4.28.2",
+    "commander": "^14.0.3",
     "copyfiles": "^2.4.1",
     "cross-env": "^10.1.0",
     "terser-webpack-plugin": "^5.5.0",
@@ -78,6 +77,6 @@
     "webpack-cli": "^7.0.2"
   },
   "description": "tsParticles CLI",
-  "main": "dist/cli.js",
+  "main": "dist/create.js",
   "author": "Matteo Bruni <matteo.bruni@me.com>"
 }

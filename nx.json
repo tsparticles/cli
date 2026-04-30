@@ -1,5 +1,83 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "analytics": true,
-  "nxCloudId": "69f2a8ac88e8207eb33ce56c"
+  "extends": "nx/presets/npm.json",
+  "nxCloudId": "69f2a8ac88e8207eb33ce56c",
+  "release": {
+    "projectsRelationship": "fixed",
+    "projects": [
+      "*"
+    ],
+    "version": {
+      "conventionalCommits": true,
+      "updateDependents": "always",
+      "git": {
+        "commit": true,
+        "commitMessage": "chore(release): published new version",
+        "push": true,
+        "tag": true,
+        "stageChanges": true
+      }
+    },
+    "changelog": {
+      "workspaceChangelog": true,
+      "projectChangelogs": false,
+      "git": {
+        "commit": true,
+        "push": true,
+        "stageChanges": true
+      }
+    }
+  },
+  "affected": {
+    "defaultBase": "main"
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
+      "cache": true
+    },
+    "build:ci": {
+      "dependsOn": [
+        "^build:ci"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
+      "cache": true
+    },
+    "prepare": {
+      "dependsOn": [
+        "^build",
+        "^prepare"
+      ]
+    },
+    "package": {
+      "dependsOn": [
+        "^build",
+        "^prepare",
+        "^package"
+      ]
+    }
+  },
+  "pluginsConfig": {
+    "@nrwl/js": {
+      "analyzeSourceFiles": false
+    }
+  },
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "sharedGlobals": [],
+    "production": [
+      "default"
+    ]
+  },
+  "analytics": true
 }
