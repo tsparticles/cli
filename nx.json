@@ -1,4 +1,5 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "analytics": true
+  "analytics": true,
+  "nxCloudId": "69f2a8ac88e8207eb33ce56c"
 }
