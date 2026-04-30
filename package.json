@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "nx run-many -t build",
-    "build:ci": "nx run-many -t build:ci"
+    "build:ci": "nx run-many -t build:ci",
+    "test": "nx run-many -t test"
   },
   "devDependencies": {
     "@nx/devkit": "^22.7.1",
