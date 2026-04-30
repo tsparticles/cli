@@ -9,32 +9,42 @@ on:
       - main
       - dev
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NX_CLOUD_DISTRIBUTED_EXECUTION: true
+  NX_CLOUD_ACCESS_TOKEN: '${{ secrets.NX_CLOUD_ACCESS_TOKEN }}'
+
 jobs:
-  main:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'pull_request' }}
     steps:
       - uses: actions/checkout@v6
-        name: Checkout [main]
         with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           fetch-depth: 0
+
+      - name: Derive SHAs for nx affected
+        uses: nrwl/nx-set-shas@v5
+
       - uses: actions/setup-node@v6
         with:
-          node-version: "24"
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        id: pnpm-install
+          node-version: '24'
+
+      - uses: pnpm/action-setup@v6.0.3
         with:
           run_install: false
-      - name: Get pnpm version
-        id: pnpm-version
-        run: |
-          echo "$(pnpm --version)"
+
+      - name: Initialize Nx Cloud
+        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js"
 
       - name: Get pnpm store directory
         id: pnpm-cache
         run: |
-          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v5
         name: Setup pnpm cache
@@ -43,55 +53,16 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-      - name: Clean tmp-files directory
-        run: rm -rf tests/tmp-files
-        if: always()
-      - run: pnpm install
-      - run: pnpm run build:ci
-      - run: pnpm test
-      - name: Stop Nx Cloud Session
-        run: pnpm nx fix-ci
-        if: always()
-  pr:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          fetch-depth: 0
-      - uses: actions/setup-node@v6
-        with:
-          node-version: "24"
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          run_install: false
-      - name: Get pnpm version
-        id: pnpm-version
-        run: |
-          echo "$(pnpm --version)"
 
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      - name: Install dependencies
+        run: pnpm install
 
-      - uses: actions/cache@v5
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Clean tmp-files directory
-        run: rm -rf tests/tmp-files
-        if: always()
-      - run: pnpm install
-      - run: pnpm run build:ci
-      - run: pnpm test
+      - name: Build packages
+        run: pnpm run build:ci
+
+      - name: Run tests
+        run: pnpm test
+
       - name: Stop Nx Cloud Session
-        run: pnpm nx fix-ci
+        run: npx nx fix-ci
         if: always()
