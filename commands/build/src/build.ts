@@ -3,16 +3,20 @@ import { bundleCommand } from "@tsparticles/cli-command-build-bundle";
 import { circularDepsCommand } from "@tsparticles/cli-command-build-circular-deps";
 import { clearCommand } from "@tsparticles/cli-command-build-clear";
 import { distFilesCommand } from "@tsparticles/cli-command-build-distfiles";
+import { esLintCommand } from "@tsparticles/cli-command-build-eslint";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
 const buildCommand = new Command("build");
 
 buildCommand.description("Build the tsParticles library using TypeScript");
+
 buildCommand.addCommand(bundleCommand);
 buildCommand.addCommand(circularDepsCommand);
 buildCommand.addCommand(clearCommand);
 buildCommand.addCommand(distFilesCommand);
+buildCommand.addCommand(esLintCommand);
+
 buildCommand.option(
   "-a, --all",
   "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",
@@ -84,7 +88,7 @@ buildCommand.action(async (argPath: string) => {
   }
 
   if (canContinue && doLint) {
-    const { lint } = await import("./build-eslint.js");
+    const { lint } = await import("@tsparticles/cli-command-build-eslint");
 
     canContinue = await lint(ci, silent);
   }
