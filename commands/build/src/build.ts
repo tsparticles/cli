@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { bundleCommand } from "@tsparticles/cli-command-build-bundle";
 import { circularDepsCommand } from "@tsparticles/cli-command-build-circular-deps";
+import { clearCommand } from "@tsparticles/cli-command-build-clear";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -9,6 +10,7 @@ const buildCommand = new Command("build");
 buildCommand.description("Build the tsParticles library using TypeScript");
 buildCommand.addCommand(bundleCommand);
 buildCommand.addCommand(circularDepsCommand);
+buildCommand.addCommand(clearCommand);
 buildCommand.option(
   "-a, --all",
   "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",
@@ -60,7 +62,7 @@ buildCommand.action(async (argPath: string) => {
     oldStats = await getDistStats(basePath);
 
   if (clean) {
-    const { clearDist } = await import("./build-clear.js");
+    const { clearDist } = await import("@tsparticles/cli-command-build-clear");
 
     await clearDist(basePath, silent);
   }
