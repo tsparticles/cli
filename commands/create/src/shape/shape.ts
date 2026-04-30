@@ -1,15 +1,14 @@
-import { getDestinationDir, getRepositoryUrl } from "../../utils/file-utils.js";
+import { capitalize, getDestinationDir, getRepositoryUrl } from "@tsparticles/cli-utils";
 import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
-import { capitalize } from "../../utils/string-utils.js";
-import { createPresetTemplate } from "./create-preset.js";
+import { createShapeTemplate } from "./create-shape.js";
 import path from "node:path";
 
-const presetCommand = new Command("preset");
+const shapeCommand = new Command("shape");
 
-presetCommand.description("Create a new tsParticles preset");
-presetCommand.argument("<destination>", "Destination folder");
-presetCommand.action(async (destination: string) => {
+shapeCommand.description("Create a new tsParticles shape");
+shapeCommand.argument("<destination>", "Destination folder");
+shapeCommand.action(async (destination: string) => {
   const destPath = await getDestinationDir(destination),
     repoUrl = await getRepositoryUrl(),
     initialName = destPath.split(path.sep).pop(),
@@ -17,14 +16,14 @@ presetCommand.action(async (destination: string) => {
       {
         type: "text",
         name: "name",
-        message: "What is the name of the preset?",
+        message: "What is the name of the shape?",
         validate: (value: string) => (value ? true : "The name can't be empty"),
         initial: initialName,
       },
       {
         type: "text",
         name: "description",
-        message: "What is the description of the preset?",
+        message: "What is the description of the shape?",
         validate: (value: string) => (value ? true : "The description can't be empty"),
         initial: capitalize(initialName ?? ""),
       },
@@ -41,7 +40,7 @@ presetCommand.action(async (destination: string) => {
       repositoryUrl: string;
     };
 
-  await createPresetTemplate(name.trim(), description.trim(), repositoryUrl.trim(), destPath);
+  await createShapeTemplate(name.trim(), description.trim(), repositoryUrl.trim(), destPath);
 });
 
-export { presetCommand };
+export { shapeCommand };

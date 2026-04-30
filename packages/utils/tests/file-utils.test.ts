@@ -4,7 +4,7 @@ import {
   getRepositoryUrl,
   replaceTokensInFile,
   replaceTokensInFiles,
-} from "../src/utils/file-utils.js";
+} from "../src";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 

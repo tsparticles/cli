@@ -1,16 +1,18 @@
-import { camelize, capitalize, dash } from "../../utils/string-utils.js";
 import {
+  camelize,
+  capitalize,
   copyEmptyTemplateFiles,
   copyFilter,
+  dash,
+  replaceTokensInFile,
   runBuild,
   runInstall,
   updatePackageDistFile,
   updatePackageFile,
   updateWebpackFile,
-} from "../../utils/template-utils.js";
+} from "@tsparticles/cli-utils";
 import { cp } from "node:fs/promises";
 import path from "node:path";
-import { replaceTokensInFile } from "../../utils/file-utils.js";
 
 /**
  * Updates the index file with the correct function name

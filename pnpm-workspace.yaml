@@ -1,5 +1,6 @@
 packages:
   - packages/*
+  - commands/*
 
 allowBuilds:
   '@swc/core': true

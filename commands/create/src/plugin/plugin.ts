@@ -1,7 +1,6 @@
-import { getDestinationDir, getRepositoryUrl } from "../../utils/file-utils.js";
+import { capitalize, getDestinationDir, getRepositoryUrl } from "@tsparticles/cli-utils";
 import prompts, { type PromptObject } from "prompts";
 import { Command } from "commander";
-import { capitalize } from "../../utils/string-utils.js";
 import { createPluginTemplate } from "./create-plugin.js";
 import path from "node:path";
 

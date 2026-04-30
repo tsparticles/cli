@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { camelize, capitalize, dash } from "../src/utils/string-utils.js";
+import { camelize, capitalize, dash } from "../src";
 
 describe("capitalize", () => {
     describe("empty string", () => {
