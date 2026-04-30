@@ -49,6 +49,9 @@ jobs:
       - run: pnpm install
       - run: pnpm run build:ci
       - run: pnpm test
+      - name: Stop Nx Cloud Session
+        run: pnpm nx fix-ci
+        if: always()
   pr:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
@@ -89,3 +92,6 @@ jobs:
       - run: pnpm install
       - run: pnpm run build:ci
       - run: pnpm test
+      - name: Stop Nx Cloud Session
+        run: pnpm nx fix-ci
+        if: always()
