@@ -1,0 +1,19 @@
+{
+  "name": "@tsparticles/cli-nx-plugin",
+  "root": "packages/nx-plugin",
+  "sourceRoot": "packages/nx-plugin/src",
+  "targets": {
+    "build": {
+      "options": {
+        "main": "packages/nx-plugin/src/index.ts"
+      }
+    },
+    "build:ci": {
+      "options": {
+        "main": "packages/nx-plugin/src/index.ts"
+      }
+    }
+  },
+  "tags": ["type:tooling", "scope:nx"]
+}
+

@@ -1,13 +1,16 @@
+/* eslint-disable sort-imports */
 import { Command } from "commander";
 import { bundleCommand } from "@tsparticles/cli-command-build-bundle";
 import { circularDepsCommand } from "@tsparticles/cli-command-build-circular-deps";
 import { clearCommand } from "@tsparticles/cli-command-build-clear";
 import { distFilesCommand } from "@tsparticles/cli-command-build-distfiles";
 import { esLintCommand } from "@tsparticles/cli-command-build-eslint";
-import { existsSync } from "node:fs";
-import path from "node:path";
 import { prettierCommand } from "@tsparticles/cli-command-build-prettier";
 import { tscCommand } from "@tsparticles/cli-command-build-tsc";
+
+import type { BuildExecutionOptions } from "./build-options.js";
+import { runLegacyBuild } from "./legacy-build.js";
+import { tryRunNxBuild } from "./nx-runner.js";
 
 const buildCommand = new Command("build");
 
@@ -43,12 +46,13 @@ buildCommand.option(
   false,
 );
 buildCommand.option("-t, --tsc", "Build the library using TypeScript", false);
+buildCommand.option("--nx", "Prefer running Nx targets when available", false);
+buildCommand.option("--legacy", "Disable Nx-aware mode and force the legacy build flow", false);
 
 buildCommand.argument("[path]", `Path to the project root folder, default is "src"`, "src");
 
 buildCommand.action(async (argPath: string) => {
   const opts = buildCommand.opts(),
-    ci = !!opts["ci"],
     all =
       !!opts["all"] ||
       (!opts["bundle"] &&
@@ -58,126 +62,29 @@ buildCommand.action(async (argPath: string) => {
         !opts["lint"] &&
         !opts["prettify"] &&
         !opts["tsc"]),
-    doBundle = all || !!opts["bundle"],
-    circularDeps = all || !!opts["circularDeps"],
-    clean = all || !!opts["clean"],
-    distfiles = all || !!opts["dist"],
-    doLint = all || !!opts["lint"],
-    prettier = all || !!opts["prettify"],
-    tsc = all || !!opts["tsc"],
     silentOpt = opts["silent"] as string | boolean,
-    silent = silentOpt === "false" ? false : !!silentOpt || ci,
-    basePath = process.cwd(),
-    { getDistStats } = await import("@tsparticles/cli-command-build-diststats"),
-    oldStats = await getDistStats(basePath);
+    commandOptions: BuildExecutionOptions = {
+      all,
+      argPath,
+      basePath: process.cwd(),
+      ci: !!opts["ci"],
+      circularDeps: all || !!opts["circularDeps"],
+      clean: all || !!opts["clean"],
+      distfiles: all || !!opts["dist"],
+      doBundle: all || !!opts["bundle"],
+      doLint: all || !!opts["lint"],
+      legacy: !!opts["legacy"],
+      prettier: all || !!opts["prettify"],
+      silent: silentOpt === "false" ? false : !!silentOpt || !!opts["ci"],
+      tsc: all || !!opts["tsc"],
+      useNx: !!opts["nx"],
+    };
 
-  if (clean) {
-    const { clearDist } = await import("@tsparticles/cli-command-build-clear");
-
-    await clearDist(basePath, silent);
+  if (tryRunNxBuild(commandOptions)) {
+    return;
   }
 
-  const srcPath = path.join(basePath, argPath);
-
-  if (!existsSync(srcPath)) {
-    throw new Error("Provided path does not exist");
-  }
-
-  let canContinue = true;
-
-  if (prettier) {
-    const { prettifySrc } = await import("@tsparticles/cli-command-build-prettier");
-
-    canContinue = await prettifySrc(basePath, srcPath, ci, silent);
-  }
-
-  if (canContinue && doLint) {
-    const { lint } = await import("@tsparticles/cli-command-build-eslint");
-
-    canContinue = await lint(ci, silent);
-  }
-
-  if (canContinue && (tsc || circularDeps)) {
-    const checks: Promise<boolean>[] = [];
-
-    if (tsc) {
-      checks.push(import("@tsparticles/cli-command-build-tsc").then(({ buildTS }) => buildTS(basePath, silent)));
-    }
-
-    if (circularDeps) {
-      checks.push(
-        import("@tsparticles/cli-command-build-circular-deps").then(({ circularDeps }) =>
-          circularDeps(basePath, silent),
-        ),
-      );
-    }
-
-    canContinue = (await Promise.all(checks)).every(result => result);
-  }
-
-  if (canContinue && doBundle) {
-    const { bundle } = await import("@tsparticles/cli-command-build-bundle");
-
-    canContinue = await bundle(basePath, silent);
-  }
-
-  if (canContinue && prettier) {
-    const { prettifyReadme, prettifyPackageJson, prettifyPackageDistJson } =
-      await import("@tsparticles/cli-command-build-prettier");
-
-    canContinue =
-      (await prettifyReadme(basePath, ci, silent)) &&
-      (await prettifyPackageJson(basePath, ci, silent)) &&
-      (await prettifyPackageDistJson(basePath, ci, silent));
-  }
-
-  if (canContinue && distfiles) {
-    const { buildDistFiles } = await import("@tsparticles/cli-command-build-distfiles");
-
-    canContinue = await buildDistFiles(basePath, silent);
-  }
-
-  if (!canContinue) {
-    throw new Error("Build failed");
-  }
-
-  let texts: string[] = [],
-    outputFunc = console.info;
-
-  if (!silent) {
-    const newStats = await getDistStats(basePath),
-      diffSize = newStats.totalSize - oldStats.totalSize,
-      bundleDiffSize = newStats.bundleSize - oldStats.bundleSize,
-      minSize = 0,
-      bundleSizeIncreased = bundleDiffSize > minSize,
-      bundleSizeIncreasedText = bundleSizeIncreased ? "increased" : "decreased",
-      diffSizeIncreasedText = diffSize > minSize ? "increased" : "decreased";
-
-    outputFunc = bundleSizeIncreased ? console.warn : console.info;
-
-    texts = [
-      bundleDiffSize
-        ? `Bundle size ${bundleSizeIncreasedText} from ${oldStats.bundleSize.toString()} to ${newStats.bundleSize.toString()} (${Math.abs(bundleDiffSize).toString()}B)`
-        : "Bundle size unchanged",
-      diffSize
-        ? `Size ${diffSizeIncreasedText} from ${oldStats.totalSize.toString()} to ${newStats.totalSize.toString()} (${Math.abs(diffSize).toString()}B)`
-        : "Size unchanged",
-      `Files count changed from ${oldStats.totalFiles.toString()} to ${newStats.totalFiles.toString()} (${(
-        newStats.totalFiles - oldStats.totalFiles
-      ).toString()})`,
-      `Folders count changed from ${oldStats.totalFolders.toString()} to ${newStats.totalFolders.toString()} (${(
-        newStats.totalFolders - oldStats.totalFolders
-      ).toString()})`,
-    ];
-  }
-
-  console.log("Build finished successfully!");
-
-  if (!silent) {
-    for (const text of texts) {
-      outputFunc(text);
-    }
-  }
+  await runLegacyBuild(commandOptions);
 });
 
 export { buildCommand };

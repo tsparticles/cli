@@ -48,6 +48,18 @@ or
 tsparticles-cli build
 ```
 
+### Build in an Nx workspace
+
+The CLI can now cooperate with Nx instead of always running its internal build pipeline.
+
+```bash
+tsparticles-cli build --nx
+tsparticles-cli build --nx --clean --lint --tsc
+pnpm nx run @tsparticles/cli-command-build:tsc
+```
+
+Inside this repository, the local plugin `@tsparticles/cli-nx-plugin` augments package-based projects with canonical tsParticles targets like `clean`, `prettify`, `prettify:ci`, and `tsc`, while preserving the existing npm script names.
+
 ### Create
 
 #### Preset

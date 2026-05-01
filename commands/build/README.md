@@ -48,6 +48,40 @@ or
 tsparticles-cli build
 ```
 
+### Nx-aware build
+
+The `build` command keeps the original human-friendly multi-flag workflow, but it can now delegate to Nx targets when it detects an Nx workspace.
+
+```bash
+tsparticles-cli build --nx
+tsparticles-cli build --nx --clean --lint --tsc
+tsparticles-cli build --legacy
+```
+
+- `--nx`: force Nx target execution when the required targets are available
+- `--legacy`: skip Nx integration and use the original in-process build flow
+- default behavior: if no granular flags are passed and the current package belongs to an Nx workspace, the command prefers the Nx aggregate target (`build` / `build:ci`) and falls back automatically to the legacy flow when needed
+
+### Canonical Nx target convention
+
+The CLI now looks for these canonical build-step targets first and falls back to historical script-style names when the plugin aliases are not present.
+
+| Build step            | Canonical target | Historical fallback targets        |
+| --------------------- | ---------------- | ---------------------------------- |
+| full build            | `build`          | `build`                            |
+| full CI build         | `build:ci`       | `build:ci`, `build-ci`             |
+| clean                 | `clean`          | `clear:dist`                       |
+| source prettify       | `prettify`       | `prettify:src`, `format`           |
+| CI prettify           | `prettify:ci`    | `prettify:ci:src`                  |
+| lint                  | `lint`           | `lint`                             |
+| lint CI               | `lint:ci`        | `lint:ci`                          |
+| TypeScript build      | `tsc`            | `compile`, `build:ts`, `typecheck` |
+| circular dependencies | `circular-deps`  | `circular-deps`                    |
+| bundle                | `bundle`         | `bundle`, `build:bundle`           |
+| dist files            | `distfiles`      | `distfiles`, `build:distfiles`     |
+
+The workspace-local Nx plugin `@tsparticles/cli-nx-plugin` infers the canonical aliases automatically for packages in this repository, so packages can keep their current npm scripts while exposing friendlier Nx targets.
+
 ### Create
 
 #### Preset
