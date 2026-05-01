@@ -6,6 +6,7 @@ import { distFilesCommand } from "@tsparticles/cli-command-build-distfiles";
 import { esLintCommand } from "@tsparticles/cli-command-build-eslint";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { prettierCommand } from "@tsparticles/cli-command-build-prettier";
 
 const buildCommand = new Command("build");
 
@@ -16,6 +17,7 @@ buildCommand.addCommand(circularDepsCommand);
 buildCommand.addCommand(clearCommand);
 buildCommand.addCommand(distFilesCommand);
 buildCommand.addCommand(esLintCommand);
+buildCommand.addCommand(prettierCommand);
 
 buildCommand.option(
   "-a, --all",
@@ -82,7 +84,7 @@ buildCommand.action(async (argPath: string) => {
   let canContinue = true;
 
   if (prettier) {
-    const { prettifySrc } = await import("./build-prettier.js");
+    const { prettifySrc } = await import("@tsparticles/cli-command-build-prettier");
 
     canContinue = await prettifySrc(basePath, srcPath, ci, silent);
   }
@@ -118,7 +120,8 @@ buildCommand.action(async (argPath: string) => {
   }
 
   if (canContinue && prettier) {
-    const { prettifyReadme, prettifyPackageJson, prettifyPackageDistJson } = await import("./build-prettier.js");
+    const { prettifyReadme, prettifyPackageJson, prettifyPackageDistJson } =
+      await import("@tsparticles/cli-command-build-prettier");
 
     canContinue =
       (await prettifyReadme(basePath, ci, silent)) &&
