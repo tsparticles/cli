@@ -50,15 +50,43 @@ tsparticles-cli build
 
 ### Build in an Nx workspace
 
-The CLI can now cooperate with Nx instead of always running its internal build pipeline.
+The `build` command can delegate to Nx targets when it detects an Nx workspace.
 
 ```bash
 tsparticles-cli build --nx
 tsparticles-cli build --nx --clean --lint --tsc
+tsparticles-cli build --legacy
 pnpm nx run @tsparticles/cli-command-build:tsc
 ```
 
-Inside this repository, the local plugin `@tsparticles/cli-nx-plugin` augments package-based projects with canonical tsParticles targets like `clean`, `prettify`, `prettify:ci`, and `tsc`, while preserving the existing npm script names.
+- `--nx`: forces Nx-target execution when required targets exist
+- `--legacy`: disables Nx-aware mode and runs the original in-process pipeline
+- default behavior in this workspace: with no granular flags, `build`/`build:ci` Nx aggregate targets are preferred when available
+
+Inside this repository, the local plugin `@tsparticles/cli-nx-plugin` augments package projects under `commands/*` and `packages/*` with canonical aliases like `clean`, `prettify`, `prettify:ci`, `tsc`, `bundle`, and `distfiles`.
+
+## Workspace commands (development)
+
+From the `cli` root:
+
+```bash
+pnpm run show:projects
+pnpm run build
+pnpm run build:affected
+pnpm run build:ci
+pnpm run lint
+pnpm run lint:ci
+pnpm run test
+pnpm run test:ci
+```
+
+### Focused Nx commands
+
+```bash
+pnpm nx show project @tsparticles/cli-command-build --json
+pnpm nx run @tsparticles/cli-command-build:build
+pnpm nx run @tsparticles/cli-nx-plugin:build
+```
 
 ### Create
 

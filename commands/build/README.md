@@ -82,6 +82,17 @@ The CLI now looks for these canonical build-step targets first and falls back to
 
 The workspace-local Nx plugin `@tsparticles/cli-nx-plugin` infers the canonical aliases automatically for packages in this repository, so packages can keep their current npm scripts while exposing friendlier Nx targets.
 
+### Verify in this workspace
+
+From the `cli` root, these commands validate the Nx integration end-to-end:
+
+```bash
+pnpm nx show project @tsparticles/cli-command-build --json
+pnpm nx run @tsparticles/cli-command-build:tsc
+pnpm nx run @tsparticles/cli-command-build:test
+pnpm run build
+```
+
 ### Create
 
 #### Preset
