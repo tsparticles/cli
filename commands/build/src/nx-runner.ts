@@ -7,24 +7,24 @@ import { createNxTargetPlan } from "./nx-plan.js";
 const emptyCount = 0;
 
 export function tryRunNxBuild(options: BuildExecutionOptions): boolean {
-  if (options.legacy || hasNxTaskContext()) {
+  if (hasNxTaskContext()) {
     return false;
   }
 
   const nxContext = resolveNxContext(options.basePath);
 
-  if (!nxContext || (!options.useNx && !options.all)) {
-    return false;
+  if (!nxContext) {
+    throw new Error("Nx workspace context not found for the current package.");
   }
 
   const targetPlan = createNxTargetPlan(nxContext.targets, options);
 
-  if (targetPlan.missingSteps.length > emptyCount && options.useNx) {
+  if (targetPlan.missingSteps.length > emptyCount) {
     throw new Error(`Nx targets not found for: ${targetPlan.missingSteps.join(", ")}`);
   }
 
-  if (targetPlan.targets.length === emptyCount || targetPlan.missingSteps.length > emptyCount) {
-    return false;
+  if (targetPlan.targets.length === emptyCount) {
+    throw new Error("No Nx targets selected for the requested build options.");
   }
 
   if (!options.silent) {

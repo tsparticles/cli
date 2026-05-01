@@ -9,7 +9,6 @@ export interface BuildExecutionOptions {
   doBundleRollup: boolean;
   doBundleWebpack: boolean;
   doLint: boolean;
-  legacy: boolean;
   prettier: boolean;
   silent: boolean;
   tsc: boolean;

@@ -10,7 +10,6 @@ import { prettierCommand } from "@tsparticles/cli-command-build-prettier";
 import { tscCommand } from "@tsparticles/cli-command-build-tsc";
 
 import type { BuildExecutionOptions } from "./build-options.js";
-import { runLegacyBuild } from "./legacy-build.js";
 import { tryRunNxBuild } from "./nx-runner.js";
 
 const buildCommand = new Command("build");
@@ -50,11 +49,10 @@ buildCommand.option(
 );
 buildCommand.option("-t, --tsc", "Build the library using TypeScript", false);
 buildCommand.option("--nx", "Prefer running Nx targets when available", false);
-buildCommand.option("--legacy", "Disable Nx-aware mode and force the legacy build flow", false);
 
 buildCommand.argument("[path]", `Path to the project root folder, default is "src"`, "src");
 
-buildCommand.action(async (argPath: string) => {
+buildCommand.action((argPath: string) => {
   const opts = buildCommand.opts(),
     all =
       !!opts["all"] ||
@@ -78,18 +76,15 @@ buildCommand.action(async (argPath: string) => {
       doBundleRollup: !!opts["bundleRollup"],
       doBundleWebpack: all || !!opts["bundleWebpack"],
       doLint: all || !!opts["lint"],
-      legacy: !!opts["legacy"],
       prettier: all || !!opts["prettify"],
       silent: silentOpt === "false" ? false : !!silentOpt || !!opts["ci"],
       tsc: all || !!opts["tsc"],
       useNx: !!opts["nx"],
     };
 
-  if (tryRunNxBuild(commandOptions)) {
-    return;
+  if (!tryRunNxBuild(commandOptions)) {
+    throw new Error("Nx build execution is required, but it cannot run inside an active Nx task context.");
   }
-
-  await runLegacyBuild(commandOptions);
 });
 
 export { buildCommand };
