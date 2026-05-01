@@ -57,31 +57,29 @@ tsparticles-cli build --nx
 tsparticles-cli build --nx --clean --lint --tsc
 tsparticles-cli build --bundle-webpack
 tsparticles-cli build --bundle-rollup
-tsparticles-cli build --legacy
 ```
 
-- `--nx`: force Nx target execution when the required targets are available
-- `--legacy`: skip Nx integration and use the original in-process build flow
-- default behavior: if no granular flags are passed and the current package belongs to an Nx workspace, the command prefers the Nx aggregate target (`build` / `build:ci`) and falls back automatically to the legacy flow when needed
+- `--nx`: preserved for compatibility; the build flow is Nx-only
+- default behavior: the command resolves and runs Nx targets for the current package (aggregate or granular)
 
 ### Canonical Nx target convention
 
 The CLI now looks for these canonical build-step targets first and falls back to historical script-style names when the plugin aliases are not present.
 
-| Build step            | Canonical target | Historical fallback targets                      |
-| --------------------- | ---------------- | ------------------------------------------------ |
-| full build            | `build`          | `build`                                          |
-| full CI build         | `build:ci`       | `build:ci`, `build-ci`                           |
-| clean                 | `clean`          | `clear:dist`                                     |
-| source prettify       | `prettify`       | `prettify:src`, `format`                         |
-| CI prettify           | `prettify:ci`    | `prettify:ci:src`                                |
-| lint                  | `lint`           | `lint`                                           |
-| lint CI               | `lint:ci`        | `lint:ci`                                        |
-| TypeScript build      | `tsc`            | `compile`, `build:ts`, `typecheck`               |
-| circular dependencies | `circular-deps`  | `circular-deps`                                  |
-| webpack bundle        | `bundle:webpack` | `build:bundle:webpack`                           |
-| rollup bundle         | `bundle:rollup`  | `build:bundle:rollup`                            |
-| dist files            | `distfiles`      | `distfiles`, `build:distfiles`                   |
+| Build step            | Canonical target | Historical fallback targets        |
+| --------------------- | ---------------- | ---------------------------------- |
+| full build            | `build`          | `build`                            |
+| full CI build         | `build:ci`       | `build:ci`, `build-ci`             |
+| clean                 | `clean`          | `clear:dist`                       |
+| source prettify       | `prettify`       | `prettify:src`, `format`           |
+| CI prettify           | `prettify:ci`    | `prettify:ci:src`                  |
+| lint                  | `lint`           | `lint`                             |
+| lint CI               | `lint:ci`        | `lint:ci`                          |
+| TypeScript build      | `tsc`            | `compile`, `build:ts`, `typecheck` |
+| circular dependencies | `circular-deps`  | `circular-deps`                    |
+| webpack bundle        | `bundle:webpack` | `build:bundle:webpack`             |
+| rollup bundle         | `bundle:rollup`  | `build:bundle:rollup`              |
+| dist files            | `distfiles`      | `distfiles`, `build:distfiles`     |
 
 The workspace-local Nx plugin `@tsparticles/cli-nx-plugin` infers the canonical aliases automatically for packages in this repository, so packages can keep their current npm scripts while exposing friendlier Nx targets.
 

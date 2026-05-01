@@ -15,7 +15,6 @@ function createOptions(overrides: Partial<BuildExecutionOptions> = {}): BuildExe
     doBundleRollup: false,
     doBundleWebpack: false,
     doLint: false,
-    legacy: false,
     prettier: false,
     silent: false,
     tsc: false,
