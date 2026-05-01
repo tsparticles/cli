@@ -1,23 +1,23 @@
 import { Command } from "commander";
-import { bundle } from "./utils.js";
+import { bundleRollup } from "./utils.js";
 import { existsSync } from "node:fs";
 
-const bundleCommand = new Command("bundle:webpack");
+const bundleRollupCommand = new Command("bundle:rollup");
 
-bundleCommand.description("Bundle the tsParticles library using Webpack");
-bundleCommand.option(
+bundleRollupCommand.description("Bundle the tsParticles library using Rollup");
+bundleRollupCommand.option(
   "--ci",
   "Do all build steps for CI, no fixing files, only checking if they are formatted correctly, sets silent to true by default",
   false,
 );
-bundleCommand.option(
+bundleRollupCommand.option(
   "-s, --silent <boolean>",
   "Reduce the amount of output during the build, defaults to false, except when --ci is set",
   false,
 );
 
-bundleCommand.action(async () => {
-  const opts = bundleCommand.opts(),
+bundleRollupCommand.action(async () => {
+  const opts = bundleRollupCommand.opts(),
     ci = !!opts["ci"],
     silentOpt = opts["silent"] as string | boolean,
     silent = silentOpt === "false" ? false : !!silentOpt || ci,
@@ -27,11 +27,11 @@ bundleCommand.action(async () => {
     throw new Error("Provided path does not exist");
   }
 
-  if (!(await bundle(basePath, silent))) {
-    throw new Error("Webpack bundle failed");
+  if (!(await bundleRollup(basePath, silent))) {
+    throw new Error("Rollup bundle failed");
   }
 
-  console.log("Webpack bundle finished successfully!");
+  console.log("Rollup bundle finished successfully!");
 });
 
-export { bundle, bundleCommand };
+export { bundleRollup, bundleRollupCommand };

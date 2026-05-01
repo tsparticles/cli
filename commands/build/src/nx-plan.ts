@@ -59,7 +59,8 @@ export function createNxTargetPlan(targets: Set<string>, options: BuildExecution
       missingStep: "tsc",
     },
     options.circularDeps && { candidates: nxTargetConventions.circularDeps, missingStep: "circular-deps" },
-    options.doBundle && { candidates: nxTargetConventions.bundle, missingStep: "bundle" },
+    options.doBundleWebpack && { candidates: nxTargetConventions.bundle, missingStep: "bundle" },
+    options.doBundleRollup && { candidates: nxTargetConventions.bundleRollup, missingStep: "bundle:rollup" },
     options.prettier && {
       candidates: options.ci ? nxTargetConventions.prettifyReadme.ci : nxTargetConventions.prettifyReadme.default,
       missingStep: "prettify-readme",

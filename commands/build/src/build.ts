@@ -1,6 +1,7 @@
 /* eslint-disable sort-imports */
 import { Command } from "commander";
 import { bundleCommand } from "@tsparticles/cli-command-build-bundle";
+import { bundleRollupCommand } from "@tsparticles/cli-command-build-bundle-rollup";
 import { circularDepsCommand } from "@tsparticles/cli-command-build-circular-deps";
 import { clearCommand } from "@tsparticles/cli-command-build-clear";
 import { distFilesCommand } from "@tsparticles/cli-command-build-distfiles";
@@ -17,6 +18,7 @@ const buildCommand = new Command("build");
 buildCommand.description("Build the tsParticles library using TypeScript");
 
 buildCommand.addCommand(bundleCommand);
+buildCommand.addCommand(bundleRollupCommand);
 buildCommand.addCommand(circularDepsCommand);
 buildCommand.addCommand(clearCommand);
 buildCommand.addCommand(distFilesCommand);
@@ -29,7 +31,8 @@ buildCommand.option(
   "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",
   false,
 );
-buildCommand.option("-b, --bundle", "Bundle the library using Webpack", false);
+buildCommand.option("-b, --bundle-webpack", "Bundle the library using Webpack", false);
+buildCommand.option("--bundle-rollup", "Bundle the library using Rollup", false);
 buildCommand.option("-c, --clean", "Clean the dist folder", false);
 buildCommand.option(
   "--ci",
@@ -55,7 +58,8 @@ buildCommand.action(async (argPath: string) => {
   const opts = buildCommand.opts(),
     all =
       !!opts["all"] ||
-      (!opts["bundle"] &&
+      (!opts["bundleWebpack"] &&
+        !opts["bundleRollup"] &&
         !opts["clean"] &&
         !opts["circularDeps"] &&
         !opts["dist"] &&
@@ -71,7 +75,8 @@ buildCommand.action(async (argPath: string) => {
       circularDeps: all || !!opts["circularDeps"],
       clean: all || !!opts["clean"],
       distfiles: all || !!opts["dist"],
-      doBundle: all || !!opts["bundle"],
+      doBundleRollup: !!opts["bundleRollup"],
+      doBundleWebpack: all || !!opts["bundleWebpack"],
       doLint: all || !!opts["lint"],
       legacy: !!opts["legacy"],
       prettier: all || !!opts["prettify"],

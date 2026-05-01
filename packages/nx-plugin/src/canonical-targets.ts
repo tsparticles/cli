@@ -31,9 +31,14 @@ export const tsParticlesAliasDefinitions: readonly TsParticlesAliasDefinition[] 
     description: "Canonical tsParticles TypeScript build target.",
   },
   {
-    alias: "bundle",
-    candidates: ["build:bundle"],
-    description: "Canonical tsParticles bundle target.",
+    alias: "bundle:webpack",
+    candidates: ["build:bundle:webpack"],
+    description: "Canonical tsParticles Webpack bundle target.",
+  },
+  {
+    alias: "bundle:rollup",
+    candidates: ["build:bundle:rollup"],
+    description: "Canonical tsParticles Rollup bundle target.",
   },
   {
     alias: "distfiles",

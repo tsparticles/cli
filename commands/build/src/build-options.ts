@@ -6,7 +6,8 @@ export interface BuildExecutionOptions {
   circularDeps: boolean;
   clean: boolean;
   distfiles: boolean;
-  doBundle: boolean;
+  doBundleRollup: boolean;
+  doBundleWebpack: boolean;
   doLint: boolean;
   legacy: boolean;
   prettier: boolean;

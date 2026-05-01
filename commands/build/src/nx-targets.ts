@@ -5,6 +5,7 @@ export interface NxTargetConventions {
     default: readonly string[];
   };
   bundle: readonly string[];
+  bundleRollup: readonly string[];
   circularDeps: readonly string[];
   clean: readonly string[];
   distfiles: readonly string[];
@@ -31,7 +32,8 @@ export const nxTargetConventions: NxTargetConventions = {
     ci: ["build:ci", "build-ci"],
     default: ["build"],
   },
-  bundle: ["bundle", "build:bundle"],
+  bundle: ["bundle:webpack", "build:bundle:webpack"],
+  bundleRollup: ["bundle:rollup", "build:bundle:rollup"],
   clean: ["clean", "clear:dist"],
   circularDeps: ["circular-deps"],
   distfiles: ["distfiles", "build:distfiles"],
@@ -65,7 +67,8 @@ export const nxCanonicalTargets = [
   "lint:ci",
   "tsc",
   "circular-deps",
-  "bundle",
+  "bundle:webpack",
+  "bundle:rollup",
   "distfiles",
 ] as const;
 

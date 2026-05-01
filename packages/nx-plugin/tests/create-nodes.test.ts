@@ -6,14 +6,22 @@ import { createCanonicalAliasTargets, isTsParticlesWorkspacePackage } from "../s
 describe("createCanonicalAliasTargets", () => {
   it("creates aliases for canonical tsParticles Nx targets", () => {
     const targets = createCanonicalAliasTargets({
-      "build:bundle": "webpack --config webpack.config.js",
+      "build:bundle:webpack": "webpack --config webpack.config.js",
+      "build:bundle:rollup": "rollup -c rollup.config.mjs",
       compile: "pnpm run build:ts",
       "prettify:ci:src": "prettier --check ./src/*",
       "prettify:src": "prettier --write ./src/*",
       "clear:dist": "rimraf ./dist",
     });
 
-    expect(Object.keys(targets).sort()).toEqual(["bundle", "clean", "prettify", "prettify:ci", "tsc"]);
+    expect(Object.keys(targets).sort()).toEqual([
+      "bundle:rollup",
+      "bundle:webpack",
+      "clean",
+      "prettify",
+      "prettify:ci",
+      "tsc",
+    ]);
     expect(targets["tsc"]?.options).toEqual({ script: "compile" });
     expect(targets["clean"]?.options).toEqual({ script: "clear:dist" });
   });

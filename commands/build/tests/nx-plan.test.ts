@@ -12,7 +12,8 @@ function createOptions(overrides: Partial<BuildExecutionOptions> = {}): BuildExe
     circularDeps: false,
     clean: false,
     distfiles: false,
-    doBundle: false,
+    doBundleRollup: false,
+    doBundleWebpack: false,
     doLint: false,
     legacy: false,
     prettier: false,
@@ -26,12 +27,20 @@ function createOptions(overrides: Partial<BuildExecutionOptions> = {}): BuildExe
 describe("createNxTargetPlan", () => {
   it("prefers canonical Nx aliases when they are available", () => {
     const plan = createNxTargetPlan(
-      new Set(["build", "clean", "prettify", "lint", "tsc", "circular-deps", "bundle", "distfiles"]),
-      createOptions({ clean: true, prettier: true, doLint: true, tsc: true, circularDeps: true, doBundle: true, distfiles: true }),
+      new Set(["build", "clean", "prettify", "lint", "tsc", "circular-deps", "bundle:webpack", "distfiles"]),
+      createOptions({
+        clean: true,
+        prettier: true,
+        doLint: true,
+        tsc: true,
+        circularDeps: true,
+        doBundleWebpack: true,
+        distfiles: true,
+      }),
     );
 
     expect(plan.missingSteps).toEqual([]);
-    expect(plan.targets).toEqual(["clean", "prettify", "lint", "tsc", "circular-deps", "bundle", "distfiles"]);
+    expect(plan.targets).toEqual(["clean", "prettify", "lint", "tsc", "circular-deps", "bundle:webpack", "distfiles"]);
   });
 
   it("falls back to legacy script-style targets when the plugin aliases are missing", () => {
@@ -42,6 +51,26 @@ describe("createNxTargetPlan", () => {
 
     expect(plan.missingSteps).toEqual([]);
     expect(plan.targets).toEqual(["clear:dist", "prettify:src", "lint", "compile", "circular-deps", "prettify:readme"]);
+  });
+
+  it("selects rollup bundle target when requested", () => {
+    const plan = createNxTargetPlan(
+      new Set(["bundle:rollup", "build:bundle:rollup"]),
+      createOptions({ doBundleRollup: true }),
+    );
+
+    expect(plan.missingSteps).toEqual([]);
+    expect(plan.targets).toEqual(["bundle:rollup"]);
+  });
+
+  it("prefers webpack-specific bundle target when available", () => {
+    const plan = createNxTargetPlan(
+      new Set(["bundle:webpack", "build:bundle:webpack"]),
+      createOptions({ doBundleWebpack: true }),
+    );
+
+    expect(plan.missingSteps).toEqual([]);
+    expect(plan.targets).toEqual(["bundle:webpack"]);
   });
 
   it("uses the aggregate build target when available for all-mode", () => {

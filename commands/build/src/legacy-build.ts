@@ -55,10 +55,16 @@ export async function runLegacyBuild(options: BuildExecutionOptions): Promise<vo
     canContinue = (await Promise.all(checks)).every(Boolean);
   }
 
-  if (canContinue && options.doBundle) {
+  if (canContinue && options.doBundleWebpack) {
     const { bundle } = await import("@tsparticles/cli-command-build-bundle");
 
     canContinue = await bundle(options.basePath, options.silent);
+  }
+
+  if (canContinue && options.doBundleRollup) {
+    const { bundleRollup } = await import("@tsparticles/cli-command-build-bundle-rollup");
+
+    canContinue = await bundleRollup(options.basePath, options.silent);
   }
 
   if (canContinue && options.prettier) {
