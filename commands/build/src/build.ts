@@ -7,6 +7,7 @@ import { esLintCommand } from "@tsparticles/cli-command-build-eslint";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { prettierCommand } from "@tsparticles/cli-command-build-prettier";
+import { tscCommand } from "@tsparticles/cli-command-build-tsc";
 
 const buildCommand = new Command("build");
 
@@ -18,6 +19,7 @@ buildCommand.addCommand(clearCommand);
 buildCommand.addCommand(distFilesCommand);
 buildCommand.addCommand(esLintCommand);
 buildCommand.addCommand(prettierCommand);
+buildCommand.addCommand(tscCommand);
 
 buildCommand.option(
   "-a, --all",
@@ -99,7 +101,7 @@ buildCommand.action(async (argPath: string) => {
     const checks: Promise<boolean>[] = [];
 
     if (tsc) {
-      checks.push(import("./build-tsc.js").then(({ buildTS }) => buildTS(basePath, silent)));
+      checks.push(import("@tsparticles/cli-command-build-tsc").then(({ buildTS }) => buildTS(basePath, silent)));
     }
 
     if (circularDeps) {
