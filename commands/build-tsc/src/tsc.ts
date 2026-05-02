@@ -2,7 +2,7 @@ import { Command } from "commander";
 import { buildTS } from "./utils.js";
 import { existsSync } from "node:fs";
 
-const tscCommand = new Command("distfiles");
+const tscCommand = new Command("tsc");
 
 tscCommand.description("Build the TypeScript files for tsParticles library");
 tscCommand.option(
@@ -28,10 +28,10 @@ tscCommand.action(async () => {
   }
 
   if (!(await buildTS(basePath, silent))) {
-    throw new Error("Dist files build failed");
+    throw new Error("TypeScript build failed");
   }
 
-  console.info("Bundle finished successfully!");
+  console.info("TypeScript build finished successfully!");
 });
 
 export { buildTS, tscCommand };

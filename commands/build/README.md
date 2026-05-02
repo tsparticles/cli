@@ -59,8 +59,8 @@ tsparticles-cli build --bundle-webpack
 tsparticles-cli build --bundle-rollup
 ```
 
-- `--nx`: preserved for compatibility; the build flow is Nx-only
-- default behavior: the command resolves and runs Nx targets for the current package (aggregate or granular)
+- `--nx`: preferisce Nx quando il package e' in un workspace Nx e i target richiesti sono disponibili
+- comportamento di default: prova Nx (target aggregato o granulari), poi fallback automatico agli script `package.json`
 
 ### Canonical Nx target convention
 

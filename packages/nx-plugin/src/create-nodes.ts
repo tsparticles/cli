@@ -1,5 +1,5 @@
 import { type CreateNodesV2, createNodesFromFiles, readJsonFile } from "@nx/devkit";
-import { createCanonicalAliasTargets, isTsParticlesWorkspacePackage } from "./canonical-targets.js";
+import { createCanonicalAliasTargets, isTsParticlesWorkspacePackage } from "./canonical-targets.ts";
 import { dirname, join } from "node:path";
 
 interface TsParticlesPackageJson {

@@ -1,4 +1,4 @@
-import { createNodesV2 } from "./create-nodes.js";
+import { createNodesV2 } from "./create-nodes.ts";
 
 const plugin = {
   name: "@tsparticles/cli-nx-plugin",

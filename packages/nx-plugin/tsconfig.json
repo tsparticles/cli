@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": ".",
     "resolveJsonModule": true,
-    "composite": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Bundler",
