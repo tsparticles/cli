@@ -39,7 +39,7 @@ export function tryRunNxBuild(options: BuildExecutionOptions): boolean {
     }
   }
 
-  console.log("Build finished successfully!");
+  console.info("Build completed successfully!");
 
   return true;
 }

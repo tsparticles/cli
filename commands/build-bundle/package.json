@@ -1,5 +1,5 @@
 {
-  "name": "@tsparticles/cli-command-build-bundle",
+  "name": "@tsparticles/cli-command-build-bundle-webpack",
   "version": "3.4.7",
   "license": "MIT",
   "type": "module",
@@ -9,7 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git"
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "commands/build-bundle"
   },
   "prettier": "@tsparticles/prettier-config",
   "scripts": {
@@ -74,6 +75,6 @@
     "webpack-cli": "^7.0.2"
   },
   "description": "tsParticles CLI",
-  "main": "dist/bundle.js",
+  "main": "dist/bundle-webpack.js",
   "author": "Matteo Bruni <matteo.bruni@me.com>"
 }

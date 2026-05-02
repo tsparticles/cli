@@ -31,7 +31,7 @@ tscCommand.action(async () => {
     throw new Error("Dist files build failed");
   }
 
-  console.log("Bundle finished successfully!");
+  console.info("Bundle finished successfully!");
 });
 
 export { buildTS, tscCommand };

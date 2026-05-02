@@ -12,7 +12,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git"
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "packages/cli"
   },
   "prettier": "@tsparticles/prettier-config",
   "scripts": {

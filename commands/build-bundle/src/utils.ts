@@ -6,9 +6,9 @@ import webpack from "webpack";
  * @param silent -
  * @returns true if the bundle was created
  */
-export async function bundle(basePath: string, silent: boolean): Promise<boolean> {
+export async function bundleWebpack(basePath: string, silent: boolean): Promise<boolean> {
   if (!silent) {
-    console.log("Bundling started");
+    console.info("Webpack bundling started");
   }
 
   let res: boolean;
@@ -36,16 +36,16 @@ export async function bundle(basePath: string, silent: boolean): Promise<boolean
           return;
         }
 
-        const info = stats.toJson();
+        const statsInfo = stats.toJson();
 
         if (stats.hasErrors()) {
-          console.error(info.errors);
+          console.error(statsInfo.errors);
 
-          reject(new Error(info.errors?.map(error => error.message).join("\n")));
+          reject(new Error(statsInfo.errors?.map(error => error.message).join("\n")));
         }
 
         if (stats.hasWarnings()) {
-          console.warn(info.warnings);
+          console.warn(statsInfo.warnings);
         }
 
         resolve(true);
@@ -58,7 +58,7 @@ export async function bundle(basePath: string, silent: boolean): Promise<boolean
   }
 
   if (!silent) {
-    console.log("Bundling done");
+    console.info("Webpack bundling completed");
   }
 
   return res;

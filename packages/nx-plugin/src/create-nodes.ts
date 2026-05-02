@@ -1,9 +1,6 @@
-/* eslint-disable sort-imports */
-/* eslint-disable jsdoc/require-jsdoc */
-import { createNodesFromFiles, readJsonFile, type CreateNodesV2 } from "@nx/devkit";
+import { type CreateNodesV2, createNodesFromFiles, readJsonFile } from "@nx/devkit";
+import { createCanonicalAliasTargets, isTsParticlesWorkspacePackage } from "./canonical-targets.js";
 import { dirname, join } from "node:path";
-
-import { createCanonicalAliasTargets, isTsParticlesWorkspacePackage } from "./canonical-targets.ts";
 
 interface TsParticlesPackageJson {
   scripts?: Record<string, string>;
@@ -11,6 +8,11 @@ interface TsParticlesPackageJson {
 
 const emptyCount = 0;
 
+/**
+ * @param packageJsonPath -
+ * @param workspaceRoot -
+ * @returns -
+ */
 function createProjectAugmentation(packageJsonPath: string, workspaceRoot: string): Record<string, unknown> {
   if (!isTsParticlesWorkspacePackage(packageJsonPath)) {
     return {};

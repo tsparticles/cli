@@ -31,7 +31,7 @@ circularDepsCommand.action(async () => {
     throw new Error("Bundle failed");
   }
 
-  console.log("Circular deps check finished successfully!");
+  console.info("Circular deps check finished successfully!");
 });
 
 export { circularDeps, circularDepsCommand };

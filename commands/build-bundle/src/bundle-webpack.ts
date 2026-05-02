@@ -1,23 +1,23 @@
 import { Command } from "commander";
-import { bundle } from "./utils.js";
+import { bundleWebpack } from "./utils.js";
 import { existsSync } from "node:fs";
 
-const bundleCommand = new Command("bundle:webpack");
+const bundleWebpackCommand = new Command("bundle:webpack");
 
-bundleCommand.description("Bundle the tsParticles library using Webpack");
-bundleCommand.option(
+bundleWebpackCommand.description("Bundle the tsParticles library using Webpack");
+bundleWebpackCommand.option(
   "--ci",
   "Do all build steps for CI, no fixing files, only checking if they are formatted correctly, sets silent to true by default",
   false,
 );
-bundleCommand.option(
+bundleWebpackCommand.option(
   "-s, --silent <boolean>",
   "Reduce the amount of output during the build, defaults to false, except when --ci is set",
   false,
 );
 
-bundleCommand.action(async () => {
-  const opts = bundleCommand.opts(),
+bundleWebpackCommand.action(async () => {
+  const opts = bundleWebpackCommand.opts(),
     ci = !!opts["ci"],
     silentOpt = opts["silent"] as string | boolean,
     silent = silentOpt === "false" ? false : !!silentOpt || ci,
@@ -27,11 +27,11 @@ bundleCommand.action(async () => {
     throw new Error("Provided path does not exist");
   }
 
-  if (!(await bundle(basePath, silent))) {
-    throw new Error("Webpack bundle failed");
+  if (!(await bundleWebpack(basePath, silent))) {
+    throw new Error("Webpack bundling failed");
   }
 
-  console.log("Webpack bundle finished successfully!");
+  console.info("Webpack bundling completed successfully!");
 });
 
-export { bundle, bundleCommand };
+export { bundleWebpack, bundleWebpackCommand };

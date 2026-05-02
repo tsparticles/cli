@@ -9,7 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git"
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "commands/build-bundle-rollup"
   },
   "prettier": "@tsparticles/prettier-config",
   "scripts": {
@@ -73,4 +74,6 @@
   "main": "dist/bundle-rollup.js",
   "author": "Matteo Bruni <matteo.bruni@me.com>"
 }
+
+
 

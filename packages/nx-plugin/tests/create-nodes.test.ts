@@ -1,7 +1,6 @@
 /// <reference types="vitest" />
 import { describe, expect, it } from "vitest";
-
-import { createCanonicalAliasTargets, isTsParticlesWorkspacePackage } from "../src/canonical-targets.ts";
+import { createCanonicalAliasTargets, isTsParticlesWorkspacePackage } from "../src/canonical-targets.js";
 
 describe("createCanonicalAliasTargets", () => {
   it("creates aliases for canonical tsParticles Nx targets", () => {

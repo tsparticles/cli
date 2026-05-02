@@ -1,6 +1,6 @@
 /* eslint-disable sort-imports */
 import { Command } from "commander";
-import { bundleCommand } from "@tsparticles/cli-command-build-bundle";
+import { bundleWebpackCommand } from "@tsparticles/cli-command-build-bundle-webpack";
 import { bundleRollupCommand } from "@tsparticles/cli-command-build-bundle-rollup";
 import { circularDepsCommand } from "@tsparticles/cli-command-build-circular-deps";
 import { clearCommand } from "@tsparticles/cli-command-build-clear";
@@ -16,7 +16,7 @@ const buildCommand = new Command("build");
 
 buildCommand.description("Build the tsParticles library using TypeScript");
 
-buildCommand.addCommand(bundleCommand);
+buildCommand.addCommand(bundleWebpackCommand);
 buildCommand.addCommand(bundleRollupCommand);
 buildCommand.addCommand(circularDepsCommand);
 buildCommand.addCommand(clearCommand);

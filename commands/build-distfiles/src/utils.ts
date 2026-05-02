@@ -47,7 +47,7 @@ function resolveDeps(deps: Record<string, string>, version: string): Record<stri
  */
 export async function buildDistFiles(basePath: string, silent: boolean): Promise<boolean> {
   if (!silent) {
-    console.log("Build - started on dist files");
+    console.info("Build - started on dist files");
   }
 
   let res: boolean;
@@ -83,7 +83,7 @@ export async function buildDistFiles(basePath: string, silent: boolean): Promise
     }
 
     if (!silent) {
-      console.log(`package.dist.json updated successfully to version ${pkgInfo.version}`);
+      console.info(`package.dist.json updated successfully to version ${pkgInfo.version}`);
     }
 
     const rootFilesToCopy = [
@@ -148,7 +148,7 @@ export async function buildDistFiles(basePath: string, silent: boolean): Promise
   }
 
   if (!silent) {
-    console.log("Build - done on dist files");
+    console.info("Build - done on dist files");
   }
 
   return res;

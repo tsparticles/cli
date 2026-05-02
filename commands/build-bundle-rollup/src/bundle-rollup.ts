@@ -28,10 +28,10 @@ bundleRollupCommand.action(async () => {
   }
 
   if (!(await bundleRollup(basePath, silent))) {
-    throw new Error("Rollup bundle failed");
+    throw new Error("Rollup bundling failed");
   }
 
-  console.log("Rollup bundle finished successfully!");
+  console.info("Rollup bundling completed successfully!");
 });
 
 export { bundleRollup, bundleRollupCommand };

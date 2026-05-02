@@ -10,16 +10,16 @@ const rollupConfigCandidates = ["rollup.config.mjs", "rollup.config.js", "rollup
   emptyCount = 0;
 
 /**
- *
- * @param configData
+ * @param configData -
+ * @returns -
  */
 function normalizeRollupConfigs(configData: RollupOptions | RollupOptions[]): RollupOptions[] {
   return Array.isArray(configData) ? configData : [configData];
 }
 
 /**
- *
- * @param basePath
+ * @param basePath -
+ * @returns -
  */
 async function loadRollupConfig(basePath: string): Promise<RollupOptions[]> {
   for (const configName of rollupConfigCandidates) {
@@ -56,9 +56,9 @@ async function loadRollupConfig(basePath: string): Promise<RollupOptions[]> {
 }
 
 /**
- *
- * @param bundleResult
- * @param output
+ * @param bundleResult -
+ * @param output -
+ * @returns -
  */
 async function writeRollupOutput(
   bundleResult: Awaited<ReturnType<typeof rollup>>,
@@ -80,7 +80,7 @@ async function writeRollupOutput(
  */
 export async function bundleRollup(basePath: string, silent: boolean): Promise<boolean> {
   if (!silent) {
-    console.log("Rollup bundling started");
+    console.info("Rollup bundling started");
   }
 
   try {
@@ -111,7 +111,7 @@ export async function bundleRollup(basePath: string, silent: boolean): Promise<b
   }
 
   if (!silent) {
-    console.log("Rollup bundling done");
+    console.info("Rollup bundling completed");
   }
 
   return true;

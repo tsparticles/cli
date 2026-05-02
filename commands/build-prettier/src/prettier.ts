@@ -47,7 +47,7 @@ prettierCommand.action(async (argPath: string) => {
     throw new Error("Dist files build failed");
   }
 
-  console.log("Bundle finished successfully!");
+  console.info("Bundle finished successfully!");
 });
 
 export { prettifySrc, prettifyReadme, prettifyPackageJson, prettifyPackageDistJson, prettierCommand };

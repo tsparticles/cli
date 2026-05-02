@@ -194,7 +194,7 @@ async function compile(basePath: string, type: CompileType, silent: boolean): Pr
  */
 export async function buildTS(basePath: string, silent: boolean): Promise<boolean> {
   if (!silent) {
-    console.log("Building TS files");
+    console.info("Building TS files");
   }
 
   const types: CompileType[] = ["browser", "cjs", "esm", "types"],
@@ -208,18 +208,18 @@ export async function buildTS(basePath: string, silent: boolean): Promise<boolea
     }
 
     if (!silent) {
-      console.log(`Building TS files for ${type} configuration`);
+      console.info(`Building TS files for ${type} configuration`);
     }
 
     for (const log of result.logs) {
-      console.log(log);
+      console.info(log);
     }
   }
 
   const res = results.every(result => result.exitCode === ExitCodes.OK);
 
   if (!silent) {
-    console.log("Building TS files done");
+    console.info("Building TS files done");
   }
 
   return res;

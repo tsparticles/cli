@@ -9,7 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git"
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "commands/build"
   },
   "prettier": "@tsparticles/prettier-config",
   "scripts": {
@@ -36,7 +37,7 @@
   },
   "dependencies": {
     "@swc/core": "^1.15.32",
-    "@tsparticles/cli-command-build-bundle": "workspace:*",
+    "@tsparticles/cli-command-build-bundle-webpack": "workspace:*",
     "@tsparticles/cli-command-build-bundle-rollup": "workspace:*",
     "@tsparticles/cli-command-build-circular-deps": "workspace:*",
     "@tsparticles/cli-command-build-clear": "workspace:*",

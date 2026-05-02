@@ -23,12 +23,12 @@ importers:
       '@swc/core':
         specifier: ^1.15.32
         version: 1.15.32
-      '@tsparticles/cli-command-build-bundle':
-        specifier: workspace:*
-        version: link:../build-bundle
       '@tsparticles/cli-command-build-bundle-rollup':
         specifier: workspace:*
         version: link:../build-bundle-rollup
+      '@tsparticles/cli-command-build-bundle-webpack':
+        specifier: workspace:*
+        version: link:../build-bundle
       '@tsparticles/cli-command-build-circular-deps':
         specifier: workspace:*
         version: link:../build-circular-deps
