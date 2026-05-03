@@ -1,0 +1,11 @@
+node_modules/
+dist
+.DS_Store
+*-debug.log
+.idea
+
+.nx/cache
+.nx/workspace-data
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json
