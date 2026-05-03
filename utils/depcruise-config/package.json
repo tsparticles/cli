@@ -1,0 +1,57 @@
+{
+  "name": "@tsparticles/depcruise-config",
+  "version": "3.4.14",
+  "private": false,
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "utils/depcruise-config"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prettify:ci:src": "prettier --check ./src/*",
+    "prettify:ci:readme": "prettier --check ./README.md",
+    "prettify:src": "prettier --write ./src/*",
+    "prettify:readme": "prettier --write ./README.md",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
+    "lint:ci": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "compile": "tsup",
+    "compile:ci": "tsup",
+    "build": "pnpm run prettify:src && pnpm run lint && pnpm run compile && pnpm run prettify:readme",
+    "build:ci": "pnpm run prettify:ci:src && pnpm run lint:ci && pnpm run compile && pnpm run prettify:ci:readme",
+    "prepack": "pnpm run build"
+  },
+  "peerDependencies": {
+    "dependency-cruiser": "^17"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@tsparticles/eslint-config": "workspace:^",
+    "@tsparticles/prettier-config": "workspace:^",
+    "@types/node": "^25.6.0",
+    "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsdoc": "^62.9.0",
+    "eslint-plugin-tsdoc": "^0.5.2",
+    "prettier": "^3.8.3",
+    "prettier-plugin-multiline-arrays": "^4.1.7",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.1"
+  }
+}

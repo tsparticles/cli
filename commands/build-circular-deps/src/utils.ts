@@ -33,11 +33,12 @@ export async function circularDeps(basePath: string, silent: boolean): Promise<b
 
         console.error(`Cycle detected: ${cyclePath.join(" -> ")}`);
       }
+
       return false;
     }
 
     if (!silent) {
-      console.log("✅ No circular dependencies found.");
+      console.info("✅ No circular dependencies found.");
     }
 
     return true;
@@ -47,7 +48,7 @@ export async function circularDeps(basePath: string, silent: boolean): Promise<b
     return false;
   } finally {
     if (!silent) {
-      console.log("Finished checking circular dependencies.");
+      console.info("Finished checking circular dependencies.");
     }
   }
 }

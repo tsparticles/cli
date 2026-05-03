@@ -9,7 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git"
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "commands/build"
   },
   "prettier": "@tsparticles/prettier-config",
   "scripts": {
@@ -27,6 +28,8 @@
     "build": "pnpm run clear:dist && pnpm run prettify:src && pnpm run lint && pnpm run compile && pnpm run circular-deps && pnpm run prettify:readme",
     "build:ci": "pnpm run clear:dist && pnpm run prettify:ci:src && pnpm run lint:ci && pnpm run compile:ci && pnpm run prettify:ci:readme",
     "clear:dist": "rimraf ./dist",
+    "test": "vitest run --config vitest.config.ts",
+    "test:ci": "vitest run --config vitest.config.ts",
     "prepack": "pnpm run build"
   },
   "peerDependencies": {
@@ -34,17 +37,21 @@
   },
   "dependencies": {
     "@swc/core": "^1.15.32",
-    "@tsparticles/cli-command-build-bundle": "workspace:*",
-    "@tsparticles/cli-command-build-circular-deps": "workspace:*",
-    "@tsparticles/cli-command-build-clear": "workspace:*",
-    "@tsparticles/cli-command-build-distfiles": "workspace:*",
-    "@tsparticles/cli-command-build-diststats": "workspace:*",
-    "@tsparticles/depcruise-config": "^3.4.14",
-    "@tsparticles/eslint-config": "^3.4.14",
-    "@tsparticles/prettier-config": "^3.4.14",
-    "@tsparticles/tsconfig": "^3.4.14",
-    "@tsparticles/webpack-plugin": "^3.4.14",
-    "eslint": "^10.2.1",
+    "@tsparticles/cli-command-build-bundle-webpack": "workspace:^",
+    "@tsparticles/cli-command-build-bundle-rollup": "workspace:^",
+    "@tsparticles/cli-command-build-circular-deps": "workspace:^",
+    "@tsparticles/cli-command-build-clear": "workspace:^",
+    "@tsparticles/cli-command-build-distfiles": "workspace:^",
+    "@tsparticles/cli-command-build-diststats": "workspace:^",
+    "@tsparticles/cli-command-build-eslint": "workspace:^",
+    "@tsparticles/cli-command-build-prettier": "workspace:^",
+    "@tsparticles/cli-command-build-tsc": "workspace:^",
+    "@tsparticles/depcruise-config": "workspace:^",
+    "@tsparticles/eslint-config": "workspace:^",
+    "@tsparticles/prettier-config": "workspace:^",
+    "@tsparticles/tsconfig": "workspace:^",
+    "@tsparticles/webpack-plugin": "workspace:^",
+    "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsdoc": "^62.9.0",
     "eslint-plugin-prettier": "^5.5.5",

@@ -1,6 +1,7 @@
 packages:
   - packages/*
   - commands/*
+  - utils/*
 
 allowBuilds:
   '@swc/core': true
@@ -8,7 +9,15 @@ allowBuilds:
   esbuild: true
   nx: true
 
+ignoredBuiltDependencies:
+  - nx
+
 onlyBuiltDependencies:
   - '@swc/core'
   - '@tsparticles/engine'
+  - core-js
   - esbuild
+  - fsevents
+
+patchedDependencies:
+  tsup@8.5.1: utils/patches/tsup@8.5.1.patch

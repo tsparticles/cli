@@ -1,0 +1,28 @@
+{
+  "name": "@tsparticles/tsconfig",
+  "version": "3.4.14",
+  "description": "tsParticles default TypeScript Compiler Configuration",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "utils/tsconfig"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "cpx \"./src/**.*\" ./dist/",
+    "build:ci": "cpx \"./src/**.*\" ./dist/"
+  },
+  "peerDependencies": {
+    "typescript": "^6"
+  },
+  "devDependencies": {
+    "cpx2": "^8.0.2",
+    "typescript": "^6.0.3"
+  }
+}

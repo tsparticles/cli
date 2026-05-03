@@ -31,6 +31,9 @@
   "affected": {
     "defaultBase": "main"
   },
+  "plugins": [
+    "@tsparticles/cli-nx-plugin"
+  ],
   "targetDefaults": {
     "build": {
       "dependsOn": [

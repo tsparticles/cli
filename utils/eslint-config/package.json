@@ -1,0 +1,49 @@
+{
+  "name": "@tsparticles/eslint-config",
+  "version": "3.4.14",
+  "description": "tsParticles default ESLint Configuration (ESLint 10 + Flat Config)",
+  "type": "module",
+  "main": "dist/eslint.config.js",
+  "types": "dist/eslint.config.d.ts",
+  "license": "MIT",
+  "files": [
+    "dist/eslint.config.js",
+    "dist/eslint.config.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "utils/eslint-config"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "pnpm run lint && tsc",
+    "build:ci": "pnpm run lint:ci && tsc",
+    "lint": "eslint -c src/eslint.config.ts ./src --fix",
+    "lint:ci": "eslint -c src/eslint.config.ts ./src"
+  },
+  "prettier": "@tsparticles/prettier-config",
+  "peerDependencies": {
+    "eslint": "^10"
+  },
+  "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@tsparticles/prettier-config": "workspace:^",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsdoc": "^62.9.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-tsdoc": "^0.5.2",
+    "jiti": "^2.6.1",
+    "prettier": "^3.8.3",
+    "prettier-plugin-multiline-arrays": "^4.1.7",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "eslint": "^10.3.0"
+  }
+}
