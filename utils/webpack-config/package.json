@@ -7,8 +7,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/utils.git",
-    "directory": "packages/webpack-config"
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "utils/webpack-config"
   },
   "publishConfig": {
     "access": "public"
@@ -39,7 +39,7 @@
     "@tsparticles/eslint-config": "workspace:^",
     "@tsparticles/prettier-config": "workspace:^",
     "browserslist": "^4.28.2",
-    "eslint": "^10.2.1",
+    "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsdoc": "^62.9.0",
     "eslint-plugin-tsdoc": "^0.5.2",

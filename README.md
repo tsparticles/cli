@@ -63,7 +63,7 @@ pnpm nx run @tsparticles/cli-command-build:tsc
 - `--legacy`: disables Nx-aware mode and runs the original in-process pipeline
 - default behavior in this workspace: with no granular flags, `build`/`build:ci` Nx aggregate targets are preferred when available
 
-Inside this repository, the local plugin `@tsparticles/cli-nx-plugin` augments package projects under `commands/*` and `packages/*` with canonical aliases like `clean`, `prettify`, `prettify:ci`, `tsc`, `bundle`, and `distfiles`.
+Inside this repository, the local plugin `@tsparticles/cli-nx-plugin` augments package projects under `commands/*`, `packages/*`, and `utils/*` with canonical aliases like `clean`, `prettify`, `prettify:ci`, `tsc`, `bundle`, and `distfiles`.
 
 ## Workspace commands (development)
 

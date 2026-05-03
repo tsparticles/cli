@@ -9,8 +9,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/utils.git",
-    "directory": "packages/prettier-config"
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "utils/prettier-config"
   },
   "publishConfig": {
     "access": "public"

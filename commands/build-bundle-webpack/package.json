@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tsparticles/cli.git",
-    "directory": "commands/build-bundle"
+    "directory": "commands/build-bundle-webpack"
   },
   "prettier": "@tsparticles/prettier-config",
   "scripts": {
@@ -35,11 +35,11 @@
   },
   "dependencies": {
     "@swc/core": "^1.15.32",
-    "@tsparticles/depcruise-config": "^3.4.14",
-    "@tsparticles/eslint-config": "^3.4.14",
-    "@tsparticles/prettier-config": "^3.4.14",
-    "@tsparticles/tsconfig": "^3.4.14",
-    "@tsparticles/webpack-plugin": "^3.4.14",
+    "@tsparticles/depcruise-config": "workspace:^",
+    "@tsparticles/eslint-config": "workspace:^",
+    "@tsparticles/prettier-config": "workspace:^",
+    "@tsparticles/tsconfig": "workspace:^",
+    "@tsparticles/webpack-plugin": "workspace:^",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsdoc": "^62.9.0",

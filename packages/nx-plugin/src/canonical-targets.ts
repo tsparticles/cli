@@ -105,5 +105,9 @@ export function isTsParticlesWorkspacePackage(packageJsonPath: string): boolean 
     return false;
   }
 
-  return normalizedPath.startsWith("commands/") || normalizedPath.startsWith("packages/");
+  return (
+    normalizedPath.startsWith("commands/") ||
+    normalizedPath.startsWith("packages/") ||
+    normalizedPath.startsWith("utils/")
+  );
 }

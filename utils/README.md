@@ -4,12 +4,12 @@ Shared build and tooling utilities used across the [tsParticles ecosystem](https
 
 ## Packages
 
-- [`@tsparticles/browserslist-config`](./packages/browserslist-config/README.md): shared Browserslist targets
-- [`@tsparticles/depcruise-config`](./packages/depcruise-config/README.md): shared Dependency Cruiser rules and loader
-- [`@tsparticles/eslint-config`](./packages/eslint-config/README.md): shared ESLint 10 flat config
-- [`@tsparticles/prettier-config`](./packages/prettier-config/README.md): shared Prettier config
-- [`@tsparticles/tsconfig`](./packages/tsconfig/README.md): shared TypeScript config presets
-- [`@tsparticles/webpack-plugin`](./packages/webpack-config/README.md): helper functions to generate tsParticles webpack configs
+- [`@tsparticles/browserslist-config`](./browserslist-config/README.md): shared Browserslist targets
+- [`@tsparticles/depcruise-config`](./depcruise-config/README.md): shared Dependency Cruiser rules and loader
+- [`@tsparticles/eslint-config`](./eslint-config/README.md): shared ESLint 10 flat config
+- [`@tsparticles/prettier-config`](./prettier-config/README.md): shared Prettier config
+- [`@tsparticles/tsconfig`](./tsconfig/README.md): shared TypeScript config presets
+- [`@tsparticles/webpack-plugin`](./webpack-config/README.md): helper functions to generate tsParticles webpack configs
 
 ## Requirements
 

@@ -26,9 +26,9 @@
   },
   "dependencies": {
     "@nx/devkit": "^22.7.1",
-    "@tsparticles/eslint-config": "^3.4.14",
-    "@tsparticles/prettier-config": "^3.4.14",
-    "@tsparticles/tsconfig": "^3.4.14",
+    "@tsparticles/eslint-config": "workspace:^",
+    "@tsparticles/prettier-config": "workspace:^",
+    "@tsparticles/tsconfig": "workspace:^",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsdoc": "^62.9.0",
@@ -49,6 +49,3 @@
   "main": "src/index.ts",
   "author": "Matteo Bruni <matteo.bruni@me.com>"
 }
-
-
-

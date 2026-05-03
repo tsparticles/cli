@@ -6,7 +6,7 @@ Internal Nx plugin used by the `tsParticles CLI` workspace.
 
 ## What it does
 
-The plugin augments package-based Nx projects under `commands/*` and `packages/*` with canonical tsParticles build-step aliases.
+The plugin augments package-based Nx projects under `commands/*`, `packages/*`, and `utils/*` with canonical tsParticles build-step aliases.
 
 It is enabled in the workspace `nx.json` via the `@tsparticles/cli-nx-plugin` entry in `plugins`.
 

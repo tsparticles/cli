@@ -6,8 +6,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/utils.git",
-    "directory": "packages/browserslist-config"
+    "url": "git+https://github.com/tsparticles/cli.git",
+    "directory": "utils/browserslist-config"
   },
   "publishConfig": {
     "access": "public"
